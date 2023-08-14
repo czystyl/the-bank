@@ -1,0 +1,20 @@
+{
+  "name": "@bank-brew/env",
+  "version": "0.1.0",
+  "main": "./env.ts",
+  "types": "./env.ts",
+  "license": "MIT",
+  "scripts": {
+    "clean": "rm -rf .turbo node_modules",
+    "type-check": "tsc --noEmit",
+    "lint": "eslint .",
+    "lint:fix": "yarn lint --fix"
+  },
+  "dependencies": {
+    "@t3-oss/env-nextjs": "^0.6.0",
+    "zod": "^3.21.4"
+  },
+  "devDependencies": {
+    "dotenv-cli": "^7.2.1"
+  }
+}
