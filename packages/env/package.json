@@ -13,5 +13,14 @@
   "dependencies": {
     "@t3-oss/env-nextjs": "^0.6.0",
     "zod": "^3.21.4"
+  },
+  "devDependencies": {
+    "@bank-brew/eslint-config": "^0.2.0"
+  },
+  "eslintConfig": {
+    "root": true,
+    "extends": [
+      "@bank-brew/eslint-config/base"
+    ]
   }
 }

@@ -6,10 +6,8 @@ import { db, transactions } from "@bank-brew/db";
 import { createTRPCRouter, protectedProcedure, publicProcedure } from "../trpc";
 
 export const transactionsRouter = createTRPCRouter({
-  allNot: publicProcedure.query(async ({ ctx }) => {
+  allNot: publicProcedure.query(async () => {
     const res = await db.select().from(transactions);
-
-    console.log(res);
 
     return res;
   }),

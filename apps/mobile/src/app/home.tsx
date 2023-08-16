@@ -23,7 +23,9 @@ export default function Index() {
       </Text>
       <ScrollView>
         {data?.map((transaction) => (
-          <Text key={transaction.id}>{transaction.id}</Text>
+          <Text key={transaction.id}>
+            {transaction.id} - {transaction.amount}
+          </Text>
         ))}
       </ScrollView>
     </View>
