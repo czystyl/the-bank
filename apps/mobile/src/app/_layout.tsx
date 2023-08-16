@@ -35,11 +35,25 @@ export default function RootLayout() {
           <SafeAreaProvider>
             <StatusBar />
 
-            <Stack>
+            <Stack initialRouteName="index">
               <Stack.Screen
                 name="index"
                 options={{
+                  title: "",
+                  animation: "none",
+                }}
+              />
+              <Stack.Screen
+                name="home"
+                options={{
                   title: "Home",
+                  animation: "none",
+                }}
+              />
+              <Stack.Screen
+                name="(auth)/onboarding"
+                options={{
+                  title: "Onboarding 🎉",
                   animation: "none",
                 }}
               />

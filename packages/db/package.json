@@ -15,7 +15,6 @@
     "drizzle-orm": "^0.28.0"
   },
   "devDependencies": {
-    "dotenv-cli": "^7.2.1",
     "drizzle-kit": "^0.19.12",
     "typescript": "^5.1.6"
   }

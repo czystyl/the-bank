@@ -2,9 +2,6 @@ import { createEnv } from "@t3-oss/env-nextjs";
 import { config } from "dotenv";
 import { z } from "zod";
 
-// Load environment variables from global .env file
-config({ path: "../../.env" });
-
 export const env = createEnv({
   skipValidation: !!process.env.CI || !!process.env.SKIP_ENV_VALIDATION,
   /*
@@ -20,6 +17,7 @@ export const env = createEnv({
       ])
       .default("development"),
     DATABASE_URL: z.string().min(1),
+    CLERK_SECRET_KEY: z.string().min(1),
   },
   /*
    * Environment variables available on the client (and server).
@@ -27,7 +25,7 @@ export const env = createEnv({
    * 💡 You'll get type errors if these are not prefixed with NEXT_PUBLIC_.
    */
   client: {
-    // NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY: z.string().min(1),
+    NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY: z.string().min(1),
   },
   /*
    * Due to how Next.js bundles environment variables on Edge and Client,
@@ -38,5 +36,8 @@ export const env = createEnv({
   runtimeEnv: {
     NODE_ENV: process.env.NODE_ENV,
     DATABASE_URL: process.env.DATABASE_URL,
+    CLERK_SECRET_KEY: process.env.CLERK_SECRET_KEY,
+    NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY:
+      process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY,
   },
 });

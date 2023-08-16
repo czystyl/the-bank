@@ -10,7 +10,7 @@ export default function SignIn() {
     redirectUrl: "exp://",
   });
 
-  const { user } = useAuth();
+  const { resetOnboarding } = useAuth();
 
   const onGooglePress = useCallback(async () => {
     try {
@@ -26,8 +26,10 @@ export default function SignIn() {
 
   return (
     <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-      <Text>{user?.id}</Text>
       <Text onPress={onGooglePress}>Sign In</Text>
+      <Text onPress={resetOnboarding} className="mt-10 text-xl">
+        RESET
+      </Text>
     </View>
   );
 }

@@ -1,17 +1,13 @@
-import { Text, View } from "react-native";
+import { Redirect } from "expo-router";
 
 import { useAuth } from "../utils/authProvider";
 
 export default function Index() {
-  const { signOut, user } = useAuth();
+  const { ready } = useAuth();
 
-  return (
-    <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-      <Text>id: {user?.id}!</Text>
-      <Text>
-        name: {user?.firstName} {user?.lastName}!
-      </Text>
-      <Text onPress={() => signOut()}>Sign Out</Text>
-    </View>
-  );
+  if (!ready) {
+    return null;
+  }
+
+  return <Redirect href="/home" />;
 }
