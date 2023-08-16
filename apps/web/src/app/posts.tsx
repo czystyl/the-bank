@@ -5,6 +5,7 @@ import { useUser } from "@clerk/nextjs";
 
 import { api } from "~/utils/api";
 import type { RouterOutputs } from "~/utils/api";
+import { Button } from "~/components/ui/button";
 
 export function CreatePostForm() {
   const context = api.useContext();
@@ -93,9 +94,10 @@ export function CreatePostForm() {
           {error.data.zodError.fieldErrors.content}
         </span>
       )}
-      <button type="submit" className="rounded bg-pink-400 p-2 font-bold">
+
+      <Button type="submit" variant="secondary">
         Create
-      </button>
+      </Button>
     </form>
   );
 }

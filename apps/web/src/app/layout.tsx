@@ -1,15 +1,16 @@
-import type { Metadata } from "next";
-import { Inter } from "next/font/google";
-
 import "~/styles/globals.css";
 
+import type { Metadata } from "next";
+import { Roboto_Mono } from "next/font/google";
 import { ClerkProvider } from "@clerk/nextjs";
 
+import { ThemeProvider } from "~/components/ThemeProvider";
+import { Toaster } from "~/components/ui/toaster";
 import { TRPCReactProvider } from "./providers";
 
-const fontSans = Inter({
+const roboto_mono = Roboto_Mono({
   subsets: ["latin"],
-  variable: "--font-sans",
+  variable: "--font-roboto-mono",
 });
 
 export const metadata: Metadata = {
@@ -25,12 +26,24 @@ export const metadata: Metadata = {
 
 export default function Layout(props: { children: React.ReactNode }) {
   return (
-    <ClerkProvider>
-      <html lang="en">
-        <body className={["font-sans", fontSans.variable].join(" ")}>
-          <TRPCReactProvider>{props.children}</TRPCReactProvider>
-        </body>
-      </html>
-    </ClerkProvider>
+    <html lang="en" className={`${roboto_mono.variable} font-mono`}>
+      <body>
+        <main>
+          <ClerkProvider>
+            <TRPCReactProvider>
+              <ThemeProvider
+                attribute="class"
+                defaultTheme="system"
+                enableSystem
+              >
+                {props.children}
+              </ThemeProvider>
+            </TRPCReactProvider>
+          </ClerkProvider>
+        </main>
+
+        <Toaster />
+      </body>
+    </html>
   );
 }
