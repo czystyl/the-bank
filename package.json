@@ -4,14 +4,13 @@
   "engines": {
     "node": ">=v18.16.1"
   },
-  "packageManager": "pnpm@8.6.7",
+  "packageManager": "pnpm@8.7.0",
   "scripts": {
     "build": "turbo build",
     "preinstall": "npx only-allow pnpm",
     "clean": "git clean -xdf node_modules",
     "clean:workspaces": "turbo clean",
-    "db:generate": "turbo db:generate",
-    "db:push": "turbo db:push db:generate",
+    "db:push": "turbo db:push",
     "db:studio": "pnpm -F db dev",
     "dev": "turbo dev --parallel",
     "format": "prettier --write \"**/*.{js,cjs,mjs,ts,tsx,md,json}\" --ignore-path .gitignore",

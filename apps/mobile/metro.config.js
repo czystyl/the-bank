@@ -8,6 +8,10 @@ const workspaceRoot = path.resolve(projectRoot, "../..");
 // Create the default Metro config
 const config = getDefaultConfig(projectRoot);
 
+// Expo 49 issue: default metro config needs to include "mjs"
+// https://github.com/expo/expo/issues/23180
+config.resolver.sourceExts.push("mjs");
+
 // 1. Watch all files within the monorepo
 config.watchFolders = [workspaceRoot];
 // 2. Let Metro know where to resolve packages and in what order

@@ -56,10 +56,10 @@ export function AuthProvider(props: { children: React.ReactNode }) {
 
     if (!user) {
       if (!isOnboardingCompleted) {
-        return router.replace("(auth)/onboarding");
+        return router.replace("/(auth)/onboarding");
       }
 
-      return router.replace("(auth)/sign-in");
+      return router.replace("/(auth)/sign-in");
     }
   }, [
     isLoaded,

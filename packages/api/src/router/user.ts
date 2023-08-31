@@ -1,16 +1,32 @@
-import { clerkClient } from "@clerk/nextjs";
+import { z } from "zod";
 
-import { createTRPCRouter, protectedProcedure, publicProcedure } from "../trpc";
+import { getAccountBalance } from "@bank-brew/db";
+
+import { createTRPCRouter, protectedProcedure } from "../trpc";
+import { getPaginatedClerkUsers } from "../userService";
 
 export const userRouter = createTRPCRouter({
-  users: publicProcedure.query(() => {
-    return clerkClient.users.getUserList();
+  balance: protectedProcedure.query(async ({ ctx }) => {
+    return getAccountBalance(ctx.auth.userId);
   }),
-  getSession: publicProcedure.query(({ ctx }) => {
-    return ctx.auth;
-  }),
-  getSecretMessage: protectedProcedure.query(() => {
-    // testing type validation of overridden next-auth Session in @bank-brew/auth package
-    return "you can see this secret message!";
-  }),
+  all: protectedProcedure
+    .input(
+      z.object({
+        limit: z.number().default(100),
+        offset: z.number().default(0),
+      }),
+    )
+    .query(async ({ input, ctx }) => {
+      try {
+        const users = await getPaginatedClerkUsers(input.limit, input.offset);
+
+        const filteredList = users.filter(
+          (user) => user.id !== ctx.auth.userId,
+        );
+
+        return filteredList;
+      } catch (error) {
+        return null;
+      }
+    }),
 });

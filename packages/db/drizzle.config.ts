@@ -6,7 +6,7 @@ export default {
   dbCredentials: {
     connectionString: env.DATABASE_URL,
   },
-  schema: "./schema.ts",
+  schema: "./src/schema.ts",
   out: "./drizzle",
   driver: "mysql2",
 } satisfies Config;

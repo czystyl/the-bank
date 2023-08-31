@@ -1,6 +1,7 @@
-import { appRouter, createInnerTRPCContext } from "@bank-brew/api";
 import { auth } from "@clerk/nextjs";
 import { fetchRequestHandler } from "@trpc/server/adapters/fetch";
+
+import { appRouter, createInnerTRPCContext } from "@bank-brew/api";
 
 export const runtime = "nodejs";
 
@@ -16,10 +17,9 @@ function setCorsHeaders(res: Response) {
 }
 
 export function OPTIONS() {
-  const response = new Response(null, {
-    status: 204,
-  });
+  const response = new Response(null, { status: 204 });
   setCorsHeaders(response);
+
   return response;
 }
 
@@ -36,6 +36,7 @@ async function handler(req: Request) {
   });
 
   setCorsHeaders(response);
+
   return response;
 }
 

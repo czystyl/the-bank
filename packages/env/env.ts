@@ -15,7 +15,16 @@ export const env = createEnv({
         z.literal("production"),
       ])
       .default("development"),
-    DATABASE_URL: z.string().min(1),
+    DATABASE_URL: z
+      .string()
+      .min(1)
+      .transform((value) => {
+        // Transform connections string to according: https://orm.drizzle.team/kit-docs/conf#headlessui-tabs-panel-:R3a6qb6:
+        return value.replace(
+          "sslaccept=strict",
+          'ssl={"rejectUnauthorized":true}',
+        );
+      }),
     CLERK_SECRET_KEY: z.string().min(1),
   },
   /*
