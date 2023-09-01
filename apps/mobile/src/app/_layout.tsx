@@ -53,14 +53,14 @@ export default function RootLayout() {
               <Stack.Screen
                 name="(auth)/onboarding"
                 options={{
-                  title: "Onboarding 🎉",
                   animation: "none",
+                  headerShown: false,
                 }}
               />
               <Stack.Screen
                 name="(auth)/sign-in"
                 options={{
-                  title: "Sign In",
+                  headerShown: false,
                   animation: "none",
                 }}
               />

@@ -1,7 +1,6 @@
 import "@total-typescript/ts-reset";
 
 import React, { createContext, useEffect, useState } from "react";
-import { Text } from "react-native";
 import {
   router,
   SplashScreen,
@@ -79,9 +78,6 @@ export function AuthProvider(props: { children: React.ReactNode }) {
         completeOnboarding,
       }}
     >
-      <Text className="text-xl">
-        Onboarding: {isOnboardingCompleted?.toString()}
-      </Text>
       {props.children}
     </AuthContext.Provider>
   );
