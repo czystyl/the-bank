@@ -1,3 +1,5 @@
+import "react-native-gesture-handler";
+
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import { Stack } from "expo-router";
 import * as SecureStore from "expo-secure-store";
@@ -24,6 +26,11 @@ const tokenCache = {
   },
 };
 
+const defaultOptions = {
+  headerShown: false,
+  // animation: "none" as const,
+};
+
 export default function RootLayout() {
   return (
     <ClerkProvider
@@ -36,34 +43,11 @@ export default function RootLayout() {
             <StatusBar />
 
             <Stack initialRouteName="index">
-              <Stack.Screen
-                name="index"
-                options={{
-                  title: "",
-                  animation: "none",
-                }}
-              />
-              <Stack.Screen
-                name="home"
-                options={{
-                  title: "Home",
-                  animation: "none",
-                }}
-              />
-              <Stack.Screen
-                name="(auth)/onboarding"
-                options={{
-                  animation: "none",
-                  headerShown: false,
-                }}
-              />
-              <Stack.Screen
-                name="(auth)/sign-in"
-                options={{
-                  headerShown: false,
-                  animation: "none",
-                }}
-              />
+              <Stack.Screen name="index" options={defaultOptions} />
+              <Stack.Screen name="transfer" options={{ headerShown: false }} />
+              <Stack.Screen name="home" options={defaultOptions} />
+              <Stack.Screen name="(auth)/onboarding" options={defaultOptions} />
+              <Stack.Screen name="(auth)/sign-in" options={defaultOptions} />
             </Stack>
           </SafeAreaProvider>
         </TRPCProvider>

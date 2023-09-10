@@ -17,6 +17,7 @@ interface AuthContextType {
   signOut: () => Promise<void>;
   user: UserResource | null;
   ready: boolean;
+  isNavigated: boolean;
   resetOnboarding: () => void;
   completeOnboarding: () => void;
 }
@@ -24,6 +25,8 @@ interface AuthContextType {
 const AuthContext = createContext<AuthContextType | null>(null);
 
 export function AuthProvider(props: { children: React.ReactNode }) {
+  const [isNavigated, setIsNavigated] = useState(false);
+
   const segments = useSegments();
   const rootNavigationState = useRootNavigationState();
   const {
@@ -43,6 +46,7 @@ export function AuthProvider(props: { children: React.ReactNode }) {
   }, [isLoaded, isOnboardingValueChecked]);
 
   useEffect(() => {
+    setIsNavigated(true);
     if (!rootNavigationState?.key || !isLoaded) {
       return;
     }
@@ -50,7 +54,7 @@ export function AuthProvider(props: { children: React.ReactNode }) {
     const isAuthSegment = segments[0] === "(auth)";
 
     if (user && isAuthSegment) {
-      return router.replace("/home");
+      return router.replace("/main");
     }
 
     if (!user) {
@@ -73,6 +77,7 @@ export function AuthProvider(props: { children: React.ReactNode }) {
       value={{
         signOut,
         user: user ?? null,
+        isNavigated,
         ready: isLoaded && isOnboardingValueChecked,
         resetOnboarding,
         completeOnboarding,

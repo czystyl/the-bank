@@ -1,11 +1,22 @@
 import { useCallback } from "react";
-import * as React from "react";
-import { Alert, Pressable, Text, View } from "react-native";
+import {
+  Alert,
+  ImageBackground,
+  Pressable,
+  StyleSheet,
+  Text,
+  View,
+} from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useOAuth } from "@clerk/clerk-expo";
 import { AntDesign } from "@expo/vector-icons";
 
+import { useAuth } from "~/utils/authProvider";
+import MainBackground from "../../images/welcome.png";
+
 export default function SignIn() {
+  const { resetOnboarding } = useAuth();
+
   const { startOAuthFlow: startGoogleAuthFlow } = useOAuth({
     strategy: "oauth_google",
     redirectUrl: "exp://",
@@ -58,32 +69,49 @@ export default function SignIn() {
   }, [startGithubAuthFlow]);
 
   return (
-    <SafeAreaView className="flex flex-1 justify-center bg-green-300 px-4">
-      <View className="flex flex-1 items-center justify-center gap-3">
-        <Pressable
-          onPress={onGithubLoginPress}
-          className="flex w-full flex-row items-center justify-center gap-x-2 rounded-md border bg-white p-3"
-        >
-          <AntDesign name="github" size={32} color="black" />
-          <Text className="text-xl font-bold">Continue with Github</Text>
-        </Pressable>
+    <ImageBackground source={MainBackground} style={styles.container}>
+      <SafeAreaView className="flex flex-1 justify-center px-4">
+        <Text className="mb-4 text-4xl text-slate-200">Continue with</Text>
+        <View className=" flex items-center justify-center gap-3">
+          <Pressable
+            onPress={onGithubLoginPress}
+            className="flex w-full flex-row items-center justify-center gap-x-2 rounded-md border bg-white p-3"
+          >
+            <AntDesign name="github" size={32} color="black" />
+            <Text className="text-xl font-bold">Continue with Github</Text>
+          </Pressable>
 
-        <Pressable
-          onPress={onAppleLoginPress}
-          className="flex w-full flex-row items-center justify-center gap-x-2 rounded-md border bg-white p-3"
-        >
-          <AntDesign name="apple1" size={32} color="black" />
-          <Text className="text-xl font-bold">Continue with Apple</Text>
-        </Pressable>
+          <Pressable
+            onPress={onAppleLoginPress}
+            className="flex w-full flex-row items-center justify-center gap-x-2 rounded-md border bg-white p-3"
+          >
+            <AntDesign name="apple1" size={32} color="black" />
+            <Text className="text-xl font-bold">Continue with Apple</Text>
+          </Pressable>
 
-        <Pressable
-          onPress={onGoogleLoginPress}
-          className="flex w-full flex-row items-center justify-center gap-x-2 rounded-md border bg-white p-3"
-        >
-          <AntDesign name="google" size={32} color="black" />
-          <Text className="text-xl font-bold">Continue with Google</Text>
-        </Pressable>
-      </View>
-    </SafeAreaView>
+          <Pressable
+            onPress={onGoogleLoginPress}
+            className="mb-10 flex w-full flex-row items-center justify-center gap-x-2 rounded-md border bg-white p-3"
+          >
+            <AntDesign name="google" size={32} color="black" />
+            <Text className="text-xl font-bold">Continue with Google</Text>
+          </Pressable>
+
+          <Pressable
+            onPress={resetOnboarding}
+            className="flex w-full flex-row items-center justify-center gap-x-2 rounded-md border bg-neutral-500 p-3"
+          >
+            <AntDesign name="banckward" size={10} color="black" />
+            <Text className="font-bold">Back to Onboarding</Text>
+          </Pressable>
+        </View>
+      </SafeAreaView>
+    </ImageBackground>
   );
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
+});
