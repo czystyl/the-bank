@@ -1,14 +1,10 @@
-import React from "react";
-import {
-  ActivityIndicator,
-  Pressable,
-  ScrollView,
-  Text,
-  View,
-} from "react-native";
+import { ActivityIndicator, Pressable, ScrollView, View } from "react-native";
+import Animated from "react-native-reanimated";
+import { router } from "expo-router";
 
 import { api } from "~/utils/api";
 import { useAuth } from "~/utils/authProvider";
+import Typography from "~/components/Typography";
 
 export default function Transactions() {
   const { user } = useAuth();
@@ -17,26 +13,42 @@ export default function Transactions() {
 
   return (
     <View>
-      <ScrollView
-        contentContainerStyle={{
-          marginHorizontal: 10,
-        }}
-      >
+      <ScrollView className="mx-4 flex gap-y-1">
         {transactionsResult.isLoading || transactionsResult.isFetching ? (
           <ActivityIndicator size={"large"} />
         ) : null}
         {transactionsResult.data?.map((transaction) => (
           <Pressable
+            className="flex flex-row gap-3"
             key={transaction.id}
-            className="flex flex-row items-center justify-between"
+            onPress={() => {
+              router.push(`/transaction/${transaction.uuid}`);
+            }}
           >
-            <Text className="text-lg">{transaction.id}</Text>
-            <Text className="text-lg">{transaction.title}</Text>
-            <Text className="text-lg">{transaction.value}</Text>
-            <Text className="text-lg">{transaction.balance}</Text>
-            <Text>
-              {transaction.recipientUserId === user?.id ? "RECEIVED" : "SENT"}
-            </Text>
+            <Animated.Image
+              source={{ uri: user?.imageUrl }}
+              sharedTransitionTag={transaction.uuid ?? undefined}
+              style={{
+                height: 50,
+                width: 50,
+                borderRadius: 50,
+              }}
+            />
+
+            <View className="flex flex-1 justify-center">
+              <Typography font="bold">John Doe</Typography>
+              <Typography numberOfLines={1}>{transaction.title}</Typography>
+              <Typography font="italic">{new Date().toDateString()}</Typography>
+            </View>
+
+            <View className="flex  items-end justify-center">
+              <Typography classNames="text-xl" font="bold">
+                ${transaction.value.toFixed(2)}
+              </Typography>
+              <Typography classNames="text-" font="italic">
+                ${transaction.balance.toFixed(2)}
+              </Typography>
+            </View>
           </Pressable>
         ))}
       </ScrollView>

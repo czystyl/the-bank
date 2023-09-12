@@ -8,6 +8,7 @@ export default function AppLayout() {
         name="index"
         options={{
           title: "Home",
+          headerShown: false,
           tabBarIcon: ({ color, size }) => (
             <AntDesign name="home" size={size} color={color} />
           ),
