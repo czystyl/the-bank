@@ -62,28 +62,17 @@ export default function RootLayout() {
       <AuthProvider>
         <TRPCProvider>
           <SafeAreaProvider>
-            <StatusBar />
-
+            <StatusBar style="dark" />
             <Stack
-              initialRouteName="index"
               screenOptions={{
-                headerTintColor: "#fff",
-                headerTitleStyle: {
-                  fontWeight: "bold",
-                },
-                gestureEnabled: true,
+                headerShown: false,
+                // contentStyle: {
+                //   backgroundColor: "red",
+                // },
               }}
             >
-              <Stack.Screen
-                name="transaction/[id]"
-                options={{
-                  title: "Transaction",
-                  headerShown: true,
-                  presentation: "containedModal",
-                  gestureDirection: "vertical",
-                  gestureEnabled: true,
-                }}
-              />
+              <Stack.Screen name="index" />
+              {/* <Stack.Screen name="transfer" /> */}
             </Stack>
           </SafeAreaProvider>
         </TRPCProvider>

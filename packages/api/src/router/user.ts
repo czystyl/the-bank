@@ -1,9 +1,8 @@
 import { z } from "zod";
 
-import { getAccountBalance } from "@bank-brew/db";
+import { getAccountBalance, getUsers } from "@bank-brew/db";
 
 import { createTRPCRouter, protectedProcedure } from "../trpc";
-import { getPaginatedClerkUsers } from "../userService";
 
 export const userRouter = createTRPCRouter({
   balance: protectedProcedure.query(async ({ ctx }) => {
@@ -18,14 +17,15 @@ export const userRouter = createTRPCRouter({
     )
     .query(async ({ input, ctx }) => {
       try {
-        const users = await getPaginatedClerkUsers(input.limit, input.offset);
+        const users = await getUsers();
 
         const filteredList = users.filter(
-          (user) => user.id !== ctx.auth.userId,
+          (user) => user.clerkId !== ctx.auth.userId,
         );
 
         return filteredList;
       } catch (error) {
+        console.log(error);
         return null;
       }
     }),

@@ -1,14 +1,17 @@
 import { Tabs } from "expo-router/tabs";
 import { AntDesign } from "@expo/vector-icons";
 
-export default function AppLayout() {
+export default function homeLayout() {
   return (
-    <Tabs>
+    <Tabs
+      screenOptions={{
+        headerShown: false,
+      }}
+    >
       <Tabs.Screen
         name="index"
         options={{
           title: "Home",
-          headerShown: false,
           tabBarIcon: ({ color, size }) => (
             <AntDesign name="home" size={size} color={color} />
           ),

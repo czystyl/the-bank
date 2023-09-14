@@ -25,6 +25,7 @@
     "@trpc/react-query": "^10.34.0",
     "@trpc/server": "^10.34.0",
     "clsx": "^2.0.0",
+    "dayjs": "^1.11.9",
     "expo": "^49.0.3",
     "expo-auth-session": "~5.0.2",
     "expo-constants": "~14.4.2",

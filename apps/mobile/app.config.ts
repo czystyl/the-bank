@@ -7,11 +7,11 @@ const defineConfig = (): ExpoConfig => ({
   version: "1.0.0",
   orientation: "portrait",
   icon: "./assets/icon.png",
-  userInterfaceStyle: "dark",
+  userInterfaceStyle: "automatic",
   splash: {
     image: "./assets/icon.png",
     resizeMode: "contain",
-    backgroundColor: "#3d3d3d",
+    backgroundColor: "#fff",
   },
   updates: {
     fallbackToCacheTimeout: 0,

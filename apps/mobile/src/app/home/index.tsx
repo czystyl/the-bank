@@ -1,4 +1,4 @@
-import { Image, Pressable, Text, View } from "react-native";
+import { Image, Pressable, View } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { router } from "expo-router";
@@ -23,10 +23,7 @@ export default function HomeScreen() {
   });
 
   return (
-    <SafeAreaView
-      className="flex flex-1 justify-between bg-gray-50 px-4"
-      edges={["top"]}
-    >
+    <SafeAreaView className="flex flex-1 justify-between px-4" edges={["top"]}>
       <View className="mt-4 flex flex-row items-center">
         <Image
           source={{ uri: user?.imageUrl }}

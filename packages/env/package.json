@@ -3,7 +3,8 @@
   "version": "0.1.0",
   "main": "./env.ts",
   "types": "./env.ts",
-  "license": "MIT",
+  "private": true,
+  "type": "module",
   "scripts": {
     "clean": "rm -rf .turbo node_modules",
     "type-check": "tsc --noEmit",

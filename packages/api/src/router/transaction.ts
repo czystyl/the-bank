@@ -1,13 +1,17 @@
 import { TRPCError } from "@trpc/server";
 import { z } from "zod";
 
-import { addFounds, createTransaction, getTransactions } from "@bank-brew/db";
+import {
+  addFounds,
+  createTransaction,
+  getTransactions,
+  getUser,
+} from "@bank-brew/db";
 
 import { createTRPCRouter, protectedProcedure } from "../trpc";
-import { getClerkUser } from "../userService";
 
 export const transactionRouter = createTRPCRouter({
-  all: protectedProcedure.query(async ({ ctx }) => {
+  all: protectedProcedure.query(({ ctx }) => {
     return getTransactions(ctx.auth.userId);
   }),
 
@@ -35,7 +39,7 @@ export const transactionRouter = createTRPCRouter({
       }),
     )
     .mutation(async ({ ctx, input }) => {
-      const user = await getClerkUser(input.recipientUserId);
+      const user = await getUser(input.recipientUserId);
 
       if (!user) {
         throw new TRPCError({
@@ -49,7 +53,7 @@ export const transactionRouter = createTRPCRouter({
           title: input.title,
           value: input.value,
           senderUserId: ctx.auth.userId,
-          recipientUserId: user.id,
+          recipientUserId: user.clerkId,
         });
       } catch (error) {
         throw new TRPCError({

@@ -1,7 +1,4 @@
 packages:
-  - apps/web
-  - apps/mobile
-  - packages/api
-  - packages/db
-  - packages/env
+  - "apps/*"
+  - "packages/*"
   - packages/config/*

@@ -1,0 +1,28 @@
+{
+  "name": "@bank-brew/scripts",
+  "version": "0.1.0",
+  "main": "./index.ts",
+  "types": "./index.ts",
+  "type": "module",
+  "private": "true",
+  "engines": {
+    "node": ">=v18.16.1"
+  },
+  "scripts": {
+    "dev": "pnpm with-env tsx watch ./src/scripts.ts",
+    "seed:users": "pnpm with-env tsx ./src/syncClerkUsers.ts",
+    "seed:fake-users": "pnpm with-env tsx ./src/seedFakeUsers.ts",
+    "with-env": "dotenv -e ../../.env --"
+  },
+  "dependencies": {
+    "@bank-brew/db": "*",
+    "@bank-brew/env": "*",
+    "@clerk/clerk-sdk-node": "^4.12.5",
+    "@faker-js/faker": "^8.0.2"
+  },
+  "devDependencies": {
+    "dotenv-cli": "^7.2.1",
+    "tsx": "^3.12.9",
+    "typescript": "^5.1.6"
+  }
+}

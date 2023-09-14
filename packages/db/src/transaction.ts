@@ -1,7 +1,8 @@
 import { and, desc, eq, InferInsertModel, or, sql } from "drizzle-orm";
+import { alias } from "drizzle-orm/mysql-core";
 
 import { db } from "./db";
-import { transactions } from "./schema";
+import { transactions, users } from "./schema";
 
 export function getTransaction(uuid: string) {
   return db.select().from(transactions).where(eq(transactions.uuid, uuid));
@@ -14,11 +15,14 @@ type CreateTransactionInput = Pick<
   "title" | "value" | "recipientUserId" | "senderUserId"
 >;
 
-export async function createTransaction(data: CreateTransactionInput) {
+export async function createTransaction(
+  data: CreateTransactionInput,
+  skipValidation = false,
+) {
   const senderAccountBalance = await getAccountBalance(data.senderUserId);
   const recipientAccountBalance = await getAccountBalance(data.recipientUserId);
 
-  if (senderAccountBalance < data.value) {
+  if (senderAccountBalance < data.value && !skipValidation) {
     throw new Error("Not enough funds!");
   }
 
@@ -74,21 +78,34 @@ export async function getAccountBalance(clerkUserID: string) {
 }
 
 export function getTransactions(clerkUserID: string) {
+  const senderAlias = alias(users, "sender");
+  const recipientAlias = alias(users, "recipient");
+  const transactionAlias = alias(transactions, "transaction");
+
   return db
     .select()
-    .from(transactions)
+    .from(transactionAlias)
+    .leftJoin(
+      senderAlias,
+      eq(transactionAlias.senderUserId, senderAlias.clerkId),
+    )
+    .leftJoin(
+      recipientAlias,
+      eq(transactionAlias.recipientUserId, recipientAlias.clerkId),
+    )
+
     .where(
       or(
         and(
-          eq(transactions.senderUserId, clerkUserID),
-          eq(transactions.type, "OUTGOING"),
+          eq(transactionAlias.senderUserId, clerkUserID),
+          eq(transactionAlias.type, "OUTGOING"),
         ),
 
         and(
-          eq(transactions.recipientUserId, clerkUserID),
-          eq(transactions.type, "INCOME"),
+          eq(transactionAlias.recipientUserId, clerkUserID),
+          eq(transactionAlias.type, "INCOME"),
         ),
       ),
     )
-    .orderBy(desc(transactions.id));
+    .orderBy(desc(transactionAlias.id));
 }

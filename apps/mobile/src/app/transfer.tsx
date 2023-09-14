@@ -38,7 +38,7 @@ export default function Transactions() {
           <Pressable
             key={user.id}
             className="m-4 flex items-center"
-            onPress={() => setSelectedUser(user.id)}
+            onPress={() => setSelectedUser("user.id")}
           >
             <Image
               source={{ uri: user.imageUrl, height: 50, width: 50 }}

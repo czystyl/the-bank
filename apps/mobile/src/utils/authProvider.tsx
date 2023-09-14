@@ -11,7 +11,7 @@ import { useAuth as useClerkAuth, useUser } from "@clerk/clerk-expo";
 import type { UserResource } from "@clerk/types";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
-SplashScreen.preventAutoHideAsync();
+// SplashScreen.preventAutoHideAsync();
 
 interface AuthContextType {
   signOut: () => Promise<void>;
@@ -54,7 +54,7 @@ export function AuthProvider(props: { children: React.ReactNode }) {
     const isAuthSegment = segments[0] === "(auth)";
 
     if (user && isAuthSegment) {
-      return router.replace("/main");
+      return;
     }
 
     if (!user) {
