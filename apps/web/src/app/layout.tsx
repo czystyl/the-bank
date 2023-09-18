@@ -28,20 +28,13 @@ export default function Layout(props: { children: React.ReactNode }) {
   return (
     <html lang="en" className={`${roboto_mono.variable} font-mono`}>
       <body>
-        <main>
-          <ClerkProvider>
-            <TRPCReactProvider>
-              <ThemeProvider
-                attribute="class"
-                defaultTheme="system"
-                enableSystem
-              >
-                {props.children}
-              </ThemeProvider>
-            </TRPCReactProvider>
-          </ClerkProvider>
-        </main>
-
+        <ClerkProvider>
+          <TRPCReactProvider>
+            <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+              {props.children}
+            </ThemeProvider>
+          </TRPCReactProvider>
+        </ClerkProvider>
         <Toaster />
       </body>
     </html>
