@@ -11,7 +11,7 @@ export default function Page() {
           Today, tomorrow in the future
         </h2>
       </div>
-      <div className="flex flex-1 items-center justify-center md:border-l-2">
+      <div className="flex flex-1 items-center justify-center border-gray-400 md:border-l-2">
         <SignUp />
       </div>
     </main>
