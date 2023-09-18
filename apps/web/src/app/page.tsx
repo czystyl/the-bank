@@ -1,4 +1,7 @@
-import { UserButton } from "@clerk/nextjs";
+import Link from "next/link";
+import { SignedIn, SignedOut, SignInButton, UserButton } from "@clerk/nextjs";
+
+import { Button } from "~/components/ui/button";
 
 export default function HomePage() {
   return (
@@ -14,16 +17,30 @@ export default function HomePage() {
       </div>
 
       <div className="flex flex-1 items-center justify-center border-gray-400 md:border-l-2">
-        <UserButton
-          showName
-          appearance={{
-            elements: {
-              avatarBox: "h-20 w-20",
-              userButtonBox: "flex flex-col-reverse ",
-              userButtonOuterIdentifier: "text-2xl text-gray-300",
-            },
-          }}
-        />
+        <SignedIn>
+          <div className="flex flex-col gap-4">
+            <UserButton
+              showName
+              afterSignOutUrl="/"
+              appearance={{
+                elements: {
+                  avatarBox: "h-20 w-20",
+                  userButtonBox: "flex flex-col-reverse ",
+                  userButtonOuterIdentifier: "text-2xl text-gray-300",
+                },
+              }}
+            />
+            <Link href="/dashboard" className="w-full">
+              <Button className="w-full">Go to dashboard</Button>
+            </Link>
+          </div>
+        </SignedIn>
+
+        <SignedOut>
+          <SignInButton>
+            <Button>Sign in</Button>
+          </SignInButton>
+        </SignedOut>
       </div>
     </main>
   );
