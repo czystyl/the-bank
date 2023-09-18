@@ -1,11 +1,10 @@
-import { Pressable, StyleSheet, View } from "react-native";
+import { Pressable, StyleSheet, Text, View } from "react-native";
 import Animated from "react-native-reanimated";
 import { router } from "expo-router";
 import dayjs from "dayjs";
 
 import type { RouterOutputs } from "~/utils/api";
 import { formatTransactionValue } from "~/utils/formatTransactionValue";
-import Typography from "./Typography";
 
 type TransactionResult = RouterOutputs["transaction"]["all"][number];
 
@@ -29,7 +28,7 @@ export default function TransactionItem({
       key={transaction.id}
       onPress={() => {
         router.push({
-          pathname: `/home/transactions/${transaction.uuid}`,
+          pathname: `/(home)/transactions/${transaction.uuid}`,
           params: { senderTransitionTag, recipientTransitionTag },
         });
       }}
@@ -60,29 +59,29 @@ export default function TransactionItem({
         </View>
 
         <View className="ml-2 flex flex-1 justify-center">
-          <Typography classNames="text-lg" font="bold" numberOfLines={1}>
+          <Text className="text-lg font-bold" numberOfLines={1}>
             {transaction.type === "INCOME"
               ? `${sender?.firstName} ${sender?.lastName}`
               : `${recipient?.firstName} ${recipient?.lastName}`}
-          </Typography>
+          </Text>
 
-          <Typography numberOfLines={2} classNames="text-md" font="medium">
+          <Text numberOfLines={2} className="text-md">
             {transaction.title}
-          </Typography>
+          </Text>
 
-          <Typography classNames="pt-1 text-xs" font="italic">
+          <Text className="pt-1 text-xs italic">
             {dayjs(transaction.createdAt).format("DD/MM/YYYY ")}
-          </Typography>
+          </Text>
         </View>
 
         <View className="flex items-end justify-center pl-1">
-          <Typography classNames="text-lg" font="bold">
+          <Text className="text-lg font-bold">
             {formatTransactionValue(transaction.value, transaction.type)}
-          </Typography>
+          </Text>
 
-          <Typography classNames="text-sm text-gray-600" font="italic">
+          <Text className="text-sm italic text-gray-600">
             {transaction.balance.toFixed(2)} $
-          </Typography>
+          </Text>
         </View>
       </View>
     </Pressable>

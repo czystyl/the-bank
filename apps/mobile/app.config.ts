@@ -11,7 +11,7 @@ const defineConfig = (): ExpoConfig => ({
   splash: {
     image: "./assets/icon.png",
     resizeMode: "contain",
-    backgroundColor: "#fff",
+    backgroundColor: "#3d3d3d",
   },
   updates: {
     fallbackToCacheTimeout: 0,

@@ -1,6 +1,6 @@
 import "@total-typescript/ts-reset";
 
-import React, { createContext, useEffect, useState } from "react";
+import React, { createContext, use, useEffect, useState } from "react";
 import {
   router,
   SplashScreen,
@@ -11,13 +11,12 @@ import { useAuth as useClerkAuth, useUser } from "@clerk/clerk-expo";
 import type { UserResource } from "@clerk/types";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
-// SplashScreen.preventAutoHideAsync();
+SplashScreen.preventAutoHideAsync();
 
 interface AuthContextType {
   signOut: () => Promise<void>;
   user: UserResource | null;
   ready: boolean;
-  isNavigated: boolean;
   resetOnboarding: () => void;
   completeOnboarding: () => void;
 }
@@ -25,7 +24,7 @@ interface AuthContextType {
 const AuthContext = createContext<AuthContextType | null>(null);
 
 export function AuthProvider(props: { children: React.ReactNode }) {
-  const [isNavigated, setIsNavigated] = useState(false);
+  const [navigated, setNavigated] = useState(false);
 
   const segments = useSegments();
   const rootNavigationState = useRootNavigationState();
@@ -40,21 +39,22 @@ export function AuthProvider(props: { children: React.ReactNode }) {
   const { isLoaded, signOut } = useClerkAuth();
 
   useEffect(() => {
-    if (isLoaded && isOnboardingValueChecked) {
-      SplashScreen.hideAsync();
+    if (navigated) {
+      void SplashScreen.hideAsync();
     }
-  }, [isLoaded, isOnboardingValueChecked]);
+  }, [navigated]);
 
   useEffect(() => {
-    setIsNavigated(true);
-    if (!rootNavigationState?.key || !isLoaded) {
+    if (!rootNavigationState?.key || !isLoaded || !isOnboardingValueChecked) {
       return;
     }
 
     const isAuthSegment = segments[0] === "(auth)";
 
+    setNavigated(true);
+
     if (user && isAuthSegment) {
-      return;
+      return router.replace("/(home)/");
     }
 
     if (!user) {
@@ -70,6 +70,7 @@ export function AuthProvider(props: { children: React.ReactNode }) {
     segments,
     user,
     isOnboardingCompleted,
+    isOnboardingValueChecked,
   ]);
 
   return (
@@ -77,7 +78,6 @@ export function AuthProvider(props: { children: React.ReactNode }) {
       value={{
         signOut,
         user: user ?? null,
-        isNavigated,
         ready: isLoaded && isOnboardingValueChecked,
         resetOnboarding,
         completeOnboarding,

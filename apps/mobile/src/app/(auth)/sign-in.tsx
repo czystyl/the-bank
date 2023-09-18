@@ -1,13 +1,7 @@
 import { useCallback } from "react";
-import {
-  Alert,
-  ImageBackground,
-  Pressable,
-  StyleSheet,
-  Text,
-  View,
-} from "react-native";
+import { Alert, Pressable, StyleSheet, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { Image } from "expo-image";
 import { useOAuth } from "@clerk/clerk-expo";
 import { AntDesign } from "@expo/vector-icons";
 
@@ -69,7 +63,8 @@ export default function SignIn() {
   }, [startGithubAuthFlow]);
 
   return (
-    <ImageBackground source={MainBackground} style={styles.container}>
+    <>
+      <Image source={MainBackground} style={StyleSheet.absoluteFillObject} />
       <SafeAreaView className="flex flex-1 justify-center px-4">
         <Text className="mb-4 text-4xl text-slate-200">Continue with</Text>
         <View className=" flex items-center justify-center gap-3">
@@ -106,12 +101,6 @@ export default function SignIn() {
           </Pressable>
         </View>
       </SafeAreaView>
-    </ImageBackground>
+    </>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-});

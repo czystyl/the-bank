@@ -77,7 +77,7 @@ export async function getAccountBalance(clerkUserID: string) {
   return lastTransactionDetails[0]?.balance ?? 0;
 }
 
-export function getTransactions(clerkUserID: string) {
+export function getTransactions(userId: string) {
   const senderAlias = alias(users, "sender");
   const recipientAlias = alias(users, "recipient");
   const transactionAlias = alias(transactions, "transaction");
@@ -97,15 +97,16 @@ export function getTransactions(clerkUserID: string) {
     .where(
       or(
         and(
-          eq(transactionAlias.senderUserId, clerkUserID),
+          eq(transactionAlias.senderUserId, userId),
           eq(transactionAlias.type, "OUTGOING"),
         ),
 
         and(
-          eq(transactionAlias.recipientUserId, clerkUserID),
+          eq(transactionAlias.recipientUserId, userId),
           eq(transactionAlias.type, "INCOME"),
         ),
       ),
     )
-    .orderBy(desc(transactionAlias.id));
+    .orderBy(desc(transactionAlias.id))
+    .limit(0);
 }

@@ -1,10 +1,4 @@
-import {
-  ImageBackground,
-  Pressable,
-  StyleSheet,
-  Text,
-  View,
-} from "react-native";
+import { Pressable, StyleSheet, Text, View } from "react-native";
 import Animated, {
   useAnimatedScrollHandler,
   useAnimatedStyle,
@@ -12,6 +6,7 @@ import Animated, {
   withSpring,
 } from "react-native-reanimated";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { Image } from "expo-image";
 import { AntDesign } from "@expo/vector-icons";
 
 import { useAuth } from "~/utils/authProvider";
@@ -36,7 +31,9 @@ export default function Onboarding() {
   });
 
   return (
-    <ImageBackground source={MainBackground} style={styles.container}>
+    <>
+      <Image source={MainBackground} style={StyleSheet.absoluteFillObject} />
+
       <SafeAreaView className="flex-1">
         <Pressable
           className="absolute right-6 top-20 z-10"
@@ -137,14 +134,11 @@ export default function Onboarding() {
           <AntDesign name="right" size={10} color="white" />
         </Pressable>
       </SafeAreaView>
-    </ImageBackground>
+    </>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
   indicator: {
     position: "absolute",
     height: 4,

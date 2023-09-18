@@ -1,7 +1,6 @@
 import "react-native-gesture-handler";
 
 import { SafeAreaProvider } from "react-native-safe-area-context";
-import { useFonts } from "expo-font";
 import { Stack } from "expo-router";
 import * as SecureStore from "expo-secure-store";
 import { StatusBar } from "expo-status-bar";
@@ -33,27 +32,6 @@ const tokenCache = {
 };
 
 export default function RootLayout() {
-  const [loaded, error] = useFonts({
-    "RobotoMono-Bold": require("../../assets/fonts/RobotoMono-Bold.ttf"),
-    "RobotoMono-BoldItalic": require("../../assets/fonts/RobotoMono-BoldItalic.ttf"),
-    "RobotoMono-Italic": require("../../assets/fonts/RobotoMono-Italic.ttf"),
-    "RobotoMono-ExtraLight": require("../../assets/fonts/RobotoMono-ExtraLight.ttf"),
-    "RobotoMono-ExtraLightItalic": require("../../assets/fonts/RobotoMono-ExtraLightItalic.ttf"),
-    "RobotoMono-Light": require("../../assets/fonts/RobotoMono-Light.ttf"),
-    "RobotoMono-LightItalic": require("../../assets/fonts/RobotoMono-LightItalic.ttf"),
-    "RobotoMono-Medium": require("../../assets/fonts/RobotoMono-Medium.ttf"),
-    "RobotoMono-MediumItalic": require("../../assets/fonts/RobotoMono-MediumItalic.ttf"),
-    "RobotoMono-Regular": require("../../assets/fonts/RobotoMono-Regular.ttf"),
-    "RobotoMono-SemiBold": require("../../assets/fonts/RobotoMono-SemiBold.ttf"),
-    "RobotoMono-SemiBoldItalic": require("../../assets/fonts/RobotoMono-SemiBoldItalic.ttf"),
-    "RobotoMono-Thin": require("../../assets/fonts/RobotoMono-Thin.ttf"),
-    "RobotoMono-ThinItalic": require("../../assets/fonts/RobotoMono-ThinItalic.ttf"),
-  });
-
-  if (!loaded) {
-    return null;
-  }
-
   return (
     <ClerkProvider
       tokenCache={tokenCache}
@@ -66,13 +44,31 @@ export default function RootLayout() {
             <Stack
               screenOptions={{
                 headerShown: false,
-                // contentStyle: {
-                //   backgroundColor: "red",
-                // },
+                contentStyle: {
+                  backgroundColor: "#3d3d3d",
+                },
               }}
             >
-              <Stack.Screen name="index" />
-              {/* <Stack.Screen name="transfer" /> */}
+              <Stack.Screen
+                name="transfer"
+                options={{
+                  headerShown: true,
+                  headerTitle: "Transfer money",
+                }}
+              />
+              <Stack.Screen name="(home)" />
+              <Stack.Screen
+                name="(auth)/onboarding"
+                options={{
+                  animation: "none",
+                }}
+              />
+              <Stack.Screen
+                name="(auth)/sign-in"
+                options={{
+                  animation: "none",
+                }}
+              />
             </Stack>
           </SafeAreaProvider>
         </TRPCProvider>

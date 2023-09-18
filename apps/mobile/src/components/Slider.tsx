@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect } from "react";
 import { Dimensions, ImageBackground, StyleSheet } from "react-native";
 import { Gesture, GestureDetector } from "react-native-gesture-handler";
 import Animated, {
@@ -28,12 +28,29 @@ const CONFIRM_COLOR = "#16a34a";
 const ARROW_START_COLOR = "#334155";
 const ARROW_END_COLOR = "#cbd5e1";
 
-export default function Slider() {
-  const [_isConfirmed, setIsConfirmed] = useState(false);
+interface PropsSliderValue {
+  onSlideConfirm: () => void;
+  children?: React.ReactNode;
+  reset: boolean;
+  sliderEnabled?: boolean;
+}
 
+export default function Slider({
+  children,
+  onSlideConfirm,
+  reset,
+  sliderEnabled,
+}: PropsSliderValue) {
   const isPressed = useSharedValue(false);
   const offsetX = useSharedValue(0);
   const startX = useSharedValue(0);
+
+  useEffect(() => {
+    if (reset) {
+      startX.value = 0;
+      offsetX.value = withTiming(0);
+    }
+  }, [offsetX, reset, startX]);
 
   const gesture = Gesture.Pan()
     .onBegin(() => {
@@ -41,11 +58,9 @@ export default function Slider() {
     })
     .onUpdate((e) => {
       const newX = e.translationX + startX.value;
-
       const isOnEnd = startX.value === END_POINT;
 
-      if (newX > 0 && newX < END_POINT && !isOnEnd) {
-        runOnJS(setIsConfirmed)(false);
+      if (newX > 0 && newX < END_POINT && !isOnEnd && sliderEnabled) {
         offsetX.value = e.translationX + startX.value;
       }
     })
@@ -53,11 +68,11 @@ export default function Slider() {
       if (offsetX.value > END_POINT * CONFIRM_THRESHOLD) {
         startX.value = END_POINT;
         offsetX.value = withTiming(END_POINT);
-        runOnJS(setIsConfirmed)(true);
+
+        runOnJS(onSlideConfirm)();
       } else {
         startX.value = 0;
         offsetX.value = withTiming(0);
-        runOnJS(setIsConfirmed)(false);
       }
     })
     .onFinalize(() => {
@@ -149,7 +164,7 @@ export default function Slider() {
       duration: 200,
     });
 
-    const top = withSpring(offsetX.value === END_POINT ? "40%" : "0%");
+    const top = withSpring(offsetX.value === END_POINT ? "35%" : "0%");
 
     return {
       left: offsetX.value - SLIDE_POINT_SIZE * 2.5,
@@ -198,38 +213,26 @@ export default function Slider() {
             />
           </Animated.View>
         </GestureDetector>
-        <Animated.Text style={[styles.textPosition, slideTextStyle]}>
-          🚀 SLIDE TO SEND{" "}
-          <Animated.Text style={styles.confirm}>$1 000</Animated.Text>
-        </Animated.Text>
+        <Animated.View style={[slideTextStyle, styles.textContainer]}>
+          {children}
+        </Animated.View>
 
         <Animated.Text
-          style={[styles.textPosition, styles.confirm, releaseTextStyle]}
+          style={[
+            styles.textContainer,
+            styles.textPosition,
+            styles.confirm,
+            releaseTextStyle,
+          ]}
         >
           🫵 Release
         </Animated.Text>
-        <Animated.Text
-          style={[
-            styles.textPosition,
-            { position: "absolute" },
-            confirmTextStyle,
-          ]}
-        >
+        {/* </Animated.View> */}
+
+        <Animated.Text style={[styles.textPosition, confirmTextStyle]}>
           🎉 Confirmed!
         </Animated.Text>
       </ImageBackground>
-      {/* <Pressable
-        className={`mt-4 ${isConfirmed ? "bg-green-800" : "bg-green-300"} p-4`}
-        onPress={() => {
-          setIsConfirmed(false);
-          offsetX.value = withTiming(0);
-          startX.value = withTiming(0);
-        }}
-      >
-        <Text>
-          {isConfirmed ? "Confirmed - press to reset" : "Slide to confirm"}
-        </Text>
-      </Pressable> */}
     </>
   );
 }
@@ -256,9 +259,11 @@ const styles = StyleSheet.create({
     gap: -10,
     backgroundColor: "#e5e5e5",
   },
-  textPosition: {
+  textContainer: {
     position: "absolute",
     top: "40%",
+  },
+  textPosition: {
     fontSize: 20,
     fontWeight: "bold",
     color: "#fbfbfb",

@@ -7,14 +7,6 @@ export default function Transactions() {
   const { data, isLoading, isFetching, refetch } =
     api.transaction.all.useQuery();
 
-  if (isLoading) {
-    return (
-      <View className="h-full w-full flex-1 justify-center">
-        <ActivityIndicator size="large" color="green" />
-      </View>
-    );
-  }
-
   return (
     <>
       <FlatList
@@ -33,6 +25,12 @@ export default function Transactions() {
           );
         }}
       />
+
+      {isLoading && !data && (
+        <View className="absolute h-full w-full flex-1 justify-center ">
+          <ActivityIndicator size="large" color="green" />
+        </View>
+      )}
     </>
   );
 }

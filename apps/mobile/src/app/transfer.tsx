@@ -1,28 +1,34 @@
-import React, { useState } from "react";
+import { useMemo, useState } from "react";
 import {
   ActivityIndicator,
   Alert,
-  Image,
+  KeyboardAvoidingView,
+  Platform,
   Pressable,
   ScrollView,
+  StyleSheet,
   Text,
   TextInput,
   View,
 } from "react-native";
+import { Image } from "expo-image";
 import { router } from "expo-router";
 
 import { api } from "~/utils/api";
+import { cn } from "~/utils/cn";
 import Slider from "~/components/Slider";
 
 export default function Transactions() {
-  const [title, setTitle] = useState("Hello world");
-  const [value, setValue] = useState(1);
+  const [title, setTitle] = useState("");
+  const [transferValue, setTransferValue] = useState("");
   const [selectedUser, setSelectedUser] = useState<string | null>(null);
+
   const apiUtils = api.useContext();
+  const { data: userBalance } = api.user.balance.useQuery();
 
-  const userResult = api.user.all.useQuery({ limit: 10, offset: 0 });
+  const userResult = api.user.all.useQuery();
 
-  const { mutate, isLoading, error } = api.transaction.create.useMutation({
+  const { mutate, error } = api.transaction.create.useMutation({
     onSuccess: () => {
       void apiUtils.user.balance.refetch();
       void apiUtils.transaction.all.refetch();
@@ -30,61 +36,166 @@ export default function Transactions() {
     },
   });
 
+  const transactionValue = Number.isNaN(transferValue)
+    ? 0
+    : Number(transferValue);
+  const balance = userBalance ?? 0;
+  const balanceAfterTransaction = balance - transactionValue;
+
+  const errorMessage = useMemo(() => {
+    if (!selectedUser) {
+      return "Pick a user for payment 💸";
+    }
+
+    if (transactionValue <= 0) {
+      return "Enter the 💰 amount to send";
+    }
+
+    if (balanceAfterTransaction < 0) {
+      return "Funds insufficient 🤷‍♂️";
+    }
+
+    if (title.length === 0 || title === "") {
+      return "Name the transaction ✍️";
+    }
+
+    if (title.length < 3) {
+      return "Details too brief ✍️";
+    }
+
+    return null;
+  }, [balanceAfterTransaction, selectedUser, title, transactionValue]);
+
   return (
-    <View className="flex flex-1 justify-center">
-      <ScrollView horizontal>
-        {userResult.isLoading ? <ActivityIndicator size={"large"} /> : null}
-        {userResult.data?.map((user) => (
-          <Pressable
-            key={user.id}
-            className="m-4 flex items-center"
-            onPress={() => setSelectedUser("user.id")}
-          >
-            <Image
-              source={{ uri: user.imageUrl, height: 50, width: 50 }}
-              className="rounded-full"
+    <View className="flex flex-1 bg-white">
+      <View className="flex items-center justify-center border-b border-gray-500 p-4">
+        <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+          {userResult.isLoading ? (
+            <ActivityIndicator size={"large"} className="py-10" />
+          ) : null}
+
+          {userResult.data?.map((user) => (
+            <Pressable
+              key={user.id}
+              className="mx-1 mt-1 flex w-24 items-center"
+              onPress={() => setSelectedUser(user.clerkId)}
+            >
+              <View
+                className={cn("rounded-full", {
+                  "-m-1 border-4 border-green-900":
+                    user.clerkId === selectedUser,
+                })}
+              >
+                <Image
+                  source={{ uri: user.imageUrl }}
+                  className={cn("h-14 w-14 rounded-full")}
+                />
+              </View>
+              <Text
+                className={cn("mt-2 text-center text-sm text-gray-400", {
+                  "text-gray-800": user.clerkId === selectedUser,
+                  "font-bold": user.clerkId === selectedUser,
+                })}
+                numberOfLines={2}
+              >
+                {user.firstName} {user.lastName}
+              </Text>
+            </Pressable>
+          ))}
+        </ScrollView>
+      </View>
+
+      <KeyboardAvoidingView
+        behavior={Platform.OS === "ios" ? "padding" : "height"}
+        className="mb-14 flex flex-1"
+        keyboardVerticalOffset={110}
+      >
+        <ScrollView
+          scrollEnabled={false}
+          contentContainerStyle={styles.scrollViewContainer}
+        >
+          <View className="flex w-full items-center gap-y-3">
+            <View className="flex flex-row items-center">
+              {transferValue !== "" ? (
+                <Text className="mt-2 text-5xl">$</Text>
+              ) : null}
+              <TextInput
+                textAlign="center"
+                style={styles.input}
+                value={transferValue.toString()}
+                placeholder="How much?"
+                keyboardType="numeric"
+                onChangeText={(text) => {
+                  const isNumber = !Number.isNaN(Number(text));
+
+                  if (text === "" || isNumber) {
+                    setTransferValue(text);
+                  }
+                }}
+              />
+            </View>
+
+            <View className="flex items-center">
+              <Text className="text-xl">
+                Current Balance:{" "}
+                <Text className="font-bold">{userBalance?.toFixed(2)}$</Text>
+              </Text>
+            </View>
+
+            <TextInput
+              textAlign="center"
+              style={styles.input}
+              value={title}
+              placeholder="For what?"
+              onChangeText={setTitle}
             />
-            <Text>{user.firstName}</Text>
-          </Pressable>
-        ))}
-      </ScrollView>
+          </View>
+        </ScrollView>
 
-      <Slider />
-
-      <View className="flex items-center gap-3 px-4">
-        <Text className="text-xl">TRANSACTION</Text>
-        <TextInput
-          className="w-full border-2 p-4"
-          value={value.toString()}
-          placeholder="Value"
-          placeholderTextColor={"black"}
-          keyboardType="numeric"
-          onChangeText={(text) => setValue(parseInt(text, 10))}
-        />
-        <TextInput
-          className="w-full border-2 p-4"
-          value={title}
-          onChangeText={setTitle}
-        />
-        <Text>SELECTED USER: {selectedUser ?? "NO SELECTED"}</Text>
-
-        {isLoading ? <ActivityIndicator size={"large"} /> : null}
-
-        {error ? <Text className="text-xl">{error.message}</Text> : null}
-
-        <Pressable
-          className="rounded-md border bg-green-500 px-4 py-2"
-          onPress={() => {
+        <Slider
+          reset={!!error}
+          sliderEnabled={!errorMessage}
+          onSlideConfirm={() => {
             if (!selectedUser) {
               return Alert.alert("Select a user");
             }
 
-            mutate({ title, value, recipientUserId: selectedUser });
+            mutate({
+              title,
+              value: transactionValue,
+              recipientUserId: selectedUser,
+            });
           }}
         >
-          <Text className="text-lg font-bold">SEND 💰§</Text>
-        </Pressable>
-      </View>
+          {errorMessage ? (
+            <Text style={[styles.textPosition]}>{errorMessage}</Text>
+          ) : transactionValue ? (
+            <Text style={[styles.textPosition]}>
+              🚀 SLIDE TO SEND{" "}
+              <Text style={styles.confirm}>{transactionValue}$</Text>
+            </Text>
+          ) : null}
+        </Slider>
+      </KeyboardAvoidingView>
     </View>
   );
 }
+
+const styles = StyleSheet.create({
+  scrollViewContainer: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  input: {
+    fontSize: 48,
+  },
+  textPosition: {
+    fontSize: 20,
+    fontWeight: "bold",
+    color: "#fbfbfb",
+  },
+  confirm: {
+    color: "#16a34a",
+  },
+});

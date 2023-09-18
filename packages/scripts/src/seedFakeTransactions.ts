@@ -1,7 +1,6 @@
 import { faker } from "@faker-js/faker";
 
 import { createTransaction, getAllUsers } from "@bank-brew/db";
-import { users } from "@bank-brew/db/src/schema";
 
 const allUsers = await getAllUsers();
 
@@ -19,13 +18,6 @@ for (let i = 0; i < 100; i++) {
     min: 1,
     max: 1000,
     precision: 0.01,
-  });
-
-  console.log({
-    recipientUserId: recipientUser.clerkId,
-    senderUserId: senderUser.clerkId,
-    title: transactionTitle,
-    value: transactionValue,
   });
 
   await createTransaction(

@@ -10,6 +10,7 @@
   },
   "scripts": {
     "dev": "pnpm with-env tsx watch ./src/scripts.ts",
+    "seed:transactions": "pnpm with-env tsx ./src/seedFakeTransactions.ts",
     "seed:users": "pnpm with-env tsx ./src/syncClerkUsers.ts",
     "seed:fake-users": "pnpm with-env tsx ./src/seedFakeUsers.ts",
     "with-env": "dotenv -e ../../.env --"

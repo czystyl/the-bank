@@ -1,4 +1,4 @@
-import { StyleSheet, View } from "react-native";
+import { StyleSheet, Text, View } from "react-native";
 import Animated from "react-native-reanimated";
 import { useLocalSearchParams } from "expo-router";
 import { AntDesign } from "@expo/vector-icons";
@@ -6,7 +6,6 @@ import dayjs from "dayjs";
 
 import { api } from "~/utils/api";
 import { formatTransactionValue } from "~/utils/formatTransactionValue";
-import Typography from "~/components/Typography";
 
 export default function TransactionScreen() {
   const params = useLocalSearchParams<{ uuid: string }>();
@@ -42,14 +41,14 @@ export default function TransactionScreen() {
             style={styles.avatar}
             sharedTransitionTag={senderTransitionTag}
           />
-          <Typography classNames="text-lg">{sender.firstName}</Typography>
+          <Text className="text-lg">{sender.firstName}</Text>
         </View>
 
         <View className="flex items-center justify-center">
           <AntDesign name="arrowright" size={40} color="black" />
-          <Typography classNames="text-2xl" font="bold">
+          <Text className="text-2xl font-bold">
             {formatTransactionValue(transaction.value, transaction.type)}
-          </Typography>
+          </Text>
         </View>
 
         <View className="flex items-center">
@@ -58,55 +57,47 @@ export default function TransactionScreen() {
             sharedTransitionTag={recipientTransitionTag}
             style={styles.avatar}
           />
-          <Typography classNames="text-lg">{recipient.firstName}</Typography>
+          <Text className="text-lg">{recipient.firstName}</Text>
         </View>
       </View>
 
       <View className="flex gap-2 pt-4">
         <View className="rounded-md bg-zinc-300">
           <View className="flex flex-row justify-between p-2">
-            <Typography classNames="">UUID</Typography>
-            <Typography classNames="">{transaction.uuid}</Typography>
+            <Text className="font-bold">UUID</Text>
+            <Text>{transaction.uuid}</Text>
           </View>
 
           <View className="flex flex-row justify-between p-2">
-            <Typography classNames="">Title</Typography>
-            <Typography classNames="">{transaction.title}</Typography>
+            <Text className="font-bold">Title</Text>
+            <Text>{transaction.title}</Text>
           </View>
 
           <View className="flex flex-row justify-between p-2">
-            <Typography classNames="">Date</Typography>
-            <Typography classNames="">
-              {dayjs(transaction.createdAt).format("DD/MM/YYYY ")}
-            </Typography>
+            <Text className="font-bold">Date</Text>
+            <Text>{dayjs(transaction.createdAt).format("DD/MM/YYYY ")}</Text>
           </View>
 
           <View className="flex flex-row justify-between p-2">
-            <Typography classNames="">Time</Typography>
-            <Typography classNames="">
-              {dayjs(transaction.createdAt).format("HH:mm:ss ")}
-            </Typography>
+            <Text className="font-bold">Time</Text>
+            <Text>{dayjs(transaction.createdAt).format("HH:mm:ss ")}</Text>
           </View>
         </View>
 
         <View className="rounded-md bg-zinc-300">
           <View className="flex flex-row justify-between p-2">
-            <Typography classNames="">Value</Typography>
-            <Typography classNames="">
-              {transaction.value.toFixed(2)} $
-            </Typography>
+            <Text className="font-bold">Value</Text>
+            <Text>{transaction.value.toFixed(2)} $</Text>
           </View>
 
           <View className="flex flex-row justify-between p-2">
-            <Typography classNames="">Type</Typography>
-            <Typography classNames="">{transaction.type}</Typography>
+            <Text className="font-bold">Type</Text>
+            <Text>{transaction.type}</Text>
           </View>
 
           <View className="flex flex-row justify-between p-2">
-            <Typography classNames="">Balance</Typography>
-            <Typography classNames="">
-              {transaction.balance.toFixed(2)} $
-            </Typography>
+            <Text className="font-bold">Balance</Text>
+            <Text>{transaction.balance.toFixed(2)} $</Text>
           </View>
         </View>
       </View>
