@@ -6,6 +6,7 @@
  * tl;dr - this is where all the tRPC server stuff is created and plugged in.
  * The pieces you will need to use are documented accordingly near the end
  */
+import clerk from "@clerk/clerk-sdk-node";
 import type {
   SignedInAuthObject,
   SignedOutAuthObject,
@@ -37,9 +38,9 @@ interface AuthContext {
  * - testing, so we dont have to mock Next.js' req/res
  * - trpc's `createSSGHelpers` where we don't have req/res
  */
-export const createInnerTRPCContext = ({ auth }: AuthContext) => {
+export const createInnerTRPCContext = (opts?: Partial<AuthContext>) => {
   return {
-    auth,
+    auth: opts?.auth,
   };
 };
 
@@ -101,7 +102,7 @@ export const publicProcedure = t.procedure;
  * procedure
  */
 const enforceUserIsAuthenticated = t.middleware(({ ctx, next }) => {
-  if (!ctx.auth.userId) {
+  if (!ctx.auth?.userId) {
     throw new TRPCError({ code: "UNAUTHORIZED" });
   }
 
@@ -122,3 +123,23 @@ const enforceUserIsAuthenticated = t.middleware(({ ctx, next }) => {
  * @see https://trpc.io/docs/procedures
  */
 export const protectedProcedure = t.procedure.use(enforceUserIsAuthenticated);
+
+const enforceUserIsAdmin = t.middleware(async ({ ctx, next }) => {
+  if (!ctx.auth?.userId) {
+    throw new TRPCError({ code: "UNAUTHORIZED" });
+  }
+
+  const user = await clerk.users.getUser(ctx.auth.userId);
+
+  if (!user.privateMetadata.isAdmin) {
+    throw new TRPCError({ code: "UNAUTHORIZED" });
+  }
+
+  return next({
+    ctx: {
+      auth: ctx.auth,
+    },
+  });
+});
+
+export const adminProcedure = t.procedure.use(enforceUserIsAdmin);

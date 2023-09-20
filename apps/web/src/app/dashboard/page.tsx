@@ -1,17 +1,54 @@
+import type { Metadata } from "next";
 import { UserButton } from "@clerk/nextjs";
 
 import { ModeToggle } from "~/components/ModeToggle";
-import { Button } from "~/components/ui/button";
-import Hello from "./hello";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "~/components/ui/tabs";
+import OverviewTab from "./OverviewTab";
+import TransactionsTab from "./TransactionsTab";
+import UserTab from "./UserTab";
 
-export default function HomePage() {
+export const metadata: Metadata = {
+  title: "Dashboard",
+  description: "Example dashboard app built using the components.",
+};
+
+export default function DashboardPage() {
   return (
-    <div className="mt-20 flex flex-col items-center justify-center gap-10">
-      <UserButton afterSignOutUrl="/" />
+    <div className="flex flex-col">
+      <div className="border-b">
+        <div className="flex h-16 items-center px-4">
+          <h1 className="bg-gradient-to-r from-green-400 to-blue-600 bg-clip-text text-3xl font-extrabold text-transparent">
+            The Bank
+          </h1>
 
-      <ModeToggle />
-      <Button>Testing button text</Button>
-      <Hello />
+          <div className="ml-auto flex items-center space-x-4">
+            <UserButton />
+            <ModeToggle />
+          </div>
+        </div>
+      </div>
+
+      <div className="flex-1 space-y-4 p-8 pt-6">
+        <Tabs defaultValue="overview" className="space-y-4">
+          <TabsList>
+            <TabsTrigger value="overview">Overview</TabsTrigger>
+            <TabsTrigger value="users">Users</TabsTrigger>
+            <TabsTrigger value="transactions">Transactions</TabsTrigger>
+            <TabsTrigger value="reports" disabled about="elo">
+              Reports
+            </TabsTrigger>
+          </TabsList>
+          <TabsContent value="transactions" className="space-y-4">
+            <TransactionsTab />
+          </TabsContent>
+          <TabsContent value="users" className="space-y-4">
+            <UserTab />
+          </TabsContent>
+          <TabsContent value="overview" className="space-y-4">
+            <OverviewTab />
+          </TabsContent>
+        </Tabs>
+      </div>
     </div>
   );
 }

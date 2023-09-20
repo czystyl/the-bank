@@ -1,3 +1,4 @@
+import { DatabaseError } from "@planetscale/database";
 import {
   and,
   desc,
@@ -13,15 +14,24 @@ import { users } from "./schema";
 
 type UserInput = InferInsertModel<typeof users>;
 type UserSelect = InferSelectModel<typeof users>;
+
 /**
  * This function should only be used in script package,
  * and we want to ignore duplicate errors
  */
-export async function insertUsers(data: UserInput[]) {
+export async function insertUser(data: UserInput) {
   try {
     return await db.insert(users).values(data);
   } catch (error) {
-    // We do not care about duplicate errors
+    if (
+      error instanceof DatabaseError &&
+      error.message.includes("Duplicate entry")
+    ) {
+      console.log("Users already exist, skipping insert");
+      return null;
+    }
+
+    console.log(error);
   }
 }
 
@@ -50,4 +60,14 @@ export async function getUser(clerkId: UserSelect["clerkId"]) {
   }
 
   return user;
+}
+
+export async function getUsersCount() {
+  const results = await db
+    .select({
+      count: sql<number>`COUNT(*)`,
+    })
+    .from(users);
+
+  return results[0]?.count ?? 0;
 }

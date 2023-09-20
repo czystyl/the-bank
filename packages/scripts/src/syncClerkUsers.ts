@@ -1,4 +1,4 @@
-import { insertUsers } from "@bank-brew/db";
+import { insertUser } from "@bank-brew/db";
 
 import "@bank-brew/env";
 
@@ -6,7 +6,7 @@ import clerk from "@clerk/clerk-sdk-node";
 
 const users = [];
 
-const limit = 2;
+const limit = 50;
 let page = 0;
 let fetchMore = true;
 
@@ -22,6 +22,7 @@ do {
     firstName: user.firstName,
     lastName: user.lastName,
     imageUrl: user.imageUrl,
+    createdAt: new Date(user.createdAt),
   }));
 
   users.push(...formattedUserList);
@@ -32,10 +33,8 @@ do {
 
 console.log(`Found ${users.length} users.`);
 
-const results = await insertUsers(users);
-
-if (!results) {
-  console.log("No users were inserted");
-} else {
-  console.log(`Inserted ${results.rowsAffected} users.`);
+for (const user of users) {
+  await insertUser(user);
 }
+
+console.log("Done!");

@@ -1,6 +1,6 @@
 import "@total-typescript/ts-reset";
 
-import React, { createContext, use, useEffect, useState } from "react";
+import React, { createContext, useEffect, useState } from "react";
 import {
   router,
   SplashScreen,

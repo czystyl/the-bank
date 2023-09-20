@@ -1,7 +1,7 @@
-import { auth } from "@clerk/nextjs";
+import type { NextApiRequest, NextApiResponse } from "next";
 import { fetchRequestHandler } from "@trpc/server/adapters/fetch";
 
-import { appRouter, createInnerTRPCContext } from "@bank-brew/api";
+import { appRouter, createTRPCContext } from "@bank-brew/api";
 
 export const runtime = "nodejs";
 
@@ -23,15 +23,16 @@ export function OPTIONS() {
   return response;
 }
 
-async function handler(req: Request) {
+async function handler(req: Request, res: NextApiResponse) {
   const response = await fetchRequestHandler({
     endpoint: "/api/trpc",
     router: appRouter,
     req,
-    createContext() {
-      return createInnerTRPCContext({
-        auth: auth(),
-      });
+    createContext: () => {
+      /**
+       * TRCP Types are not ready to use New NextApiRequest and NextApiResponse types from Next.js
+       */
+      return createTRPCContext({ req: req as unknown as NextApiRequest, res });
     },
   });
 

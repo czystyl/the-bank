@@ -12,6 +12,7 @@ import { MaterialIcons } from "@expo/vector-icons";
 
 import { api } from "~/utils/api";
 import { useAuth } from "~/utils/authProvider";
+import { formatValue } from "~/utils/formatTransactionValue";
 
 export default function HomeScreen() {
   const { user, signOut } = useAuth();
@@ -53,7 +54,7 @@ export default function HomeScreen() {
         <Text className="text-3xl text-slate-500">Balance:</Text>
         <Text className="mt-4 text-5xl font-bold text-slate-700">
           {isLoading ? <ActivityIndicator size="large" color="green" /> : null}
-          {userBalance ? `${userBalance}$` : null}
+          {formatValue(userBalance)}
         </Text>
 
         <View className="mt-10 flex flex-row items-center justify-center gap-x-10">

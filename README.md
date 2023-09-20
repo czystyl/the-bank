@@ -1,4 +1,4 @@
-# Bank Brew
+# The Brew
 
 ## Installation
 

@@ -14,20 +14,24 @@ const roboto_mono = Roboto_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Bank Brew",
-  description: "Bank Brew, best transfer app in the world",
+  title: "The Bank",
+  description: "The Bank, best transfer app in the world",
   openGraph: {
-    title: "Bank Brew",
+    title: "The Bank",
     description: "Simple monorepo with shared backend for web & mobile apps",
     url: "https://google.com",
-    siteName: "Bank Brew",
+    siteName: "The Bank",
   },
 };
 
 export default function Layout(props: { children: React.ReactNode }) {
   return (
-    <html lang="en" className={`${roboto_mono.variable} font-mono`}>
-      <body>
+    <html
+      lang="en"
+      className={`${roboto_mono.variable} font-mono`}
+      suppressHydrationWarning
+    >
+      <body suppressHydrationWarning={true}>
         <ClerkProvider>
           <TRPCReactProvider>
             <ThemeProvider attribute="class" defaultTheme="system" enableSystem>

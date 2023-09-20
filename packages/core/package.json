@@ -1,0 +1,18 @@
+{
+  "name": "@bank-brew/core",
+  "version": "0.1.0",
+  "main": "./index.ts",
+  "types": "./index.ts",
+  "type": "module",
+  "private": true,
+  "engines": {
+    "node": ">=v18.16.1"
+  },
+  "scripts": {},
+  "dependencies": {
+    "@bank-brew/api": "*"
+  },
+  "devDependencies": {
+    "typescript": "^5.1.6"
+  }
+}

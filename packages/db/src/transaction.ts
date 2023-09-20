@@ -1,5 +1,7 @@
-import { and, desc, eq, InferInsertModel, or, sql } from "drizzle-orm";
+import dayjs from "dayjs";
+import { and, desc, eq, InferInsertModel, lt, or, sql } from "drizzle-orm";
 import { alias } from "drizzle-orm/mysql-core";
+import { nanoid } from "nanoid";
 
 import { db } from "./db";
 import { transactions, users } from "./schema";
@@ -12,13 +14,18 @@ type TransactionInput = InferInsertModel<typeof transactions>;
 
 type CreateTransactionInput = Pick<
   TransactionInput,
-  "title" | "value" | "recipientUserId" | "senderUserId"
+  "title" | "value" | "recipientUserId" | "senderUserId" | "createdAt"
 >;
 
-export async function createTransaction(
-  data: CreateTransactionInput,
-  skipValidation = false,
-) {
+type CreateTransactionParams = {
+  data: CreateTransactionInput;
+  skipValidation?: boolean;
+};
+
+export async function createTransaction({
+  data,
+  skipValidation,
+}: CreateTransactionParams) {
   const senderAccountBalance = await getAccountBalance(data.senderUserId);
   const recipientAccountBalance = await getAccountBalance(data.recipientUserId);
 
@@ -26,15 +33,19 @@ export async function createTransaction(
     throw new Error("Not enough funds!");
   }
 
+  const transactionID = nanoid();
+
   await db.insert(transactions).values([
     {
       ...data,
+      uuid: transactionID,
       value: data.value * -1,
       type: "OUTGOING",
       balance: senderAccountBalance - data.value,
     },
     {
       ...data,
+      uuid: transactionID,
       type: "INCOME",
       balance: recipientAccountBalance + data.value,
     },
@@ -44,7 +55,10 @@ export async function createTransaction(
 export async function addFounds(userId: string, value: number) {
   const accountBalance = await getAccountBalance(userId);
 
+  const transactionID = nanoid();
+
   await db.insert(transactions).values({
+    uuid: transactionID,
     title: "Add founds",
     value,
     type: "INCOME",
@@ -109,4 +123,58 @@ export function getTransactions(userId: string) {
     )
     .orderBy(desc(transactionAlias.id))
     .limit(0);
+}
+
+export function getRecentTransactions(limit: number) {
+  const transactionAlias = alias(transactions, "transaction");
+  const senderAlias = alias(users, "sender");
+  const recipientAlias = alias(users, "recipient");
+
+  return db
+    .select()
+    .from(transactionAlias)
+    .leftJoin(
+      senderAlias,
+      eq(transactionAlias.senderUserId, senderAlias.clerkId),
+    )
+    .leftJoin(
+      recipientAlias,
+      eq(transactionAlias.recipientUserId, recipientAlias.clerkId),
+    )
+    .orderBy(desc(transactionAlias.id))
+    .where(eq(transactionAlias.type, "INCOME"))
+    .limit(limit);
+}
+
+export async function getTotalVolume() {
+  const result = await db
+    .select({
+      totalVolume: sql<number>`SUM(${transactions.value})`,
+    })
+    .from(transactions)
+    .where(eq(transactions.type, "INCOME"));
+
+  return result[0]?.totalVolume ?? 0;
+}
+
+export async function getTransactionCount() {
+  const result = await db
+    .select({
+      count: sql<number>`COUNT(*)`,
+    })
+    .from(transactions)
+    .where(and(eq(transactions.type, "INCOME")));
+
+  return result[0]?.count ?? 0;
+}
+
+export async function getTransactionAvg() {
+  const result = await db
+    .select({
+      avg: sql<number>`AVG(${transactions.value})`,
+    })
+    .from(transactions)
+    .where(and(eq(transactions.type, "INCOME")));
+
+  return result[0]?.avg ?? 0;
 }

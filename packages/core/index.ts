@@ -1,4 +1,4 @@
-import type { RouterOutputs } from "./api";
+import type { RouterOutputs } from "@bank-brew/api";
 
 export function formatTransactionValue(
   value: number,
@@ -13,6 +13,6 @@ export function formatTransactionValue(
   return `-${displayValue}$`;
 }
 
-export function formatValue(value = 0) {
-  return `${value.toFixed(2)}$`;
+export function formatValue({ value = 0, withSuffix = false }) {
+  return `${withSuffix && value > 0 ? "+" : ""}${value.toFixed(2)}$`;
 }

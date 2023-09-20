@@ -50,10 +50,12 @@ export const transactionRouter = createTRPCRouter({
 
       try {
         await createTransaction({
-          title: input.title,
-          value: input.value,
-          senderUserId: ctx.auth.userId,
-          recipientUserId: user.clerkId,
+          data: {
+            title: input.title,
+            value: input.value,
+            senderUserId: ctx.auth.userId,
+            recipientUserId: user.clerkId,
+          },
         });
       } catch (error) {
         throw new TRPCError({

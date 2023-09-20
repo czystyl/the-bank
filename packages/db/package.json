@@ -14,8 +14,10 @@
   "dependencies": {
     "@bank-brew/env": "*",
     "@planetscale/database": "^1.10.0",
+    "dayjs": "^1.11.9",
     "drizzle-orm": "^0.28.5",
-    "mysql2": "^3.6.0"
+    "mysql2": "^3.6.0",
+    "nanoid": "^5.0.1"
   },
   "devDependencies": {
     "dotenv-cli": "^7.2.1",

@@ -87,8 +87,8 @@ export default function Transactions() {
                 })}
               >
                 <Image
-                  source={{ uri: user.imageUrl }}
-                  className={cn("h-14 w-14 rounded-full")}
+                  source={{ uri: user.imageUrl, height: 56, width: 56 }}
+                  style={{ borderRadius: 56 }}
                 />
               </View>
               <Text
@@ -125,6 +125,7 @@ export default function Transactions() {
                 value={transferValue.toString()}
                 placeholder="How much?"
                 keyboardType="numeric"
+                placeholderTextColor="#a6a6a6"
                 onChangeText={(text) => {
                   const isNumber = !Number.isNaN(Number(text));
 
@@ -147,6 +148,7 @@ export default function Transactions() {
               style={styles.input}
               value={title}
               placeholder="For what?"
+              placeholderTextColor="#a6a6a6"
               onChangeText={setTitle}
             />
           </View>
