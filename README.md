@@ -13,22 +13,35 @@ TBA
 .vscode
   └─ Recommended extensions and settings for VSCode users
 apps
-  ├─ expo
+  ├─ mobile
   |   ├─ Expo SDK 49
   |   ├─ React Native using React 18
   |   ├─ Navigation using Expo Router
-  |   ├─ Tailwind using Nativewind ??
+  |   ├─ Tailwind using Nativewind
   |   └─ Typesafe API calls using tRPC
-  └─ next.js
+  └─ web
       ├─ Next.js 13
       ├─ React 18
       ├─ Tailwind CSS
-      └─ E2E Typesafe API Server & Client
+      └─ shadcn UI
+tooling
+  ├─ eslint
+  |   └─ Eslint config for monorepo packages
+  ├─ prettier
+  |   └─ Prettier config for monorepo packages
+  ├─ tailwind
+  |   └─ Tailwind configuration shared in WEB and mobile
+  └─ tsconfig
+      └─ TypeScript config for monorepo packages
 packages
   ├─ api
   |   └─ tRPC v10 router definition
-  ├─ config
+  ├─ core
+  |   └─ Shared business logic
+  ├─ env
   |   └─ Shared Tailwind & Eslint configs
+  ├─ scripts
+  |   └─ Scripts to interact with DB like seed etc
   └─ db
       └─ Typesafe db calls using Drizzle
 ```
@@ -46,6 +59,7 @@ pnpm i
 # Configure environment variables.
 # There is an `.env.example` in the root directory you can use for reference
 cp .env.example .env
+cp apps/mobile/.env.example .env
 
 # Push the Drizzle schema to your database
 pnpm db:push
