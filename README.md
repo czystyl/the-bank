@@ -1,10 +1,6 @@
 # The Brew
 
-## Installation
-
-TBA
-
-## About
+## Project Structure
 
 ```
 .github
@@ -46,6 +42,17 @@ packages
       └─ Typesafe db calls using Drizzle
 ```
 
+## Pre-requirements
+
+Make sure that you have installed:
+
+- Node.js, [Recommendation NVM](https://github.com/nvm-sh/nvm)
+- pnpm [Installation guide](https://pnpm.io/installation#using-npm)
+- Expo:
+
+Additional:
+Beekeper
+
 ## Quick Start
 
 To get it running, follow the steps below:
@@ -56,8 +63,7 @@ To get it running, follow the steps below:
 # Install dependencies
 pnpm i
 
-# Configure environment variables.
-# There is an `.env.example` in the root directory you can use for reference
+# Copy example .env file for whole project and mobile separately
 cp .env.example .env
 cp apps/mobile/.env.example .env
 
