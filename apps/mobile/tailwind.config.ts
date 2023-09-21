@@ -1,6 +1,5 @@
+import baseConfig from "@the-bank/tailwind-config";
 import type { Config } from "tailwindcss";
-
-import baseConfig from "@bank-brew/tailwind-config";
 
 export default {
   content: ["./src/**/*.{ts,tsx}"],

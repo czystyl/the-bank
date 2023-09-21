@@ -1,6 +1,5 @@
 import { faker } from "@faker-js/faker";
-
-import { createTransaction, getAllUsers } from "@bank-brew/db";
+import { createTransaction, getAllUsers } from "@the-bank/db";
 
 const allUsers = await getAllUsers();
 

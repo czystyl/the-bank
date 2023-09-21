@@ -1,4 +1,4 @@
-import { getAccountBalance, getUsers } from "@bank-brew/db";
+import { getAccountBalance, getUsers } from "@the-bank/db";
 
 import { createTRPCRouter, protectedProcedure } from "../trpc";
 

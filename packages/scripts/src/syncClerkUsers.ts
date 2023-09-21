@@ -1,6 +1,6 @@
-import { insertUser } from "@bank-brew/db";
+import { insertUser } from "@the-bank/db";
 
-import "@bank-brew/env";
+import "@the-bank/env";
 
 import clerk from "@clerk/clerk-sdk-node";
 

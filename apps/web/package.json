@@ -1,5 +1,5 @@
 {
-  "name": "@bank-brew/web",
+  "name": "@the-bank/web",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -13,11 +13,7 @@
     "with-env": "dotenv -e ../../.env --"
   },
   "dependencies": {
-    "@bank-brew/api": "*",
-    "@bank-brew/core": "*",
-    "@bank-brew/db": "*",
-    "@bank-brew/env": "*",
-    "@clerk/nextjs": "^4.22.1",
+    "@clerk/nextjs": "^4.24.0",
     "@radix-ui/react-avatar": "^1.0.3",
     "@radix-ui/react-checkbox": "^1.0.4",
     "@radix-ui/react-dropdown-menu": "^2.0.5",
@@ -25,51 +21,58 @@
     "@radix-ui/react-slot": "^1.0.2",
     "@radix-ui/react-tabs": "^1.0.4",
     "@radix-ui/react-toast": "^1.1.4",
-    "@tanstack/react-query": "^4.29.23",
-    "@tanstack/react-query-devtools": "^4.29.23",
+    "@tanstack/react-query": "^4.35.3",
+    "@tanstack/react-query-devtools": "^4.35.3",
     "@tanstack/react-query-next-experimental": "5.0.0-alpha.80",
     "@tanstack/react-table": "^8.10.1",
-    "@trpc/client": "^10.34.0",
-    "@trpc/next": "^10.34.0",
-    "@trpc/react-query": "^10.34.0",
-    "@trpc/server": "^10.34.0",
+    "@the-bank/api": "0.1.0",
+    "@the-bank/core": "0.1.0",
+    "@the-bank/db": "0.1.0",
+    "@the-bank/env": "0.1.0",
+    "@trpc/client": "^10.38.3",
+    "@trpc/next": "^10.38.3",
+    "@trpc/react-query": "^10.38.3",
+    "@trpc/server": "^10.38.3",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.0.0",
     "dayjs": "^1.11.9",
     "encoding": "^0.1.13",
     "lucide-react": "^0.268.0",
     "nanoid": "^5.0.1",
-    "next": "^13.4.10",
+    "next": "^13.5.2",
     "next-themes": "^0.2.1",
     "pusher": "^5.1.3",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "recharts": "^2.8.0",
-    "superjson": "1.9.1",
+    "superjson": "1.13.1",
     "tailwind-merge": "^1.14.0",
     "tailwindcss-animate": "^1.0.6",
     "trpc-panel": "^1.3.4",
     "zod": "^3.21.4"
   },
   "devDependencies": {
-    "@bank-brew/eslint-config": "^0.2.0",
-    "@bank-brew/tailwind-config": "^0.1.0",
+    "@the-bank/eslint-config": "^0.1.0",
+    "@the-bank/prettier-config": "^0.1.0",
+    "@the-bank/tailwind-config": "^0.1.0",
+    "@the-bank/tsconfig": "^0.1.0",
     "@types/node": "^18.16.19",
     "@types/react": "^18.2.15",
     "@types/react-dom": "^18.2.7",
-    "autoprefixer": "^10.4.14",
+    "autoprefixer": "^10.4.16",
     "dotenv-cli": "^7.2.1",
     "eslint": "^8.45.0",
     "postcss": "^8.4.26",
     "tailwindcss": "3.3.2",
-    "typescript": "^5.1.6"
+    "typescript": "^5.2.2"
   },
   "eslintConfig": {
     "root": true,
     "extends": [
-      "@bank-brew/eslint-config/base",
-      "@bank-brew/eslint-config/nextjs",
-      "@bank-brew/eslint-config/react"
+      "@the-bank/eslint-config/base",
+      "@the-bank/eslint-config/nextjs",
+      "@the-bank/eslint-config/react"
     ]
-  }
+  },
+  "prettier": "@the-bank/prettier-config"
 }

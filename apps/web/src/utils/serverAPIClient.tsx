@@ -1,6 +1,5 @@
 import { auth } from "@clerk/nextjs";
-
-import { appRouter } from "@bank-brew/api";
+import { appRouter } from "@the-bank/api";
 
 export function serverAPIClient() {
   const authSession = auth();

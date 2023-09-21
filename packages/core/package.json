@@ -1,18 +1,25 @@
 {
-  "name": "@bank-brew/core",
+  "name": "@the-bank/core",
   "version": "0.1.0",
   "main": "./index.ts",
   "types": "./index.ts",
   "type": "module",
   "private": true,
-  "engines": {
-    "node": ">=v18.16.1"
-  },
-  "scripts": {},
   "dependencies": {
-    "@bank-brew/api": "*"
+    "@the-bank/api": "0.1.0"
   },
   "devDependencies": {
-    "typescript": "^5.1.6"
-  }
+    "@the-bank/eslint-config": "^0.1.0",
+    "@the-bank/prettier-config": "^0.1.0",
+    "@the-bank/tsconfig": "^0.1.0",
+    "eslint": "^8.45.0",
+    "typescript": "^5.2.2"
+  },
+  "eslintConfig": {
+    "root": true,
+    "extends": [
+      "@the-bank/eslint-config/base"
+    ]
+  },
+  "prettier": "@the-bank/prettier-config"
 }

@@ -1,12 +1,14 @@
 {
-  "extends": "../../tsconfig.json",
+  "extends": "@the-bank/tsconfig/base.json",
   "compilerOptions": {
     "baseUrl": ".",
     "paths": {
       "~/*": ["./src/*"]
     },
     "jsx": "react-native",
-    "types": ["nativewind/types"]
+    "tsBuildInfoFile": "node_modules/.cache/tsbuildinfo.json",
+    "types": ["nativewind/types"],
+    "noEmit": true
   },
   "include": [
     "expo-plugins",
@@ -17,5 +19,5 @@
     ".expo/types/**/*.ts",
     "expo-env.d.ts"
   ],
-  "exclude": ["node_modules", "*.config.js"]
+  "exclude": ["node_modules"]
 }

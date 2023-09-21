@@ -1,6 +1,5 @@
 import { faker } from "@faker-js/faker";
-
-import { insertUsers } from "@bank-brew/db";
+import { insertUsers } from "@the-bank/db";
 
 const users = [];
 

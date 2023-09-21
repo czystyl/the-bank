@@ -1,6 +1,5 @@
+import { appRouter } from "@the-bank/api";
 import { renderTrpcPanel } from "trpc-panel";
-
-import { appRouter } from "@bank-brew/api";
 
 function handler() {
   return new Response(

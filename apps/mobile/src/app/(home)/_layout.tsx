@@ -1,4 +1,4 @@
-import { Tabs } from "expo-router/tabs";
+import { Tabs } from "expo-router";
 import { AntDesign } from "@expo/vector-icons";
 
 export default function homeLayout() {

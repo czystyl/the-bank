@@ -1,6 +1,5 @@
+import { env } from "@the-bank/env";
 import type { Config } from "drizzle-kit";
-
-import { env } from "@bank-brew/env";
 
 export default {
   dbCredentials: {

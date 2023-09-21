@@ -1,27 +1,30 @@
 {
-  "name": "@the-bank/api",
+  "name": "@the-bank/tailwind-config",
   "version": "0.1.0",
-  "main": "./index.ts",
-  "types": "./index.ts",
+  "private": true,
+  "main": "index.ts",
   "license": "MIT",
+  "files": [
+    "index.ts",
+    "postcss.js"
+  ],
   "scripts": {
     "clean": "rm -rf .turbo node_modules",
     "lint": "eslint .",
-    "lint:fix": "pnpm lint --fix",
-    "type-check": "tsc --noEmit"
+    "format": "prettier --check \"**/*.{mjs,ts,md,json}\"",
+    "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "@the-bank/db": "0.1.0",
-    "@trpc/client": "^10.38.3",
-    "@trpc/server": "^10.38.3",
-    "superjson": "1.13.1",
-    "zod": "^3.21.4"
+    "autoprefixer": "^10.4.16",
+    "postcss": "^8.4.26",
+    "tailwindcss": "3.3.2"
   },
   "devDependencies": {
     "@the-bank/eslint-config": "^0.1.0",
     "@the-bank/prettier-config": "^0.1.0",
     "@the-bank/tsconfig": "^0.1.0",
     "eslint": "^8.45.0",
+    "prettier": "^3.0.3",
     "typescript": "^5.2.2"
   },
   "eslintConfig": {

@@ -5,8 +5,7 @@ import {
   PersonIcon,
   RocketIcon,
 } from "@radix-ui/react-icons";
-
-import { formatValue } from "@bank-brew/core";
+import { formatValue } from "@the-bank/core";
 
 import { serverAPIClient } from "~/utils/serverAPIClient";
 import CardInfo from "~/components/CardInfo";

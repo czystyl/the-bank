@@ -1,5 +1,5 @@
 {
-  "name": "@bank-brew/env",
+  "name": "@the-bank/env",
   "version": "0.1.0",
   "main": "./env.ts",
   "types": "./env.ts",
@@ -16,13 +16,15 @@
     "zod": "^3.21.4"
   },
   "devDependencies": {
-    "@bank-brew/eslint-config": "^0.2.0",
-    "typescript": "^5.1.6"
+    "@the-bank/eslint-config": "^0.1.0",
+    "@the-bank/prettier-config": "^0.1.0",
+    "@the-bank/tsconfig": "^0.1.0"
   },
   "eslintConfig": {
     "root": true,
     "extends": [
-      "@bank-brew/eslint-config/base"
+      "@the-bank/eslint-config/base"
     ]
-  }
+  },
+  "prettier": "@the-bank/prettier-config"
 }

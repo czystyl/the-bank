@@ -32,6 +32,8 @@ export async function insertUser(data: UserInput) {
     }
 
     console.log(error);
+
+    return null;
   }
 }
 

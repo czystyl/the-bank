@@ -1,5 +1,5 @@
 {
-  "name": "@bank-brew/scripts",
+  "name": "@the-bank/scripts",
   "version": "0.1.0",
   "main": "./index.ts",
   "types": "./index.ts",
@@ -16,14 +16,23 @@
     "with-env": "dotenv -e ../../.env --"
   },
   "dependencies": {
-    "@bank-brew/db": "*",
-    "@bank-brew/env": "*",
     "@clerk/clerk-sdk-node": "^4.12.5",
-    "@faker-js/faker": "^8.0.2"
+    "@faker-js/faker": "^8.0.2",
+    "@the-bank/db": "0.1.0",
+    "@the-bank/env": "0.1.0"
   },
   "devDependencies": {
+    "@the-bank/eslint-config": "^0.1.0",
+    "@the-bank/prettier-config": "^0.1.0",
+    "@the-bank/tsconfig": "^0.1.0",
     "dotenv-cli": "^7.2.1",
-    "tsx": "^3.12.9",
-    "typescript": "^5.1.6"
-  }
+    "tsx": "^3.12.9"
+  },
+  "eslintConfig": {
+    "root": true,
+    "extends": [
+      "@the-bank/eslint-config/base"
+    ]
+  },
+  "prettier": "@the-bank/prettier-config"
 }

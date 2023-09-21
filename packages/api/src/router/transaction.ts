@@ -1,12 +1,11 @@
-import { TRPCError } from "@trpc/server";
-import { z } from "zod";
-
 import {
   addFounds,
   createTransaction,
   getTransactions,
   getUser,
-} from "@bank-brew/db";
+} from "@the-bank/db";
+import { TRPCError } from "@trpc/server";
+import { z } from "zod";
 
 import { createTRPCRouter, protectedProcedure } from "../trpc";
 

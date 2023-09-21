@@ -1,4 +1,4 @@
-import type { RouterOutputs } from "@bank-brew/api";
+import type { RouterOutputs } from "@the-bank/api";
 
 export function formatTransactionValue(
   value: number,

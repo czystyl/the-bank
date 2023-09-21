@@ -10,10 +10,18 @@ import superjson from "superjson";
 import { api } from "~/utils/api";
 
 const getBaseUrl = () => {
-  if (typeof window !== "undefined") return ""; // browser should use relative url
-  if (process.env.VERCEL_URL) return `https://${process.env.VERCEL_URL}`; // SSR should use vercel url
+  // browser should use relative url
+  if (typeof window !== "undefined") {
+    return "";
+  }
 
-  return `http://localhost:3000`; // dev SSR should use localhost
+  // SSR should use vercel url
+  if (process.env.VERCEL_URL) {
+    return `https://${process.env.VERCEL_URL}`;
+  }
+
+  // dev SSR should use localhost
+  return `http://localhost:3000`;
 };
 
 export function TRPCReactProvider(props: { children: React.ReactNode }) {
@@ -45,13 +53,13 @@ export function TRPCReactProvider(props: { children: React.ReactNode }) {
   );
 
   return (
-    <QueryClientProvider client={queryClient}>
-      <ReactQueryStreamedHydration>
-        <api.Provider client={trpcClient} queryClient={queryClient}>
+    <api.Provider client={trpcClient} queryClient={queryClient}>
+      <QueryClientProvider client={queryClient}>
+        <ReactQueryStreamedHydration>
           {props.children}
-        </api.Provider>
-      </ReactQueryStreamedHydration>
-      <ReactQueryDevtools initialIsOpen={false} />
-    </QueryClientProvider>
+        </ReactQueryStreamedHydration>
+        <ReactQueryDevtools initialIsOpen={false} />
+      </QueryClientProvider>
+    </api.Provider>
   );
 }

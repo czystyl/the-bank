@@ -1,5 +1,5 @@
 {
-  "name": "@bank-brew/db",
+  "name": "@the-bank/db",
   "version": "0.1.0",
   "main": "./src/index.ts",
   "types": "./src/index.ts",
@@ -12,16 +12,25 @@
     "with-env": "dotenv -e ../../.env --"
   },
   "dependencies": {
-    "@bank-brew/env": "*",
     "@planetscale/database": "^1.10.0",
+    "@the-bank/env": "0.1.0",
     "dayjs": "^1.11.9",
     "drizzle-orm": "^0.28.5",
     "mysql2": "^3.6.0",
     "nanoid": "^5.0.1"
   },
   "devDependencies": {
+    "@the-bank/eslint-config": "^0.1.0",
+    "@the-bank/prettier-config": "^0.1.0",
+    "@the-bank/tsconfig": "^0.1.0",
     "dotenv-cli": "^7.2.1",
-    "drizzle-kit": "^0.19.12",
-    "typescript": "^5.1.6"
-  }
+    "drizzle-kit": "^0.19.12"
+  },
+  "eslintConfig": {
+    "root": true,
+    "extends": [
+      "@the-bank/eslint-config/base"
+    ]
+  },
+  "prettier": "@the-bank/prettier-config"
 }

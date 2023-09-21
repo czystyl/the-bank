@@ -1,5 +1,5 @@
 {
-  "name": "@bank-brew/mobile",
+  "name": "@the-bank/mobile",
   "version": "0.1.0",
   "private": true,
   "main": "expo-router/entry",
@@ -13,26 +13,22 @@
     "type-check": "tsc --noEmit"
   },
   "dependencies": {
-    "@bank-brew/env": "^0.1.0",
-    "@clerk/clerk-expo": "^0.18.17",
+    "@clerk/clerk-expo": "^0.19.2",
     "@expo/metro-config": "^0.10.6",
     "@expo/vector-icons": "^13.0.0",
-    "@pusher/pusher-websocket-react-native": "^1.2.2",
     "@react-native-async-storage/async-storage": "1.18.2",
-    "@shopify/flash-list": "1.4.3",
-    "@tanstack/react-query": "^4.29.23",
-    "@trpc/client": "^10.34.0",
-    "@trpc/react-query": "^10.34.0",
-    "@trpc/server": "^10.34.0",
+    "@tanstack/react-query": "^4.35.3",
+    "@the-bank/env": "^0.1.0",
+    "@trpc/client": "^10.38.3",
+    "@trpc/react-query": "^10.38.3",
+    "@trpc/server": "^10.38.3",
     "clsx": "^2.0.0",
     "dayjs": "^1.11.9",
-    "expo": "^49.0.3",
-    "expo-auth-session": "~5.0.2",
+    "expo": "^49.0.11",
     "expo-constants": "~14.4.2",
-    "expo-font": "^11.4.0",
     "expo-image": "~1.3.2",
     "expo-linking": "~5.0.2",
-    "expo-router": "^2.0.0",
+    "expo-router": "^2.0.8",
     "expo-secure-store": "~12.3.1",
     "expo-splash-screen": "~0.20.5",
     "expo-status-bar": "~1.6.0",
@@ -45,30 +41,33 @@
     "react-native-safe-area-context": "4.6.3",
     "react-native-screens": "~3.22.1",
     "react-native-svg": "13.9.0",
-    "superjson": "1.9.1",
+    "superjson": "1.13.1",
     "tailwind-merge": "^1.14.0"
   },
   "devDependencies": {
     "@babel/core": "^7.22.9",
     "@babel/preset-env": "^7.22.9",
     "@babel/runtime": "^7.22.6",
-    "@bank-brew/api": "^0.1.0",
-    "@bank-brew/eslint-config": "^0.2.0",
-    "@bank-brew/tailwind-config": "^0.1.0",
     "@expo/config-plugins": "^7.2.5",
+    "@the-bank/api": "^0.1.0",
+    "@the-bank/eslint-config": "^0.1.0",
+    "@the-bank/prettier-config": "^0.1.0",
+    "@the-bank/tailwind-config": "^0.1.0",
+    "@the-bank/tsconfig": "^0.1.0",
     "@total-typescript/ts-reset": "^0.4.2",
     "@types/babel__core": "^7.20.1",
     "@types/react": "^18.2.15",
     "eslint": "^8.45.0",
     "postcss": "^8.4.26",
     "tailwindcss": "3.3.2",
-    "typescript": "^5.1.6"
+    "typescript": "^5.2.2"
   },
   "eslintConfig": {
     "root": true,
     "extends": [
-      "@bank-brew/eslint-config/base",
-      "@bank-brew/eslint-config/react"
+      "@the-bank/eslint-config/base",
+      "@the-bank/eslint-config/react"
     ]
-  }
+  },
+  "prettier": "@the-bank/prettier-config"
 }

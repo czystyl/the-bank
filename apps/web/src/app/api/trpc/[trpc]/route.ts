@@ -1,7 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from "next";
+import { appRouter, createTRPCContext } from "@the-bank/api";
 import { fetchRequestHandler } from "@trpc/server/adapters/fetch";
-
-import { appRouter, createTRPCContext } from "@bank-brew/api";
 
 export const runtime = "nodejs";
 

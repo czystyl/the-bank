@@ -15,6 +15,7 @@ const roboto_mono = Roboto_Mono({
 
 export const metadata: Metadata = {
   title: "The Bank",
+  metadataBase: new URL("https://acme.com"),
   description: "The Bank, best transfer app in the world",
   openGraph: {
     title: "The Bank",

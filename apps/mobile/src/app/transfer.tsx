@@ -12,11 +12,12 @@ import {
   View,
 } from "react-native";
 import { Image } from "expo-image";
-import { router } from "expo-router";
+
+import Slider from "~/components/Slider";
+// import { router } from "expo-router";
 
 import { api } from "~/utils/api";
 import { cn } from "~/utils/cn";
-import Slider from "~/components/Slider";
 
 export default function Transactions() {
   const [title, setTitle] = useState("");
@@ -32,7 +33,7 @@ export default function Transactions() {
     onSuccess: () => {
       void apiUtils.user.balance.refetch();
       void apiUtils.transaction.all.refetch();
-      router.back();
+      // router.back();
     },
   });
 

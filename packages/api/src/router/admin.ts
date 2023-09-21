@@ -1,5 +1,3 @@
-import { z } from "zod";
-
 import {
   getAllUsers,
   getRecentTransactions,
@@ -7,7 +5,8 @@ import {
   getTransactionAvg,
   getTransactionCount,
   getUsersCount,
-} from "@bank-brew/db";
+} from "@the-bank/db";
+import { z } from "zod";
 
 import { adminProcedure, createTRPCRouter } from "../trpc";
 
