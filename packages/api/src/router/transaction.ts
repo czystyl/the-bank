@@ -7,7 +7,7 @@ import {
 import { TRPCError } from "@trpc/server";
 import { z } from "zod";
 
-import { createTRPCRouter, protectedProcedure } from "../trpc";
+import { adminProcedure, createTRPCRouter, protectedProcedure } from "../trpc";
 
 export const transactionRouter = createTRPCRouter({
   all: protectedProcedure.query(({ ctx }) => {
@@ -29,6 +29,7 @@ export const transactionRouter = createTRPCRouter({
         });
       }
     }),
+
   create: protectedProcedure
     .input(
       z.object({

@@ -1,3 +1,4 @@
+import Link from "next/link";
 import dayjs from "dayjs";
 
 import { Card, CardContent, CardHeader, CardTitle } from "~/components/ui/card";
@@ -35,15 +36,21 @@ export default async function UserTab() {
           </TableHeader>
           <TableBody>
             {users.map((user) => (
-              <TableRow key={user.clerkId}>
-                <TableCell className="font-medium">{user.id}</TableCell>
-                <TableCell>{user.clerkId}</TableCell>
-                <TableCell>{user.firstName}</TableCell>
-                <TableCell>{user.lastName}</TableCell>
-                <TableCell className="text-right">
-                  {dayjs(user.createdAt).format("YYYY-MM-DD")}
-                </TableCell>
-              </TableRow>
+              <Link
+                key={user.clerkId}
+                href={`/dashboard/users/${user.clerkId}`}
+                legacyBehavior
+              >
+                <TableRow>
+                  <TableCell className="font-medium">{user.id}</TableCell>
+                  <TableCell>{user.clerkId}</TableCell>
+                  <TableCell>{user.firstName}</TableCell>
+                  <TableCell>{user.lastName}</TableCell>
+                  <TableCell className="text-right">
+                    {dayjs(user.createdAt).format("YYYY-MM-DD")}
+                  </TableCell>
+                </TableRow>
+              </Link>
             ))}
           </TableBody>
         </Table>

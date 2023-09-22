@@ -1,6 +1,6 @@
+import Link from "next/link";
 import dayjs from "dayjs";
 
-import { serverAPIClient } from "~/utils/serverAPIClient";
 import { Card, CardContent, CardHeader, CardTitle } from "~/components/ui/card";
 import {
   Table,
@@ -11,6 +11,7 @@ import {
   TableHeader,
   TableRow,
 } from "~/components/ui/table";
+import { serverAPIClient } from "~/utils/serverAPIClient";
 
 export default async function TransactionsTab() {
   const transactions = await serverAPIClient().admin.recentTransactions({
@@ -39,24 +40,30 @@ export default async function TransactionsTab() {
           </TableHeader>
           <TableBody>
             {transactions.map(({ transaction, sender, recipient }) => (
-              <TableRow key={transaction.uuid}>
-                <TableCell className="font-medium">
-                  {transaction.uuid}
-                </TableCell>
-                <TableCell>{transaction.title}</TableCell>
-                <TableCell>
-                  {sender?.firstName} {sender?.lastName}
-                </TableCell>
-                <TableCell>
-                  {recipient?.firstName} {recipient?.lastName}
-                </TableCell>
-                <TableCell>
-                  {dayjs(transaction.createdAt).format("DD-MM-YYYY")}
-                </TableCell>
-                <TableCell className="text-right">
-                  {transaction.value}$
-                </TableCell>
-              </TableRow>
+              <Link
+                key={transaction.id}
+                href={`/dashboard/transactions/${transaction.id}`}
+                legacyBehavior
+              >
+                <TableRow key={transaction.uuid}>
+                  <TableCell className="font-medium">
+                    {transaction.uuid}
+                  </TableCell>
+                  <TableCell>{transaction.title}</TableCell>
+                  <TableCell>
+                    {sender?.firstName} {sender?.lastName}
+                  </TableCell>
+                  <TableCell>
+                    {recipient?.firstName} {recipient?.lastName}
+                  </TableCell>
+                  <TableCell>
+                    {dayjs(transaction.createdAt).format("DD-MM-YYYY")}
+                  </TableCell>
+                  <TableCell className="text-right">
+                    {transaction.value}$
+                  </TableCell>
+                </TableRow>
+              </Link>
             ))}
           </TableBody>
         </Table>

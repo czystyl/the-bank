@@ -6,10 +6,6 @@ import { nanoid } from "nanoid";
 import { db } from "./db";
 import { transactions, users } from "./schema";
 
-export function getTransaction(uuid: string) {
-  return db.select().from(transactions).where(eq(transactions.uuid, uuid));
-}
-
 type TransactionInput = InferInsertModel<typeof transactions>;
 
 type CreateTransactionInput = Pick<
@@ -107,7 +103,6 @@ export function getTransactions(userId: string) {
       recipientAlias,
       eq(transactionAlias.recipientUserId, recipientAlias.clerkId),
     )
-
     .where(
       or(
         and(
@@ -121,8 +116,29 @@ export function getTransactions(userId: string) {
         ),
       ),
     )
-    .orderBy(desc(transactionAlias.id))
-    .limit(0);
+    .orderBy(desc(transactionAlias.id));
+}
+
+export async function getTransaction(id: number) {
+  const senderAlias = alias(users, "sender");
+  const recipientAlias = alias(users, "recipient");
+  const transactionAlias = alias(transactions, "transaction");
+
+  const result = await db
+    .select()
+    .from(transactionAlias)
+    .leftJoin(
+      senderAlias,
+      eq(transactionAlias.senderUserId, senderAlias.clerkId),
+    )
+    .leftJoin(
+      recipientAlias,
+      eq(transactionAlias.recipientUserId, recipientAlias.clerkId),
+    )
+    .where(eq(transactionAlias.id, id))
+    .limit(1);
+
+  return result[0];
 }
 
 export function getRecentTransactions(limit: number) {

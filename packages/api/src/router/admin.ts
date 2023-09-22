@@ -2,8 +2,10 @@ import {
   getAllUsers,
   getRecentTransactions,
   getTotalVolume,
+  getTransaction,
   getTransactionAvg,
   getTransactionCount,
+  getUser,
   getUsersCount,
 } from "@the-bank/db";
 import { z } from "zod";
@@ -24,6 +26,18 @@ export const adminRouter = createTRPCRouter({
   allUsers: adminProcedure.query(() => {
     return getAllUsers();
   }),
+
+  getTransaction: adminProcedure
+    .input(z.object({ id: z.number() }))
+    .query(({ input }) => {
+      return getTransaction(input.id);
+    }),
+
+  getUser: adminProcedure
+    .input(z.object({ clerkId: z.string() }))
+    .query(({ input }) => {
+      return getUser(input.clerkId);
+    }),
 
   overviews: adminProcedure.query(async () => {
     const [totalVolume, transactionCount, userCount, avgTransaction] =

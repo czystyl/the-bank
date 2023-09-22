@@ -1,6 +1,9 @@
 /** @type {import("next").NextConfig} */
 const config = {
   reactStrictMode: true,
+  images: {
+    domains: ["img.clerk.com"],
+  },
   compiler: {
     styledComponents: true,
   },
