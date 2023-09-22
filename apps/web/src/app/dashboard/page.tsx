@@ -3,9 +3,9 @@ import { UserButton } from "@clerk/nextjs";
 
 import { ModeToggle } from "~/components/ModeToggle";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "~/components/ui/tabs";
+import TransactionsTab from "../transactions/TransactionsTab";
+import UserTab from "../users/UserTab";
 import OverviewTab from "./OverviewTab";
-import TransactionsTab from "./TransactionsTab";
-import UserTab from "./UserTab";
 
 export const metadata: Metadata = {
   title: "Dashboard",

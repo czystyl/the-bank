@@ -1,8 +1,8 @@
-import { ActivityIndicator, FlatList, View } from "react-native";
+import { ActivityIndicator, FlatList, Text, View } from "react-native";
 import { StatusBar } from "expo-status-bar";
 
-import { api } from "~/utils/api";
 import TransactionItem from "~/components/TransactionItem";
+import { api } from "~/utils/api";
 
 export default function Transactions() {
   const { data, isLoading, isFetching, refetch } =
@@ -27,6 +27,11 @@ export default function Transactions() {
           );
         }}
       />
+      {data?.length === 0 && (
+        <Text className="absolute w-full pt-24 text-center text-lg">
+          You haven&apos;t made any transaction yet.
+        </Text>
+      )}
 
       {isLoading && !data && (
         <View className="absolute h-full w-full flex-1 justify-center ">
