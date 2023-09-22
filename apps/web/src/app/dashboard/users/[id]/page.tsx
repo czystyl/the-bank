@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import Image from "next/image";
 import Link from "next/link";
 import dayjs from "dayjs";
 import { ArrowLeft } from "lucide-react";
@@ -13,7 +12,6 @@ import {
   CardHeader,
   CardTitle,
 } from "~/components/ui/card";
-import { Skeleton } from "~/components/ui/skeleton";
 import { serverAPIClient } from "~/utils/serverAPIClient";
 
 export const metadata: Metadata = {

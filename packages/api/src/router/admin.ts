@@ -8,6 +8,7 @@ import {
   getUser,
   getUsersCount,
 } from "@the-bank/db";
+import { TRPCError } from "@trpc/server";
 import { z } from "zod";
 
 import { adminProcedure, createTRPCRouter } from "../trpc";
@@ -29,14 +30,26 @@ export const adminRouter = createTRPCRouter({
 
   getTransaction: adminProcedure
     .input(z.object({ id: z.number() }))
-    .query(({ input }) => {
-      return getTransaction(input.id);
+    .query(async ({ input }) => {
+      const transaction = await getTransaction(input.id);
+
+      if (!transaction) {
+        throw new TRPCError({ code: "NOT_FOUND" });
+      }
+
+      return transaction;
     }),
 
   getUser: adminProcedure
     .input(z.object({ clerkId: z.string() }))
-    .query(({ input }) => {
-      return getUser(input.clerkId);
+    .query(async ({ input }) => {
+      const user = await getUser(input.clerkId);
+
+      if (!user) {
+        throw new TRPCError({ code: "NOT_FOUND" });
+      }
+
+      return user;
     }),
 
   overviews: adminProcedure.query(async () => {

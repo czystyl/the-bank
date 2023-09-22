@@ -1,5 +1,3 @@
-import type { Metadata } from "next";
-
 import Header from "~/components/Header";
 
 export default function DashboardLayout({

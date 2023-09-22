@@ -11,7 +11,7 @@ import {
 } from "~/components/ui/card";
 import { Skeleton } from "~/components/ui/skeleton";
 
-export default async function TransactionsPage() {
+export default function TransactionsPage() {
   return (
     <div className="mx-auto w-1/4">
       <Link href="/dashboard">
