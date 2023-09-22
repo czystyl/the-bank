@@ -1,6 +1,5 @@
 import dayjs from "dayjs";
 
-import { serverAPIClient } from "~/utils/serverAPIClient";
 import { Card, CardContent, CardHeader, CardTitle } from "~/components/ui/card";
 import {
   Table,
@@ -11,6 +10,7 @@ import {
   TableHeader,
   TableRow,
 } from "~/components/ui/table";
+import { serverAPIClient } from "~/utils/serverAPIClient";
 
 export default async function UserTab() {
   const users = await serverAPIClient().admin.allUsers();
