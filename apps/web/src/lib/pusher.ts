@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import type { AddFoundEvent, NewFoundEvent } from "@the-bank/core";
+import type { AddFoundEvent, NewTransactionEvent } from "@the-bank/core";
 import { channels, formatCurrencyValue } from "@the-bank/core";
 import { env } from "@the-bank/env";
 import Pusher from "pusher-js";
@@ -38,12 +38,12 @@ export function useUpdateSubscribe() {
   }, [toast, apiUtils.admin]);
 
   useEffect(() => {
-    async function handler(data: NewFoundEvent) {
+    async function handler(data: NewTransactionEvent) {
       toast({
         title: "A new transaction has been made",
-        description: `${data.sender} send ${formatCurrencyValue(
+        description: `${data.sender.name} send ${formatCurrencyValue(
           data.value,
-        )} to ${data.recipient}`,
+        )} to ${data.recipient.name}`,
       });
 
       await apiUtils.admin.invalidate();

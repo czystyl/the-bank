@@ -22,14 +22,21 @@ export const channels = {
 
 export const AddFoundEventSchema = z.object({
   value: z.number().min(1),
+  clerkUserId: z.string(),
 });
 
 export type AddFoundEvent = z.infer<typeof AddFoundEventSchema>;
 
-export const NewFoundEventSchema = z.object({
-  sender: z.string(),
-  recipient: z.string(),
+export const NewTransactionEventSchema = z.object({
+  sender: z.object({
+    clerkUserId: z.string(),
+    name: z.string(),
+  }),
+  recipient: z.object({
+    clerkUserId: z.string(),
+    name: z.string(),
+  }),
   value: z.number().min(1),
 });
 
-export type NewFoundEvent = z.infer<typeof NewFoundEventSchema>;
+export type NewTransactionEvent = z.infer<typeof NewTransactionEventSchema>;

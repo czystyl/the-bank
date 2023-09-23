@@ -13,7 +13,7 @@ import { Skeleton } from "~/components/ui/skeleton";
 
 export default function UsersPage() {
   return (
-    <div className="mx-auto w-1/4">
+    <div className="mx-auto w-1/3">
       <Link href="/dashboard">
         <div className="flex items-center">
           <ArrowLeft className="my-4 h-10 w-10" />

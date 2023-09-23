@@ -1,12 +1,13 @@
 import type { ExpoConfig } from "@expo/config";
 
-const defineConfig = (): ExpoConfig => ({
+const defineConfig: ExpoConfig = {
   name: "expo",
-  slug: "expo",
+  slug: "the-bank",
   scheme: "expo",
   version: "1.0.0",
   orientation: "portrait",
   icon: "./assets/icon.png",
+  owner: "czysty",
   userInterfaceStyle: "automatic",
   splash: {
     image: "./assets/icon.png",
@@ -29,7 +30,7 @@ const defineConfig = (): ExpoConfig => ({
   },
   extra: {
     eas: {
-      // projectId: "your-project-id",
+      projectId: "677df07c-8718-4abb-8a30-d86f985f47fb",
     },
   },
   experiments: {
@@ -37,6 +38,6 @@ const defineConfig = (): ExpoConfig => ({
     typedRoutes: true,
   },
   plugins: ["expo-router", "./expo-plugins/with-modify-gradle.js"],
-});
+};
 
 export default defineConfig;

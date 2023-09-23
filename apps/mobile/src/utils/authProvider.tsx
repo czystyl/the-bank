@@ -36,6 +36,7 @@ export function AuthProvider(props: { children: React.ReactNode }) {
   } = useOnboardingSettings();
 
   const { user } = useUser();
+
   const { isLoaded, signOut } = useClerkAuth();
 
   useEffect(() => {

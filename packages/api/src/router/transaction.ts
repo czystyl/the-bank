@@ -25,7 +25,10 @@ export const transactionRouter = createTRPCRouter({
         await PusherServer.trigger(
           channels.mainChannel.name,
           channels.mainChannel.events.addFounds,
-          { value: input.value },
+          {
+            value: input.value,
+            clerkUserId: ctx.auth.userId,
+          },
         );
       } catch (error) {
         throw new TRPCError({
@@ -71,8 +74,14 @@ export const transactionRouter = createTRPCRouter({
           channels.mainChannel.name,
           channels.mainChannel.events.newTransaction,
           {
-            sender: sender?.firstName,
-            recipient: recipient.firstName,
+            sender: {
+              clerkUserId: sender?.clerkId,
+              name: sender?.firstName,
+            },
+            recipient: {
+              clerkUserId: recipient.clerkId,
+              name: recipient.firstName,
+            },
             value: input.value,
           },
         );

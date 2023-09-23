@@ -87,8 +87,8 @@ export default function Transactions() {
                 })}
               >
                 <Image
-                  source={{ uri: user.imageUrl, height: 56, width: 56 }}
-                  style={{ borderRadius: 56 }}
+                  source={{ uri: user.imageUrl }}
+                  style={{ borderRadius: 56, height: 56, width: 56 }}
                 />
               </View>
               <Text
