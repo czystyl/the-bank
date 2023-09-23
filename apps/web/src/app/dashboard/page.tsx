@@ -37,9 +37,7 @@ export default function DashboardPage() {
         </TabsContent>
 
         <TabsContent value="overview" className="space-y-4">
-          <Suspense fallback={<div>Loading...</div>}>
-            <OverviewTab />
-          </Suspense>
+          <OverviewTab />
         </TabsContent>
       </Tabs>
     </div>

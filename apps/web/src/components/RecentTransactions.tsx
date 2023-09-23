@@ -1,62 +1,38 @@
 "use client";
 
-import { useEffect } from "react";
-import type { AddFoundEvent, NewFoundEvent } from "@the-bank/core";
-import { channels, formatCurrencyValue } from "@the-bank/core";
+import { formatCurrencyValue } from "@the-bank/core";
 import dayjs from "dayjs";
 
 import { api } from "~/lib/api";
-import { PusherClient } from "~/lib/pusher";
+import { useUpdateSubscribe } from "~/lib/pusher";
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
-import { useToast } from "./ui/use-toast";
+import { Skeleton } from "./ui/skeleton";
 
 export function RecentTransactions() {
-  const { data } = api.admin.recentTransactions.useQuery({ limit: 5 });
-  const apiUtils = api.useContext();
+  const { data, isLoading } = api.admin.recentTransactions.useQuery({
+    limit: 5,
+  });
 
-  const { toast } = useToast();
+  useUpdateSubscribe();
 
-  useEffect(() => {
-    async function handler(data: AddFoundEvent) {
-      toast({
-        title: "A new transaction has been made",
-        description: `Someone add ${formatCurrencyValue(
-          data.value,
-        )} to their account`,
-      });
-
-      await apiUtils.admin.invalidate();
-    }
-
-    const updateChannel = PusherClient.subscribe(channels.mainChannel.name);
-    updateChannel.bind(channels.mainChannel.events.addFounds, handler);
-
-    return () => {
-      PusherClient.unsubscribe(channels.mainChannel.name);
-      updateChannel.unbind(channels.mainChannel.events.addFounds, handler);
-    };
-  }, [toast, apiUtils.admin]);
-
-  useEffect(() => {
-    async function handler(data: NewFoundEvent) {
-      toast({
-        title: "A new transaction has been made",
-        description: `${data.sender} send ${formatCurrencyValue(
-          data.value,
-        )} to ${data.recipient}`,
-      });
-
-      await apiUtils.admin.invalidate();
-    }
-
-    const updateChannel = PusherClient.subscribe(channels.mainChannel.name);
-    updateChannel.bind(channels.mainChannel.events.newTransaction, handler);
-
-    return () => {
-      PusherClient.unsubscribe(channels.mainChannel.name);
-      updateChannel.unbind(channels.mainChannel.events.newTransaction, handler);
-    };
-  }, [toast, apiUtils.admin]);
+  if (isLoading) {
+    return (
+      <div className="space-y-8">
+        {new Array(5).fill(null).map((_, index) => (
+          <div key={index} className="flex flex-row gap-4">
+            <Skeleton className="h-12 w-12 rounded-full" />
+            <div className="flex flex-1 flex-col gap-2 ">
+              <Skeleton className="h-6 w-1/2" />
+              <Skeleton className="h-6 w-1/4" />
+            </div>
+            <div className="flex items-center">
+              <Skeleton className="h-6 w-16" />
+            </div>
+          </div>
+        ))}
+      </div>
+    );
+  }
 
   return (
     <div className="space-y-8">

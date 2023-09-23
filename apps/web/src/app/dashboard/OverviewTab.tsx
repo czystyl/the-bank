@@ -65,9 +65,7 @@ export default async function OverviewTab() {
         <Card className="col-span-3">
           <CardHeader>
             <CardTitle>Recent Transactions</CardTitle>
-            <CardDescription>
-              Users made 265 transactions this month.
-            </CardDescription>
+            <CardDescription>List of last made transactions</CardDescription>
           </CardHeader>
           <CardContent>
             <RecentTransactions />

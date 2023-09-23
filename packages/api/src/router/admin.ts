@@ -20,11 +20,11 @@ export const adminRouter = createTRPCRouter({
         limit: z.number(),
       }),
     )
-    .query(({ input }) => {
+    .query(async ({ input }) => {
       return getRecentTransactions(input.limit);
     }),
 
-  allUsers: adminProcedure.query(() => {
+  allUsers: adminProcedure.query(async () => {
     return getAllUsers();
   }),
 
