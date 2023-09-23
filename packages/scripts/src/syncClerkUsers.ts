@@ -1,12 +1,10 @@
-import { insertUser } from "@the-bank/db";
-
-import "@the-bank/env";
-
 import clerk from "@clerk/clerk-sdk-node";
+import { insertUser } from "@the-bank/db";
 
 const users = [];
 
 const limit = 50;
+
 let page = 0;
 let fetchMore = true;
 

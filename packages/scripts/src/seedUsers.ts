@@ -1,9 +1,9 @@
 import { faker } from "@faker-js/faker";
-import { insertUsers } from "@the-bank/db";
+import { insertUser } from "@the-bank/db";
 
-const users = [];
+const count = faker.number.int({ min: 30, max: 80 });
 
-for (let i = 0; i < 50; i++) {
+for (let i = 0; i < count; i++) {
   const clerkId = `fake_${faker.string.alpha(28)}`;
   const firstName = faker.person.firstName();
   const lastName = faker.person.lastName();
@@ -13,7 +13,7 @@ for (let i = 0; i < 50; i++) {
     to: new Date().toISOString(),
   });
 
-  users.push({
+  await insertUser({
     clerkId,
     firstName,
     lastName,
@@ -22,10 +22,4 @@ for (let i = 0; i < 50; i++) {
   });
 }
 
-const results = await insertUsers(users);
-
-if (!results) {
-  console.log("No users were inserted");
-} else {
-  console.log(`Inserted ${results.rowsAffected} users.`);
-}
+console.log("Done!");

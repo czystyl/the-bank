@@ -10,7 +10,7 @@
     "dev:ios": "expo start --ios",
     "lint": "eslint .",
     "lint:fix": "pnpm lint --fix",
-    "type-check": "tsc --noEmit"
+    "typecheck": "tsc --noEmit"
   },
   "dependencies": {
     "@clerk/clerk-expo": "^0.19.2",

@@ -1,4 +1,3 @@
-import { sql } from "drizzle-orm";
 import {
   float,
   mysqlEnum,

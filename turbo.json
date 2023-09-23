@@ -22,7 +22,10 @@
     "//#clean": {
       "cache": false
     },
-    "type-check": {
+    "typecheck": {
+      "cache": false
+    },
+    "format": {
       "cache": false
     }
   },

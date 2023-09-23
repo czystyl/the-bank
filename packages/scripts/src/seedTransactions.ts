@@ -3,7 +3,11 @@ import { createTransaction, getAllUsers } from "@the-bank/db";
 
 const allUsers = await getAllUsers();
 
-for (let i = 0; i < 600; i++) {
+const count = faker.number.int({ min: 100, max: 500 });
+
+console.log(`Creating ${count} transactions...`);
+
+for (let i = 0; i < count; i++) {
   const [senderUser, recipientUser] = allUsers
     .sort(() => Math.random() - 0.5)
     .slice(0, 2);

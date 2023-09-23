@@ -7,9 +7,9 @@
   "type": "module",
   "scripts": {
     "clean": "rm -rf .turbo node_modules",
-    "type-check": "tsc --noEmit",
     "lint": "eslint .",
-    "lint:fix": "yarn lint --fix"
+    "lint:fix": "pnpm lint --fix",
+    "typecheck": "tsc --noEmit"
   },
   "dependencies": {
     "@t3-oss/env-nextjs": "^0.6.0",

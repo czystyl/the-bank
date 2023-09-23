@@ -7,8 +7,11 @@
   "type": "module",
   "scripts": {
     "clean": "rm -rf .turbo node_modules",
-    "db:studio": "pnpm with-env drizzle-kit studio",
     "db:push": "pnpm with-env  drizzle-kit push:mysql",
+    "db:studio": "pnpm with-env drizzle-kit studio",
+    "lint": "eslint .",
+    "lint:fix": "pnpm lint --fix",
+    "typecheck": "tsc --noEmit",
     "with-env": "dotenv -e ../../.env --"
   },
   "dependencies": {

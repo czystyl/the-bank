@@ -5,6 +5,12 @@
   "types": "./index.ts",
   "type": "module",
   "private": true,
+  "scripts": {
+    "clean": "rm -rf .turbo node_modules",
+    "lint": "eslint .",
+    "lint:fix": "pnpm lint --fix",
+    "typecheck": "tsc --noEmit"
+  },
   "dependencies": {
     "@the-bank/api": "0.1.0"
   },

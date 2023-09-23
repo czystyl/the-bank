@@ -9,11 +9,14 @@
     "node": ">=v18.16.1"
   },
   "scripts": {
-    "dev": "pnpm with-env tsx watch ./src/scripts.ts",
-    "seed:transactions": "pnpm with-env tsx ./src/seedFakeTransactions.ts",
+    "seed:transactions": "pnpm with-env tsx ./src/seedTransactions.ts",
     "sync:users": "pnpm with-env tsx ./src/syncClerkUsers.ts",
-    "seed:fake-users": "pnpm with-env tsx ./src/seedFakeUsers.ts",
-    "with-env": "dotenv -e ../../.env --"
+    "seed:users": "pnpm with-env tsx ./src/seedUsers.ts",
+    "clean": "rm -rf .turbo node_modules",
+    "with-env": "dotenv -e ../../.env --",
+    "lint": "eslint .",
+    "lint:fix": "pnpm lint --fix",
+    "typecheck": "tsc --noEmit"
   },
   "dependencies": {
     "@clerk/clerk-sdk-node": "^4.12.5",

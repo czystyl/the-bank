@@ -4,9 +4,6 @@ const config = {
   images: {
     domains: ["img.clerk.com"],
   },
-  compiler: {
-    styledComponents: true,
-  },
   /** Enables hot reloading for local packages without a build step */
   transpilePackages: ["@the-bank/api", "@the-bank/db"],
   /** We already do linting and typechecking as separate tasks in CI */

@@ -7,7 +7,6 @@ import {
 } from "@radix-ui/react-icons";
 import { formatValue } from "@the-bank/core";
 
-import { serverAPIClient } from "~/utils/serverAPIClient";
 import CardInfo from "~/components/CardInfo";
 import { Overview } from "~/components/Overview";
 import { RecentSales } from "~/components/RecentSales";
@@ -18,6 +17,7 @@ import {
   CardHeader,
   CardTitle,
 } from "~/components/ui/card";
+import { serverAPIClient } from "~/utils/serverAPIClient";
 
 export default async function OverviewTab() {
   const { totalVolume, transactionCount, userCount, avgTransaction } =

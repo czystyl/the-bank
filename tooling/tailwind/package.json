@@ -11,7 +11,7 @@
   "scripts": {
     "clean": "rm -rf .turbo node_modules",
     "lint": "eslint .",
-    "format": "prettier --check \"**/*.{mjs,ts,md,json}\"",
+    "lint:fix": "pnpm lint --fix",
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {

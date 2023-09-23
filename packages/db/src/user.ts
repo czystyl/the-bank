@@ -1,13 +1,6 @@
 import { DatabaseError } from "@planetscale/database";
-import {
-  and,
-  desc,
-  eq,
-  InferInsertModel,
-  InferSelectModel,
-  or,
-  sql,
-} from "drizzle-orm";
+import type { InferInsertModel, InferSelectModel } from "drizzle-orm";
+import { desc, eq, sql } from "drizzle-orm";
 
 import { db } from "./db";
 import { users } from "./schema";

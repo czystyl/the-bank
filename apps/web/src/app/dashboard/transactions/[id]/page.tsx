@@ -20,11 +20,11 @@ export const metadata: Metadata = {
   description: "Example transactions app built using the components.",
 };
 
-type TransactionsPageProps = {
+interface TransactionsPageProps {
   params: {
     id: string;
   };
-};
+}
 
 export default async function TransactionsPage({
   params,

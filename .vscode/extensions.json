@@ -4,6 +4,9 @@
     "dbaeumer.vscode-eslint",
     "esbenp.prettier-vscode",
     "expo.vscode-expo-tools",
-    "yoavbls.pretty-ts-errors"
+    "yoavbls.pretty-ts-errors",
+    "mikestead.dotenv",
+    "usernamehw.errorlens",
+    "github.copilot"
   ]
 }

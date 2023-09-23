@@ -1,5 +1,5 @@
-import dayjs from "dayjs";
-import { and, desc, eq, InferInsertModel, lt, or, sql } from "drizzle-orm";
+import type { InferInsertModel } from "drizzle-orm";
+import { and, desc, eq, or, sql } from "drizzle-orm";
 import { alias } from "drizzle-orm/mysql-core";
 import { nanoid } from "nanoid";
 
@@ -13,10 +13,10 @@ type CreateTransactionInput = Pick<
   "title" | "value" | "recipientUserId" | "senderUserId" | "createdAt"
 >;
 
-type CreateTransactionParams = {
+interface CreateTransactionParams {
   data: CreateTransactionInput;
   skipValidation?: boolean;
-};
+}
 
 export async function createTransaction({
   data,

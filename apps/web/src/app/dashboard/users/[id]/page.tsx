@@ -19,11 +19,11 @@ export const metadata: Metadata = {
   description: "Example users app built using the components.",
 };
 
-type UserPageProps = {
+interface UserPageProps {
   params: {
     id: string;
   };
-};
+}
 
 export default async function UsersPage({ params }: UserPageProps) {
   const user = await serverAPIClient().admin.getUser({ clerkId: params.id });
