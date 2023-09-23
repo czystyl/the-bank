@@ -1,18 +1,35 @@
-import type { RouterOutputs } from "@the-bank/api";
+import { z } from "zod";
 
-export function formatTransactionValue(
-  value: number,
-  type: RouterOutputs["transaction"]["all"][number]["transaction"]["type"],
-) {
-  const displayValue = Math.abs(value).toFixed(2);
+export function formatCurrencyValue(value: number) {
+  const isAboveZero = value > 0;
 
-  if (type === "INCOME") {
-    return `+${displayValue}$`;
-  }
+  const formattedValue = Math.abs(value).toLocaleString(undefined, {
+    maximumFractionDigits: 2,
+  });
 
-  return `-${displayValue}$`;
+  return `${isAboveZero ? "+" : ""}${formattedValue}$`;
 }
 
-export function formatValue({ value = 0, withSuffix = false }) {
-  return `${withSuffix && value > 0 ? "+" : ""}${value.toFixed(2)}$`;
-}
+export const channels = {
+  mainChannel: {
+    name: "main-channel",
+    events: {
+      addFounds: "add-founds",
+      newTransaction: "new-transaction",
+    },
+  },
+};
+
+export const AddFoundEventSchema = z.object({
+  value: z.number().min(1),
+});
+
+export type AddFoundEvent = z.infer<typeof AddFoundEventSchema>;
+
+export const NewFoundEventSchema = z.object({
+  sender: z.string(),
+  recipient: z.string(),
+  value: z.number().min(1),
+});
+
+export type NewFoundEvent = z.infer<typeof NewFoundEventSchema>;

@@ -12,7 +12,7 @@ import {
   CardHeader,
   CardTitle,
 } from "~/components/ui/card";
-import { serverAPIClient } from "~/utils/serverAPIClient";
+import { serverAPIClient } from "~/lib/serverAPIClient";
 
 export const metadata: Metadata = {
   title: "Users",

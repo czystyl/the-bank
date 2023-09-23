@@ -11,9 +11,6 @@
     "lint:fix": "pnpm lint --fix",
     "typecheck": "tsc --noEmit"
   },
-  "dependencies": {
-    "@the-bank/api": "0.1.0"
-  },
   "devDependencies": {
     "@the-bank/eslint-config": "^0.1.0",
     "@the-bank/prettier-config": "^0.1.0",

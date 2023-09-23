@@ -1,15 +1,14 @@
-import { Suspense } from "react";
 import {
   BarChartIcon,
   CommitIcon,
   PersonIcon,
   RocketIcon,
 } from "@radix-ui/react-icons";
-import { formatValue } from "@the-bank/core";
+import { formatCurrencyValue } from "@the-bank/core";
 
 import CardInfo from "~/components/CardInfo";
 import { Overview } from "~/components/Overview";
-import { RecentSales } from "~/components/RecentSales";
+import { RecentTransactions } from "~/components/RecentTransactions";
 import {
   Card,
   CardContent,
@@ -17,7 +16,7 @@ import {
   CardHeader,
   CardTitle,
 } from "~/components/ui/card";
-import { serverAPIClient } from "~/utils/serverAPIClient";
+import { serverAPIClient } from "~/lib/serverAPIClient";
 
 export default async function OverviewTab() {
   const { totalVolume, transactionCount, userCount, avgTransaction } =
@@ -28,7 +27,7 @@ export default async function OverviewTab() {
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
         <CardInfo
           title="Total Volume"
-          value={formatValue({ value: totalVolume })}
+          value={formatCurrencyValue(totalVolume)}
           icon={<BarChartIcon className="h-8 w-8 text-green-500" />}
           caption="+20.1% from last month"
         />
@@ -41,7 +40,7 @@ export default async function OverviewTab() {
         />
         <CardInfo
           title="Avg Transaction Value"
-          value={formatValue({ value: avgTransaction })}
+          value={formatCurrencyValue(avgTransaction)}
           icon={<CommitIcon className="h-8 w-8 text-green-500" />}
           caption="+50.82% from last month"
         />
@@ -52,6 +51,7 @@ export default async function OverviewTab() {
           caption="+5.12% from last month"
         />
       </div>
+
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-7">
         <Card className="col-span-4">
           <CardHeader>
@@ -61,6 +61,7 @@ export default async function OverviewTab() {
             <Overview />
           </CardContent>
         </Card>
+
         <Card className="col-span-3">
           <CardHeader>
             <CardTitle>Recent Transactions</CardTitle>
@@ -69,9 +70,7 @@ export default async function OverviewTab() {
             </CardDescription>
           </CardHeader>
           <CardContent>
-            <Suspense fallback={<div>Loading...</div>}>
-              <RecentSales />
-            </Suspense>
+            <RecentTransactions />
           </CardContent>
         </Card>
       </div>

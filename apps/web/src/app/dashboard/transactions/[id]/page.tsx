@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { formatTransactionValue, formatValue } from "@the-bank/core";
+import { formatCurrencyValue } from "@the-bank/core";
 import dayjs from "dayjs";
 import { ArrowLeft, ArrowRight } from "lucide-react";
 
@@ -13,7 +13,7 @@ import {
   CardHeader,
   CardTitle,
 } from "~/components/ui/card";
-import { serverAPIClient } from "~/utils/serverAPIClient";
+import { serverAPIClient } from "~/lib/serverAPIClient";
 
 export const metadata: Metadata = {
   title: "Transactions",
@@ -76,16 +76,8 @@ export default async function TransactionsPage({
             </div>
           </div>
           <p>TYPE: {transaction.transaction.type}</p>
-          <p>
-            BALANCE: {formatValue({ value: transaction.transaction.balance })}
-          </p>
-          <p>
-            Value:{" "}
-            {formatTransactionValue(
-              transaction.transaction.value,
-              transaction.transaction.type,
-            )}
-          </p>
+          <p>BALANCE: {formatCurrencyValue(transaction.transaction.balance)}</p>
+          <p>Value: {formatCurrencyValue(transaction.transaction.value)}</p>
           <p>TITLE: {transaction.transaction.title}</p>
         </CardContent>
         <CardFooter>

@@ -44,14 +44,13 @@ packages
 
 ## Pre-requirements
 
-Make sure that you have installed:
+Make sure that you have installed and configured:
 
-- Node.js, [Recommendation NVM](https://github.com/nvm-sh/nvm)
-- pnpm [Installation guide](https://pnpm.io/installation#using-npm)
-- Expo:
-
-Additional:
-Beekeper
+- **Node.js**: I recommend using NVM (Node Version Manager). [Installation Guide](https://github.com/nvm-sh/nvm)
+- **pnpm**: [Installation Guide](https://pnpm.io/installation#using-npm)
+- **Docker**: [Installation Guide](https://docs.docker.com/engine/install/)
+- **iOS Simulator**: [Installation Guide](https://docs.expo.dev/workflow/ios-simulator/)
+- **Android Studio Emulator**: [Installation Guide](https://docs.expo.dev/workflow/android-studio-emulator/)
 
 ## Quick Start
 
@@ -59,42 +58,29 @@ To get it running, follow the steps below:
 
 ### Setup dependencies
 
-```diff
-# Install dependencies
-pnpm i
+- Install dependencies
 
-# Copy example .env file for whole project and mobile separately
-cp .env.example .env
-cp apps/mobile/.env.example .env
+  ```sh
+  pnpm i
+  ```
 
-# Push the Drizzle schema to your database
-pnpm db:push
-```
+- Copy example .env files
 
-### Configure Expo `dev`-script
+  ```sh
+  cp .env.example .env
+  # Expo needs a different .env file
+  cp apps/mobile/.env.example .env
+  ```
 
-#### Use iOS Simulator
+- Database setup
 
-1. Make sure you have XCode and XCommand Line Tools installed [as shown on expo docs](https://docs.expo.dev/workflow/ios-simulator/).
-   > **NOTE:** If you just installed XCode, or if you have updated it, you need to open the simulator manually once. Run `npx expo start` in the root dir, and then enter `I` to launch Expo Go. After the manual launch, you can run `pnpm dev` in the root directory.
+  ```sh
+  docker run --name the-bank-mysql -e MYSQL_ROOT_PASSWORD=password -d -p 3306:3306 mysql
+  ```
 
-```diff
-+  "dev": "expo start --ios",
-```
+  > You can also get one from https://planetscale.com/
 
-3. Run `pnpm dev` at the project root folder.
-
-> **TIP:** It might be easier to run each app in separate terminal windows so you get the logs from each app separately. This is also required if you want your terminals to be interactive, e.g. to access the Expo QR code. You can run `pnpm --filter expo dev` and `pnpm --filter nextjs dev` to run each app in a separate terminal window.
-
-#### For Android
-
-1. Install Android Studio tools [as shown on expo docs](https://docs.expo.dev/workflow/android-studio-emulator/).
-2. Change the `dev` script at `apps/expo/package.json` to open the Android emulator.
-
-```diff
-+  "dev": "expo start --android",
-```
-
-3. Run `pnpm dev` at the project root folder.
-
-## Deployment
+- Database synchronization (optional)
+  ```
+  pnpm db:push
+  ```

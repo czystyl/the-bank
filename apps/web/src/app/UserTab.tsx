@@ -11,7 +11,7 @@ import {
   TableHeader,
   TableRow,
 } from "~/components/ui/table";
-import { serverAPIClient } from "~/utils/serverAPIClient";
+import { serverAPIClient } from "~/lib/serverAPIClient";
 
 export default async function UserTab() {
   const users = await serverAPIClient().admin.allUsers();
