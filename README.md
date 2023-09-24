@@ -84,3 +84,31 @@ To get it running, follow the steps below:
   ```
   pnpm db:push
   ```
+
+## Get started!
+
+We need to run mobile and web in parallel
+
+- Web:
+
+  ```sh
+  pnpm web
+  ```
+
+- iOS simulator:
+
+  ```sh
+  pnpm mobile
+  ```
+
+## Clear workspace
+
+If you need to reinstall all packages run:
+
+```sh
+# Clear all deps and cache
+pnpm clean:workspaces
+
+# Install all dependencies
+pnpm i
+```
