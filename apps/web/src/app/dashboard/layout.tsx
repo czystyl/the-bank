@@ -1,5 +1,3 @@
-import Header from "~/components/Header";
-
 interface DashboardLayoutProps {
   children: React.ReactNode;
 }
@@ -7,7 +5,7 @@ interface DashboardLayoutProps {
 export default function DashboardLayout({ children }: DashboardLayoutProps) {
   return (
     <div className="flex flex-col">
-      <Header />
+      {`<ToDo Layout/ >`}
       {children}
     </div>
   );

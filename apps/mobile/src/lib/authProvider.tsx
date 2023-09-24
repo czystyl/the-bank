@@ -7,16 +7,12 @@ import {
   useRootNavigationState,
   useSegments,
 } from "expo-router";
-import { useAuth as useClerkAuth, useUser } from "@clerk/clerk-expo";
-import type { UserResource } from "@clerk/types";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 SplashScreen.preventAutoHideAsync();
 
 interface AuthContextType {
-  signOut: () => Promise<void>;
-  user: UserResource | null;
-  ready: boolean;
+  setUser: (arg: boolean) => void;
   resetOnboarding: () => void;
   completeOnboarding: () => void;
 }
@@ -35,9 +31,8 @@ export function AuthProvider(props: { children: React.ReactNode }) {
     completeOnboarding,
   } = useOnboardingSettings();
 
-  const { user } = useUser();
-
-  const { isLoaded, signOut } = useClerkAuth();
+  // TODO: Replace with Clerk User!
+  const [user, setUser] = useState(false);
 
   useEffect(() => {
     if (navigated) {
@@ -46,7 +41,7 @@ export function AuthProvider(props: { children: React.ReactNode }) {
   }, [navigated]);
 
   useEffect(() => {
-    if (!rootNavigationState?.key || !isLoaded || !isOnboardingValueChecked) {
+    if (!rootNavigationState?.key || !isOnboardingValueChecked) {
       return;
     }
 
@@ -55,6 +50,7 @@ export function AuthProvider(props: { children: React.ReactNode }) {
     setNavigated(true);
 
     if (user && isAuthSegment) {
+      console.log("Navigating to home screen");
       return router.replace("/(home)/");
     }
 
@@ -66,7 +62,6 @@ export function AuthProvider(props: { children: React.ReactNode }) {
       return router.replace("/(auth)/sign-in");
     }
   }, [
-    isLoaded,
     rootNavigationState?.key,
     segments,
     user,
@@ -77,10 +72,8 @@ export function AuthProvider(props: { children: React.ReactNode }) {
   return (
     <AuthContext.Provider
       value={{
-        signOut,
-        user: user ?? null,
-        ready: isLoaded && isOnboardingValueChecked,
         resetOnboarding,
+        setUser,
         completeOnboarding,
       }}
     >
