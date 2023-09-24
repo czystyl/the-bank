@@ -9,21 +9,6 @@ import superjson from "superjson";
 
 import { api } from "~/lib/api";
 
-const getBaseUrl = () => {
-  // browser should use relative url
-  if (typeof window !== "undefined") {
-    return "";
-  }
-
-  // SSR should use vercel url
-  if (process.env.VERCEL_URL) {
-    return `https://${process.env.VERCEL_URL}`;
-  }
-
-  // dev SSR should use localhost
-  return `http://localhost:3000`;
-};
-
 export function TRPCReactProvider(props: { children: React.ReactNode }) {
   const [queryClient] = useState(
     () =>
@@ -62,4 +47,19 @@ export function TRPCReactProvider(props: { children: React.ReactNode }) {
       </QueryClientProvider>
     </api.Provider>
   );
+}
+
+function getBaseUrl() {
+  // browser should use relative url
+  if (typeof window !== "undefined") {
+    return "";
+  }
+
+  // SSR should use vercel url
+  if (process.env.VERCEL_URL) {
+    return `https://${process.env.VERCEL_URL}`;
+  }
+
+  // dev SSR should use localhost
+  return `http://localhost:3000`;
 }

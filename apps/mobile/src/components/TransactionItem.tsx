@@ -1,10 +1,10 @@
 import { Pressable, StyleSheet, Text, View } from "react-native";
 import Animated from "react-native-reanimated";
 import { router } from "expo-router";
+import { formatCurrencyValue } from "@the-bank/core";
 import dayjs from "dayjs";
 
-import type { RouterOutputs } from "~/utils/api";
-import { formatTransactionValue } from "~/utils/formatTransactionValue";
+import type { RouterOutputs } from "~/lib/api";
 
 type TransactionResult = RouterOutputs["transaction"]["all"][number];
 
@@ -76,7 +76,7 @@ export default function TransactionItem({
 
         <View className="flex items-end justify-center pl-1">
           <Text className="text-lg font-bold">
-            {formatTransactionValue(transaction.value, transaction.type)}
+            {formatCurrencyValue(transaction.value)}
           </Text>
 
           <Text className="text-sm italic text-gray-600">

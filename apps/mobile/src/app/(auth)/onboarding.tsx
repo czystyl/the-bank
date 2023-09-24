@@ -9,8 +9,8 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { Image } from "expo-image";
 import { AntDesign } from "@expo/vector-icons";
 
-import { useAuth } from "~/utils/authProvider";
-import { cn } from "~/utils/cn";
+import { useAuth } from "~/lib/authProvider";
+import { cn } from "~/lib/cn";
 import MainBackground from "../../images/welcome.png";
 
 export default function Onboarding() {

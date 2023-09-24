@@ -11,7 +11,7 @@ export const PusherClient = new Pusher(env.NEXT_PUBLIC_PUSHER_KEY, {
   cluster: "eu",
 });
 
-export function useUpdateSubscribe() {
+export function usePusherUpdates() {
   const apiUtils = api.useContext();
 
   const { toast } = useToast();

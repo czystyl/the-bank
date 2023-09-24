@@ -5,7 +5,7 @@ import { Image } from "expo-image";
 import { useOAuth } from "@clerk/clerk-expo";
 import { AntDesign } from "@expo/vector-icons";
 
-import { useAuth } from "~/utils/authProvider";
+import { useAuth } from "~/lib/authProvider";
 import MainBackground from "../../images/welcome.png";
 
 export default function SignIn() {

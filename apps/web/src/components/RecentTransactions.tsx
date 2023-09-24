@@ -4,7 +4,7 @@ import { formatCurrencyValue } from "@the-bank/core";
 import dayjs from "dayjs";
 
 import { api } from "~/lib/api";
-import { useUpdateSubscribe } from "~/lib/pusher";
+import { usePusherUpdates } from "~/lib/pusher";
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 import { Skeleton } from "./ui/skeleton";
 
@@ -13,7 +13,7 @@ export function RecentTransactions() {
     limit: 5,
   });
 
-  useUpdateSubscribe();
+  usePusherUpdates();
 
   if (isLoading) {
     return (

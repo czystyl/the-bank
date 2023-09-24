@@ -2,7 +2,7 @@ import { ActivityIndicator, FlatList, Text, View } from "react-native";
 import { StatusBar } from "expo-status-bar";
 
 import TransactionItem from "~/components/TransactionItem";
-import { api } from "~/utils/api";
+import { api } from "~/lib/api";
 
 export default function Transactions() {
   const { data, isLoading, isFetching, refetch } =

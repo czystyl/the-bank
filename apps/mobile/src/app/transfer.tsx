@@ -15,8 +15,8 @@ import { Image } from "expo-image";
 import { router } from "expo-router";
 
 import Slider from "~/components/Slider";
-import { api } from "~/utils/api";
-import { cn } from "~/utils/cn";
+import { api } from "~/lib/api";
+import { cn } from "~/lib/cn";
 
 export default function Transactions() {
   const [title, setTitle] = useState("");

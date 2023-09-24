@@ -7,8 +7,8 @@ import * as SecureStore from "expo-secure-store";
 import { StatusBar } from "expo-status-bar";
 import { ClerkProvider } from "@clerk/clerk-expo";
 
-import { TRPCProvider } from "~/utils/api";
-import { AuthProvider } from "~/utils/authProvider";
+import { TRPCProvider } from "~/lib/api";
+import { AuthProvider } from "~/lib/authProvider";
 
 export {
   // Catch any errors thrown by the Layout component.

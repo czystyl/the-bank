@@ -1,13 +1,16 @@
 import { z } from "zod";
 
-export function formatCurrencyValue(value: number) {
-  const isAboveZero = value > 0;
+export function formatCurrencyValue(value?: number) {
+  if (!value) {
+    return "";
+  }
 
-  const formattedValue = Math.abs(value).toLocaleString(undefined, {
+  const isPositiveValue = value > 0;
+  const formattedValue = value.toLocaleString(undefined, {
     maximumFractionDigits: 2,
   });
 
-  return `${isAboveZero ? "+" : ""}${formattedValue}$`;
+  return `${isPositiveValue ? "+" : ""}${formattedValue}$`;
 }
 
 export const channels = {

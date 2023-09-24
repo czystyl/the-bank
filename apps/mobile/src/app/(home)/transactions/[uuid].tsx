@@ -2,10 +2,10 @@ import { StyleSheet, Text, View } from "react-native";
 import Animated from "react-native-reanimated";
 import { useLocalSearchParams } from "expo-router";
 import { AntDesign } from "@expo/vector-icons";
+import { formatCurrencyValue } from "@the-bank/core";
 import dayjs from "dayjs";
 
-import { api } from "~/utils/api";
-import { formatTransactionValue } from "~/utils/formatTransactionValue";
+import { api } from "~/lib/api";
 
 export default function TransactionScreen() {
   const params = useLocalSearchParams<{ uuid: string }>();
@@ -47,7 +47,7 @@ export default function TransactionScreen() {
         <View className="flex items-center justify-center">
           <AntDesign name="arrowright" size={40} color="black" />
           <Text className="text-2xl font-bold">
-            {formatTransactionValue(transaction.value, transaction.type)}
+            {formatCurrencyValue(transaction.value)}
           </Text>
         </View>
 
