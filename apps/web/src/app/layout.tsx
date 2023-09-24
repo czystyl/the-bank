@@ -4,10 +4,6 @@ import type { Metadata } from "next";
 import { Roboto_Mono } from "next/font/google";
 import { ClerkProvider } from "@clerk/nextjs";
 
-import { ThemeProvider } from "~/components/ThemeProvider";
-import { Toaster } from "~/components/ui/toaster";
-import { TRPCReactProvider } from "./providers";
-
 const roboto_mono = Roboto_Mono({
   subsets: ["latin"],
   variable: "--font-roboto-mono",
@@ -32,16 +28,7 @@ export default function Layout(props: { children: React.ReactNode }) {
       className={`${roboto_mono.variable} font-mono`}
       suppressHydrationWarning
     >
-      <body suppressHydrationWarning={true}>
-        <ClerkProvider>
-          <TRPCReactProvider>
-            <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-              {props.children}
-            </ThemeProvider>
-          </TRPCReactProvider>
-        </ClerkProvider>
-        <Toaster />
-      </body>
+      <body suppressHydrationWarning={true}>{props.children}</body>
     </html>
   );
 }

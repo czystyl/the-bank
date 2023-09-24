@@ -8,6 +8,7 @@
   "scripts": {
     "preinstall": "npx only-allow pnpm",
     "web": "pnpm -F web dev",
+    "mobile": "pnpm -F mobile start",
     "ios": "pnpm -F mobile dev:ios",
     "android": "pnpm -F mobile dev:android",
     "build": "turbo build",
