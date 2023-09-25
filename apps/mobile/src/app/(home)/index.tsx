@@ -32,8 +32,7 @@ export default function HomeScreen() {
       <View className="flex flex-1 items-center justify-center">
         <Text className="text-3xl text-slate-500">Balance:</Text>
         <Text className="mt-4 text-5xl font-bold text-slate-700">
-          {!user ? <ActivityIndicator size="large" color="green" /> : null}
-          0$
+          {!user ? <ActivityIndicator size="large" color="green" /> : null}0
         </Text>
 
         <View className="mt-10 flex flex-row items-center justify-center gap-x-10">

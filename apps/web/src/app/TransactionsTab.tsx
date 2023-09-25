@@ -1,4 +1,3 @@
-import { formatCurrencyValue } from "@the-bank/core";
 import dayjs from "dayjs";
 
 import { Card, CardContent, CardHeader, CardTitle } from "~/components/ui/card";
@@ -99,7 +98,7 @@ export default function TransactionsTab() {
                   {dayjs(transaction.createdAt).format("DD-MM-YYYY")}
                 </TableCell>
                 <TableCell className="text-right">
-                  {formatCurrencyValue(transaction.value)}$
+                  {transaction.value}
                 </TableCell>
               </TableRow>
             ))}

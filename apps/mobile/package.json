@@ -20,7 +20,6 @@
     "@pusher/pusher-websocket-react-native": "^1.2.2",
     "@react-native-async-storage/async-storage": "1.18.2",
     "@tanstack/react-query": "^4.35.3",
-    "@the-bank/core": "0.1.0",
     "@the-bank/env": "^0.1.0",
     "@trpc/client": "^10.38.3",
     "@trpc/react-query": "^10.38.3",

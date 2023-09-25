@@ -47,9 +47,6 @@ importers:
       '@tanstack/react-query':
         specifier: ^4.35.3
         version: 4.35.3(react-dom@18.2.0)(react-native@0.72.4)(react@18.2.0)
-      '@the-bank/core':
-        specifier: 0.1.0
-        version: link:../../packages/core
       '@the-bank/env':
         specifier: ^0.1.0
         version: link:../../packages/env
@@ -228,9 +225,6 @@ importers:
       '@the-bank/api':
         specifier: 0.1.0
         version: link:../../packages/api
-      '@the-bank/core':
-        specifier: 0.1.0
-        version: link:../../packages/core
       '@the-bank/db':
         specifier: 0.1.0
         version: link:../../packages/db
@@ -346,9 +340,6 @@ importers:
 
   packages/api:
     dependencies:
-      '@the-bank/core':
-        specifier: 0.1.0
-        version: link:../core
       '@the-bank/db':
         specifier: 0.1.0
         version: link:../db
@@ -370,24 +361,6 @@ importers:
       zod:
         specifier: ^3.21.4
         version: 3.22.2
-    devDependencies:
-      '@the-bank/eslint-config':
-        specifier: ^0.1.0
-        version: link:../../tooling/eslint
-      '@the-bank/prettier-config':
-        specifier: ^0.1.0
-        version: link:../../tooling/prettier
-      '@the-bank/tsconfig':
-        specifier: ^0.1.0
-        version: link:../../tooling/typescript
-      eslint:
-        specifier: ^8.45.0
-        version: 8.50.0
-      typescript:
-        specifier: ^5.2.2
-        version: 5.2.2
-
-  packages/core:
     devDependencies:
       '@the-bank/eslint-config':
         specifier: ^0.1.0

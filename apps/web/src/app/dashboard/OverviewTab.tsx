@@ -4,7 +4,6 @@ import {
   PersonIcon,
   RocketIcon,
 } from "@radix-ui/react-icons";
-import { formatCurrencyValue } from "@the-bank/core";
 
 import CardInfo from "~/components/CardInfo";
 import { Overview } from "~/components/Overview";
@@ -23,7 +22,7 @@ export default function OverviewTab() {
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
         <CardInfo
           title="Total Volume"
-          value={formatCurrencyValue(1000000)}
+          value={1000000}
           icon={<BarChartIcon className="h-8 w-8 text-green-500" />}
           caption="+20.1% from last month"
         />
@@ -36,7 +35,7 @@ export default function OverviewTab() {
         />
         <CardInfo
           title="Avg Transaction Value"
-          value={formatCurrencyValue(999)}
+          value={999}
           icon={<CommitIcon className="h-8 w-8 text-green-500" />}
           caption="+50.82% from last month"
         />

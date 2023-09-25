@@ -1,6 +1,5 @@
 "use client";
 
-import { formatCurrencyValue } from "@the-bank/core";
 import dayjs from "dayjs";
 
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
@@ -103,9 +102,7 @@ export function RecentTransactions() {
               {dayjs(transaction.createdAt).format("DD MMM YYYY")}
             </p>
           </div>
-          <div className="ml-auto font-medium">
-            {formatCurrencyValue(transaction.value)}$
-          </div>
+          <div className="ml-auto font-medium">{transaction.value}</div>
         </div>
       ))}
     </div>

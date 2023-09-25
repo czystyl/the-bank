@@ -26,7 +26,6 @@
     "@tanstack/react-query-next-experimental": "5.0.0-alpha.80",
     "@tanstack/react-table": "^8.10.1",
     "@the-bank/api": "0.1.0",
-    "@the-bank/core": "0.1.0",
     "@the-bank/db": "0.1.0",
     "@the-bank/env": "0.1.0",
     "@trpc/client": "^10.38.3",
