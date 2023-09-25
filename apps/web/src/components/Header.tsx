@@ -14,7 +14,7 @@ export default function Header() {
         </Link>
 
         <div className="ml-auto flex items-center space-x-4">
-          <UserButton />
+          <UserButton afterSignOutUrl="/" />
           <ModeToggle />
         </div>
       </div>

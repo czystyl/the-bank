@@ -1,4 +1,3 @@
-import Link from "next/link";
 import dayjs from "dayjs";
 
 import { Card, CardContent, CardHeader, CardTitle } from "~/components/ui/card";
@@ -11,12 +10,56 @@ import {
   TableHeader,
   TableRow,
 } from "~/components/ui/table";
-import { serverAPIClient } from "~/lib/serverAPIClient";
 
-export default async function TransactionsTab() {
-  const transactions = await serverAPIClient().admin.recentTransactions({
-    limit: 100,
-  });
+export default function TransactionsTab() {
+  const dummyTransactions = [
+    {
+      transaction: {
+        id: 1,
+        uuid: "kgi3g9lafj3",
+        title: "Transaction 1",
+        value: 100,
+        createdAt: "2021-01-01",
+      },
+      sender: {
+        id: 1,
+        clerkId: "clerk-1",
+        firstName: "John",
+        lastName: "Doe",
+        createdAt: "2021-01-01",
+      },
+      recipient: {
+        id: 2,
+        clerkId: "clerk-2",
+        firstName: "Jane",
+        lastName: "Doe",
+        createdAt: "2021-01-01",
+      },
+    },
+    {
+      transaction: {
+        id: 2,
+        uuid: "lapfj3kgi39",
+        title: "Transaction 2",
+        value: 200,
+        createdAt: "2021-01-01",
+      },
+      sender: {
+        id: 3,
+        clerkId: "clerk-3",
+        firstName: "John",
+        lastName: "Smith",
+        createdAt: "2021-01-01",
+      },
+      recipient: {
+        id: 4,
+        clerkId: "clerk-4",
+        firstName: "Jane",
+        lastName: "Smith",
+        createdAt: "2021-01-01",
+      },
+    },
+  ];
 
   return (
     <Card className="col-span-4">
@@ -39,31 +82,25 @@ export default async function TransactionsTab() {
             </TableRow>
           </TableHeader>
           <TableBody>
-            {transactions.map(({ transaction, sender, recipient }) => (
-              <Link
-                key={transaction.id}
-                href={`/dashboard/transactions/${transaction.id}`}
-                legacyBehavior
-              >
-                <TableRow key={transaction.uuid}>
-                  <TableCell className="font-medium">
-                    {transaction.uuid}
-                  </TableCell>
-                  <TableCell>{transaction.title}</TableCell>
-                  <TableCell>
-                    {sender?.firstName} {sender?.lastName}
-                  </TableCell>
-                  <TableCell>
-                    {recipient?.firstName} {recipient?.lastName}
-                  </TableCell>
-                  <TableCell>
-                    {dayjs(transaction.createdAt).format("DD-MM-YYYY")}
-                  </TableCell>
-                  <TableCell className="text-right">
-                    {transaction.value}$
-                  </TableCell>
-                </TableRow>
-              </Link>
+            {dummyTransactions.map(({ transaction, sender, recipient }) => (
+              <TableRow key={transaction.uuid}>
+                <TableCell className="font-medium">
+                  {transaction.uuid}
+                </TableCell>
+                <TableCell>{transaction.title}</TableCell>
+                <TableCell>
+                  {sender?.firstName} {sender?.lastName}
+                </TableCell>
+                <TableCell>
+                  {recipient?.firstName} {recipient?.lastName}
+                </TableCell>
+                <TableCell>
+                  {dayjs(transaction.createdAt).format("DD-MM-YYYY")}
+                </TableCell>
+                <TableCell className="text-right">
+                  {transaction.value}$
+                </TableCell>
+              </TableRow>
             ))}
           </TableBody>
         </Table>
