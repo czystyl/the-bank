@@ -15,20 +15,7 @@ export const env = createEnv({
         z.literal("production"),
       ])
       .default("development"),
-    DATABASE_URL: z
-      .string()
-      .min(1)
-      .transform((value) => {
-        // Transform connections string to according: https://orm.drizzle.team/kit-docs/conf#headlessui-tabs-panel-:R3a6qb6:
-        return value.replace(
-          "sslaccept=strict",
-          'ssl={"rejectUnauthorized":true}',
-        );
-      }),
     CLERK_SECRET_KEY: z.string().min(1),
-    PUSHER_APP_ID: z.string().min(1),
-    PUSHER_KEY: z.string().min(1),
-    PUSHER_SECRET: z.string().min(1),
   },
   /*
    * Environment variables available on the client (and server).
@@ -37,7 +24,6 @@ export const env = createEnv({
    */
   client: {
     NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY: z.string().min(1),
-    NEXT_PUBLIC_PUSHER_KEY: z.string(),
   },
   /*
    * Due to how Next.js bundles environment variables on Edge and Client,
@@ -47,13 +33,9 @@ export const env = createEnv({
    */
   runtimeEnv: {
     NODE_ENV: process.env.NODE_ENV,
-    DATABASE_URL: process.env.DATABASE_URL,
+
     CLERK_SECRET_KEY: process.env.CLERK_SECRET_KEY,
     NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY:
       process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY,
-    NEXT_PUBLIC_PUSHER_KEY: process.env.NEXT_PUBLIC_PUSHER_KEY,
-    PUSHER_APP_ID: process.env.PUSHER_APP_ID,
-    PUSHER_KEY: process.env.PUSHER_KEY,
-    PUSHER_SECRET: process.env.PUSHER_SECRET,
   },
 });

@@ -4,32 +4,44 @@ import { router } from "expo-router";
 import { formatCurrencyValue } from "@the-bank/core";
 import dayjs from "dayjs";
 
-import type { RouterOutputs } from "~/lib/api";
-
-type TransactionResult = RouterOutputs["transaction"]["all"][number];
+interface TransactionItemProps {
+  transaction: {
+    uuid: string;
+    type: string;
+    title: string;
+    value: number;
+    balance: number;
+    createdAt: string;
+  };
+  sender: {
+    clerkId: string;
+    firstName: string;
+    lastName: string;
+    imageUrl?: string;
+  };
+  recipient: {
+    clerkId: string;
+    firstName: string;
+    lastName: string;
+    imageUrl?: string;
+  };
+}
 
 export default function TransactionItem({
   transaction,
   sender,
   recipient,
-}: TransactionResult) {
+}: TransactionItemProps) {
   if (!sender || !recipient) {
     return;
   }
 
-  const senderTransitionTag =
-    transaction.uuid + sender.clerkId + transaction.type;
-  const recipientTransitionTag =
-    transaction.uuid + recipient.clerkId + transaction.type;
-
   return (
     <Pressable
       className="px-4 py-2"
-      key={transaction.id}
       onPress={() => {
         router.push({
           pathname: `/(home)/transactions/${transaction.uuid}`,
-          params: { senderTransitionTag, recipientTransitionTag },
         });
       }}
     >
@@ -39,19 +51,16 @@ export default function TransactionItem({
             <Animated.Image
               source={{ uri: sender?.imageUrl }}
               style={styles.fullAvatar}
-              sharedTransitionTag={senderTransitionTag}
             />
           ) : (
             <>
               <Animated.Image
                 source={{ uri: sender?.imageUrl }}
                 style={styles.avatar}
-                sharedTransitionTag={senderTransitionTag}
               />
 
               <Animated.Image
                 source={{ uri: recipient?.imageUrl }}
-                sharedTransitionTag={recipientTransitionTag}
                 style={[styles.avatar, styles.movedAvatar]}
               />
             </>
