@@ -1,6 +1,7 @@
 import { ActivityIndicator, Image, Pressable, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { MaterialIcons } from "@expo/vector-icons";
+import { formatCurrencyValue } from "@the-bank/core";
 
 import { useAuth } from "~/lib/authProvider";
 
@@ -33,7 +34,7 @@ export default function HomeScreen() {
         <Text className="text-3xl text-slate-500">Balance:</Text>
         <Text className="mt-4 text-5xl font-bold text-slate-700">
           {!user ? <ActivityIndicator size="large" color="green" /> : null}
-          0$
+          {formatCurrencyValue(0)}
         </Text>
 
         <View className="mt-10 flex flex-row items-center justify-center gap-x-10">
