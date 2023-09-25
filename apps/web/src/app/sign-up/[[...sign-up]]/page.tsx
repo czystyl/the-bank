@@ -1,5 +1,3 @@
-import { SignUp } from "@clerk/nextjs";
-
 export default function Page() {
   return (
     <main className="flex h-screen flex-1 flex-col items-center justify-center bg-gradient-to-b from-gray-500 to-gray-800 md:flex-row ">
@@ -12,7 +10,7 @@ export default function Page() {
         </h2>
       </div>
       <div className="flex flex-1 items-center justify-center border-gray-400 md:border-l-2">
-        <SignUp />
+        {`<SignUp />`}
       </div>
     </main>
   );

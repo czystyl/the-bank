@@ -1,4 +1,3 @@
-import Link from "next/link";
 import dayjs from "dayjs";
 
 import { Card, CardContent, CardHeader, CardTitle } from "~/components/ui/card";
@@ -11,10 +10,38 @@ import {
   TableHeader,
   TableRow,
 } from "~/components/ui/table";
-import { serverAPIClient } from "~/lib/serverAPIClient";
 
-export default async function UserTab() {
-  const users = await serverAPIClient().admin.allUsers();
+export default function UserTab() {
+  const dummyUsers = [
+    {
+      id: 1,
+      clerkId: "clerk-1",
+      firstName: "John",
+      lastName: "Doe",
+      createdAt: "2021-01-01",
+    },
+    {
+      id: 2,
+      clerkId: "clerk-2",
+      firstName: "Jane",
+      lastName: "Doe",
+      createdAt: "2021-01-01",
+    },
+    {
+      id: 3,
+      clerkId: "clerk-3",
+      firstName: "John",
+      lastName: "Smith",
+      createdAt: "2021-01-01",
+    },
+    {
+      id: 4,
+      clerkId: "clerk-4",
+      firstName: "Jane",
+      lastName: "Smith",
+      createdAt: "2021-01-01",
+    },
+  ];
 
   return (
     <Card className="col-span-4">
@@ -35,22 +62,16 @@ export default async function UserTab() {
             </TableRow>
           </TableHeader>
           <TableBody>
-            {users.map((user) => (
-              <Link
-                key={user.clerkId}
-                href={`/dashboard/users/${user.clerkId}`}
-                legacyBehavior
-              >
-                <TableRow>
-                  <TableCell className="font-medium">{user.id}</TableCell>
-                  <TableCell>{user.clerkId}</TableCell>
-                  <TableCell>{user.firstName}</TableCell>
-                  <TableCell>{user.lastName}</TableCell>
-                  <TableCell className="text-right">
-                    {dayjs(user.createdAt).format("YYYY-MM-DD")}
-                  </TableCell>
-                </TableRow>
-              </Link>
+            {dummyUsers.map((user) => (
+              <TableRow key={user.clerkId}>
+                <TableCell className="font-medium">{user.id}</TableCell>
+                <TableCell>{user.clerkId}</TableCell>
+                <TableCell>{user.firstName}</TableCell>
+                <TableCell>{user.lastName}</TableCell>
+                <TableCell className="text-right">
+                  {dayjs(user.createdAt).format("YYYY-MM-DD")}
+                </TableCell>
+              </TableRow>
             ))}
           </TableBody>
         </Table>

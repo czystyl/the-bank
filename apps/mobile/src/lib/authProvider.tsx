@@ -7,16 +7,15 @@ import {
   useRootNavigationState,
   useSegments,
 } from "expo-router";
-import { useAuth as useClerkAuth, useUser } from "@clerk/clerk-expo";
-import type { UserResource } from "@clerk/types";
-import AsyncStorage from "@react-native-async-storage/async-storage";
+
+import { useOnboardingSettings } from "./useOnboardingSettings";
 
 SplashScreen.preventAutoHideAsync();
 
 interface AuthContextType {
-  signOut: () => Promise<void>;
-  user: UserResource | null;
-  ready: boolean;
+  user: boolean;
+  signOut: () => void;
+  signIn: () => void;
   resetOnboarding: () => void;
   completeOnboarding: () => void;
 }
@@ -35,9 +34,8 @@ export function AuthProvider(props: { children: React.ReactNode }) {
     completeOnboarding,
   } = useOnboardingSettings();
 
-  const { user } = useUser();
-
-  const { isLoaded, signOut } = useClerkAuth();
+  // TODO: Replace with Clerk User!
+  const [user, setUser] = useState(false);
 
   useEffect(() => {
     if (navigated) {
@@ -46,7 +44,7 @@ export function AuthProvider(props: { children: React.ReactNode }) {
   }, [navigated]);
 
   useEffect(() => {
-    if (!rootNavigationState?.key || !isLoaded || !isOnboardingValueChecked) {
+    if (!rootNavigationState?.key || !isOnboardingValueChecked) {
       return;
     }
 
@@ -55,6 +53,7 @@ export function AuthProvider(props: { children: React.ReactNode }) {
     setNavigated(true);
 
     if (user && isAuthSegment) {
+      console.log("Navigating to home screen");
       return router.replace("/(home)/");
     }
 
@@ -66,7 +65,6 @@ export function AuthProvider(props: { children: React.ReactNode }) {
       return router.replace("/(auth)/sign-in");
     }
   }, [
-    isLoaded,
     rootNavigationState?.key,
     segments,
     user,
@@ -74,12 +72,20 @@ export function AuthProvider(props: { children: React.ReactNode }) {
     isOnboardingValueChecked,
   ]);
 
+  function signOut() {
+    setUser(false);
+  }
+
+  function signIn() {
+    setUser(true);
+  }
+
   return (
     <AuthContext.Provider
       value={{
+        user,
         signOut,
-        user: user ?? null,
-        ready: isLoaded && isOnboardingValueChecked,
+        signIn,
         resetOnboarding,
         completeOnboarding,
       }}
@@ -98,41 +104,4 @@ export function useAuth() {
   }
 
   return context;
-}
-
-function useOnboardingSettings() {
-  const [value, setValue] = useState<boolean | null | undefined>(undefined);
-
-  useEffect(() => {
-    AsyncStorage.getItem("ONBOARDING_COMPLETE")
-      .then((value) => {
-        if (!value) {
-          return setValue(false);
-        }
-
-        try {
-          const parsedValue = JSON.parse(value);
-
-          setValue(Boolean(parsedValue));
-        } catch (error) {
-          setValue(false);
-        }
-      })
-      .catch(() => {
-        setValue(false);
-      });
-  });
-
-  return {
-    isOnboardingCompleted: value,
-    isOnboardingValueChecked: value !== undefined,
-    completeOnboarding: () => {
-      setValue(true);
-      void AsyncStorage.setItem("ONBOARDING_COMPLETE", JSON.stringify(true));
-    },
-    resetOnboarding: () => {
-      setValue(false);
-      void AsyncStorage.setItem("ONBOARDING_COMPLETE", JSON.stringify(false));
-    },
-  };
 }

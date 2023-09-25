@@ -17,16 +17,6 @@ export default function homeLayout() {
           ),
         }}
       />
-
-      <Tabs.Screen
-        name="transactions"
-        options={{
-          title: "Transactions",
-          tabBarIcon: ({ color, size }) => (
-            <AntDesign name="profile" size={size} color={color} />
-          ),
-        }}
-      />
     </Tabs>
   );
 }
