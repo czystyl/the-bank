@@ -420,7 +420,7 @@ importers:
         specifier: ^0.28.5
         version: 0.28.6(@planetscale/database@1.11.0)(mysql2@3.6.1)
       mysql2:
-        specifier: ^3.6.0
+        specifier: ^3.6.1
         version: 3.6.1
       nanoid:
         specifier: ^5.0.1

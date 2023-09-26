@@ -12,10 +12,9 @@ import {
   View,
 } from "react-native";
 import { Image } from "expo-image";
-import { router } from "expo-router";
+import { formatCurrencyValue } from "@the-bank/core";
 
 import Slider from "~/components/Slider";
-import { api } from "~/lib/api";
 import { cn } from "~/lib/cn";
 
 export default function Transactions() {
@@ -23,23 +22,10 @@ export default function Transactions() {
   const [transferValue, setTransferValue] = useState("");
   const [selectedUser, setSelectedUser] = useState<string | null>(null);
 
-  const apiUtils = api.useContext();
-  const { data: userBalance } = api.user.balance.useQuery();
-
-  const userResult = api.user.all.useQuery();
-
-  const { mutate, error } = api.transaction.create.useMutation({
-    onSuccess: () => {
-      void apiUtils.user.balance.refetch();
-      void apiUtils.transaction.all.refetch();
-      router.back();
-    },
-  });
-
   const transactionValue = Number.isNaN(transferValue)
     ? 0
     : Number(transferValue);
-  const balance = userBalance ?? 0;
+  const balance = 0;
   const balanceAfterTransaction = balance - transactionValue;
 
   const errorMessage = useMemo(() => {
@@ -66,15 +52,28 @@ export default function Transactions() {
     return null;
   }, [balanceAfterTransaction, selectedUser, title, transactionValue]);
 
+  const userResult = [
+    {
+      id: "1",
+      firstName: "John",
+      lastName: "Doe",
+      imageUrl: undefined,
+      clerkId: "1",
+    },
+    {
+      id: "2",
+      firstName: "Jane",
+      lastName: "Doe",
+      imageUrl: undefined,
+      clerkId: "2",
+    },
+  ];
+
   return (
     <View className="flex flex-1 bg-white">
       <View className="flex items-center justify-center border-b border-gray-500 p-4">
         <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-          {userResult.isLoading ? (
-            <ActivityIndicator size={"large"} className="py-10" />
-          ) : null}
-
-          {userResult.data?.map((user) => (
+          {userResult?.map((user) => (
             <Pressable
               key={user.id}
               className="mx-1 mt-1 flex w-24 items-center"
@@ -139,7 +138,7 @@ export default function Transactions() {
             <View className="flex items-center">
               <Text className="text-xl">
                 Current Balance:{" "}
-                <Text className="font-bold">{userBalance?.toFixed(2)}$</Text>
+                <Text className="font-bold">{formatCurrencyValue(0)}</Text>
               </Text>
             </View>
 
@@ -155,18 +154,12 @@ export default function Transactions() {
         </ScrollView>
 
         <Slider
-          reset={!!error}
+          reset={false}
           sliderEnabled={!errorMessage}
           onSlideConfirm={() => {
             if (!selectedUser) {
               return Alert.alert("Select a user");
             }
-
-            mutate({
-              title,
-              value: transactionValue,
-              recipientUserId: selectedUser,
-            });
           }}
         >
           {errorMessage ? (

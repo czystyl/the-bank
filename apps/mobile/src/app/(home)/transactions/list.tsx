@@ -1,43 +1,67 @@
-import { ActivityIndicator, FlatList, Text, View } from "react-native";
+import { ScrollView } from "react-native-gesture-handler";
 import { StatusBar } from "expo-status-bar";
 
 import TransactionItem from "~/components/TransactionItem";
-import { api } from "~/lib/api";
 
 export default function Transactions() {
-  const { data, isLoading, isFetching, refetch } =
-    api.transaction.all.useQuery(undefined);
+  const dummyTransactions = [
+    {
+      transaction: {
+        uuid: "uuid-1",
+        type: "transfer",
+        title: "Transfer",
+        value: 100,
+        balance: 100,
+        createdAt: "2021-06-01T00:00:00.000Z",
+      },
+      sender: {
+        clerkId: "1",
+        firstName: "John",
+        lastName: "Doe",
+      },
+      recipient: {
+        clerkId: "2",
+        firstName: "Jane",
+        lastName: "Doe",
+      },
+    },
+    {
+      transaction: {
+        uuid: "uuid-2",
+        type: "transfer",
+        title: "Transfer",
+        value: 100,
+        balance: 100,
+        createdAt: "2021-06-01T00:00:00.000Z",
+      },
+      sender: {
+        clerkId: "1",
+        firstName: "John",
+        lastName: "Doe",
+      },
+      recipient: {
+        clerkId: "2",
+        firstName: "Jane",
+        lastName: "Doe",
+      },
+    },
+  ];
 
   return (
     <>
       <StatusBar style="dark" />
-      <FlatList
-        className="pt-20"
-        data={data}
-        refreshing={!data && !isLoading && isFetching}
-        onRefresh={refetch}
-        keyExtractor={(item) => item.transaction.uuid}
-        renderItem={({ item }) => {
+      <ScrollView className="pt-20">
+        {dummyTransactions.map(({ transaction, sender, recipient }) => {
           return (
             <TransactionItem
-              transaction={item.transaction}
-              sender={item.sender}
-              recipient={item.recipient}
+              key={transaction.uuid}
+              transaction={transaction}
+              sender={sender}
+              recipient={recipient}
             />
           );
-        }}
-      />
-      {data?.length === 0 && (
-        <Text className="absolute w-full pt-24 text-center text-lg">
-          You haven&apos;t made any transaction yet.
-        </Text>
-      )}
-
-      {isLoading && !data && (
-        <View className="absolute h-full w-full flex-1 justify-center ">
-          <ActivityIndicator size="large" color="green" />
-        </View>
-      )}
+        })}
+      </ScrollView>
     </>
   );
 }

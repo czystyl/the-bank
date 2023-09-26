@@ -19,7 +19,7 @@
     "@the-bank/env": "0.1.0",
     "dayjs": "^1.11.9",
     "drizzle-orm": "^0.28.5",
-    "mysql2": "^3.6.0",
+    "mysql2": "^3.6.1",
     "nanoid": "^5.0.1"
   },
   "devDependencies": {

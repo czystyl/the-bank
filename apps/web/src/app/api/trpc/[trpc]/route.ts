@@ -29,7 +29,7 @@ async function handler(req: Request, res: NextApiResponse) {
     req,
     createContext: () => {
       /**
-       * TRCP Types are not ready to use New NextApiRequest and NextApiResponse types from Next.js
+       * tRCP Types are not ready to use the new NextApiRequest and NextApiResponse types from Next.js
        */
       return createTRPCContext({ req: req as unknown as NextApiRequest, res });
     },

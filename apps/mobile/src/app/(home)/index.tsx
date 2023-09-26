@@ -11,23 +11,10 @@ import { router } from "expo-router";
 import { MaterialIcons } from "@expo/vector-icons";
 import { formatCurrencyValue } from "@the-bank/core";
 
-import { api } from "~/lib/api";
 import { useAuth } from "~/lib/authProvider";
-import { usePusherUpdates } from "~/lib/pusher";
 
 export default function HomeScreen() {
   const { user, signOut } = useAuth();
-  const apiUtils = api.useContext();
-
-  usePusherUpdates();
-
-  const { data: userBalance, isLoading } = api.user.balance.useQuery();
-  const { mutate: addFoundsMutation } = api.transaction.addFounds.useMutation({
-    onSettled: () => {
-      void apiUtils.user.balance.invalidate();
-      void apiUtils.transaction.all.refetch();
-    },
-  });
 
   return (
     <SafeAreaView className="flex flex-1 justify-between px-4" edges={["top"]}>
@@ -54,8 +41,8 @@ export default function HomeScreen() {
       <View className="flex flex-1 items-center justify-center">
         <Text className="text-3xl text-slate-500">Balance:</Text>
         <Text className="mt-4 text-5xl font-bold text-slate-700">
-          {isLoading ? <ActivityIndicator size="large" color="green" /> : null}
-          {formatCurrencyValue(userBalance)}
+          {!user ? <ActivityIndicator size="large" color="green" /> : null}
+          {formatCurrencyValue(0)}
         </Text>
 
         <View className="mt-10 flex flex-row items-center justify-center gap-x-10">
@@ -67,13 +54,8 @@ export default function HomeScreen() {
                 {
                   text: "Let's cheat 💸",
                   style: "destructive",
-                  onPress: (value) => {
-                    const parsedValue = Number(value);
-                    const isValidNumber = !Number.isNaN(parsedValue);
-
-                    if (isValidNumber && parsedValue > 0) {
-                      addFoundsMutation({ value: parsedValue });
-                    }
+                  onPress: () => {
+                    // TODO: Waiting for API
                   },
                 },
               ]);
