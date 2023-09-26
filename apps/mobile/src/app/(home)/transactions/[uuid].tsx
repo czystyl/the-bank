@@ -8,6 +8,8 @@ import dayjs from "dayjs";
 export default function TransactionScreen() {
   const params = useLocalSearchParams<{ uuid: string }>();
 
+  // HINT:  You can get all transactions and get one by uuid
+
   const sender = {
     clerkId: "1",
     firstName: "John",

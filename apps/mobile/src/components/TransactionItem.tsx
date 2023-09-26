@@ -4,34 +4,15 @@ import { router } from "expo-router";
 import { formatCurrencyValue } from "@the-bank/core";
 import dayjs from "dayjs";
 
-interface TransactionItemProps {
-  transaction: {
-    uuid: string;
-    type: string;
-    title: string;
-    value: number;
-    balance: number;
-    createdAt: string;
-  };
-  sender: {
-    clerkId: string;
-    firstName: string;
-    lastName: string;
-    imageUrl?: string;
-  };
-  recipient: {
-    clerkId: string;
-    firstName: string;
-    lastName: string;
-    imageUrl?: string;
-  };
-}
+import type { RouterOutputs } from "~/lib/api";
+
+type TransactionResult = RouterOutputs["transaction"]["all"][number];
 
 export default function TransactionItem({
   transaction,
   sender,
   recipient,
-}: TransactionItemProps) {
+}: TransactionResult) {
   if (!sender || !recipient) {
     return;
   }

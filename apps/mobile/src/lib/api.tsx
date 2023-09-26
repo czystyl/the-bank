@@ -16,9 +16,7 @@ export { type RouterInputs, type RouterOutputs } from "@the-bank/api";
 
 /**
  * A wrapper for your app that provides the TRPC context.
- * Use only in _app.tsx
  */
-
 export function TRPCProvider(props: { children: ReactNode }) {
   const { getToken } = useAuth();
 
