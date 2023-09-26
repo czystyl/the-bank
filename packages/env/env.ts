@@ -15,6 +15,7 @@ export const env = createEnv({
         z.literal("production"),
       ])
       .default("development"),
+
     CLERK_SECRET_KEY: z.string().min(1),
   },
   /*
@@ -33,7 +34,6 @@ export const env = createEnv({
    */
   runtimeEnv: {
     NODE_ENV: process.env.NODE_ENV,
-
     CLERK_SECRET_KEY: process.env.CLERK_SECRET_KEY,
     NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY:
       process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY,

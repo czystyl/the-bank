@@ -12,6 +12,7 @@
     "seed:transactions": "pnpm with-env tsx ./src/seedTransactions.ts",
     "sync:users": "pnpm with-env tsx ./src/syncClerkUsers.ts",
     "seed:users": "pnpm with-env tsx ./src/seedUsers.ts",
+    "dev": "pnpm with-env tsx --watch ./src/index.ts",
     "clean": "rm -rf .turbo node_modules",
     "with-env": "dotenv -e ../../.env --",
     "lint": "eslint .",
