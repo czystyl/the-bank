@@ -13,10 +13,13 @@ import { formatCurrencyValue } from "@the-bank/core";
 
 import { api } from "~/lib/api";
 import { useAuth } from "~/lib/authProvider";
+import { usePusherUpdates } from "~/lib/pusher";
 
 export default function HomeScreen() {
   const { user, signOut } = useAuth();
   const apiUtils = api.useContext();
+
+  usePusherUpdates();
 
   const { data: userBalance, isLoading } = api.user.balance.useQuery();
   const { mutate: addFoundsMutation } = api.transaction.addFounds.useMutation({

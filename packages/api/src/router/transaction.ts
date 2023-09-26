@@ -1,3 +1,4 @@
+import { channels } from "@the-bank/core";
 import {
   addFounds,
   createTransaction,
@@ -7,6 +8,7 @@ import {
 import { TRPCError } from "@trpc/server";
 import { z } from "zod";
 
+import { PusherServer } from "../pusher";
 import { createTRPCRouter, protectedProcedure } from "../trpc";
 
 export const transactionRouter = createTRPCRouter({
@@ -19,6 +21,15 @@ export const transactionRouter = createTRPCRouter({
     .mutation(async ({ ctx, input }) => {
       try {
         await addFounds(ctx.auth.userId, input.value);
+
+        await PusherServer.trigger(
+          channels.mainChannel.name,
+          channels.mainChannel.events.addFounds,
+          {
+            value: input.value,
+            clerkUserId: ctx.auth.userId,
+          },
+        );
       } catch (error) {
         throw new TRPCError({
           code: "BAD_REQUEST",
@@ -40,6 +51,7 @@ export const transactionRouter = createTRPCRouter({
     )
     .mutation(async ({ ctx, input }) => {
       const recipient = await getUser(input.recipientUserId);
+      const sender = await getUser(ctx.auth.userId);
 
       if (!recipient) {
         throw new TRPCError({
@@ -57,6 +69,22 @@ export const transactionRouter = createTRPCRouter({
             recipientUserId: recipient.clerkId,
           },
         });
+
+        await PusherServer.trigger(
+          channels.mainChannel.name,
+          channels.mainChannel.events.newTransaction,
+          {
+            sender: {
+              clerkUserId: sender?.clerkId,
+              name: sender?.firstName,
+            },
+            recipient: {
+              clerkUserId: recipient.clerkId,
+              name: recipient.firstName,
+            },
+            value: input.value,
+          },
+        );
       } catch (error) {
         throw new TRPCError({
           code: "BAD_REQUEST",
