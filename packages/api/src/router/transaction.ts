@@ -1,25 +1,44 @@
-import { getUser } from "@the-bank/db";
+import {
+  addFounds,
+  createTransaction,
+  getTransactions,
+  getUser,
+} from "@the-bank/db";
 import { TRPCError } from "@trpc/server";
 import { z } from "zod";
 
 import { createTRPCRouter, protectedProcedure } from "../trpc";
 
 export const transactionRouter = createTRPCRouter({
-  all: protectedProcedure.query(() => {
-    throw new TRPCError({ code: "NOT_IMPLEMENTED" });
+  all: protectedProcedure.query(({ ctx }) => {
+    return getTransactions(ctx.auth.userId);
   }),
 
-  addFounds: protectedProcedure.mutation(() => {
-    throw new TRPCError({ code: "NOT_IMPLEMENTED" });
-  }),
+  addFounds: protectedProcedure
+    .input(z.object({ value: z.number().min(1) }))
+    .mutation(async ({ ctx, input }) => {
+      try {
+        await addFounds(ctx.auth.userId, input.value);
+      } catch (error) {
+        throw new TRPCError({
+          code: "BAD_REQUEST",
+          message:
+            error instanceof Error
+              ? error.message
+              : "Error creating transaction!",
+        });
+      }
+    }),
 
   create: protectedProcedure
     .input(
       z.object({
-        recipientUserId: z.string().min(1),
+        title: z.string().min(3),
+        value: z.number().min(1),
+        recipientUserId: z.string(),
       }),
     )
-    .mutation(async ({ input }) => {
+    .mutation(async ({ ctx, input }) => {
       const recipient = await getUser(input.recipientUserId);
 
       if (!recipient) {
@@ -30,7 +49,14 @@ export const transactionRouter = createTRPCRouter({
       }
 
       try {
-        throw new TRPCError({ code: "NOT_IMPLEMENTED" });
+        await createTransaction({
+          data: {
+            title: input.title,
+            value: input.value,
+            senderUserId: ctx.auth.userId,
+            recipientUserId: recipient.clerkId,
+          },
+        });
       } catch (error) {
         throw new TRPCError({
           code: "BAD_REQUEST",
