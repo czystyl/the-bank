@@ -17,9 +17,15 @@ export default function TransactionItem({
     return;
   }
 
+  const senderTransitionTag =
+    transaction.uuid + sender.clerkId + transaction.type;
+  const recipientTransitionTag =
+    transaction.uuid + recipient.clerkId + transaction.type;
+
   return (
     <Pressable
       className="px-4 py-2"
+      key={transaction.id}
       onPress={() => {
         router.push({
           pathname: `/(home)/transactions/${transaction.uuid}`,
@@ -32,16 +38,19 @@ export default function TransactionItem({
             <Animated.Image
               source={{ uri: sender?.imageUrl }}
               style={styles.fullAvatar}
+              sharedTransitionTag={senderTransitionTag}
             />
           ) : (
             <>
               <Animated.Image
                 source={{ uri: sender?.imageUrl }}
                 style={styles.avatar}
+                sharedTransitionTag={senderTransitionTag}
               />
 
               <Animated.Image
                 source={{ uri: recipient?.imageUrl }}
+                sharedTransitionTag={recipientTransitionTag}
                 style={[styles.avatar, styles.movedAvatar]}
               />
             </>

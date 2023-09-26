@@ -26,6 +26,12 @@ export default function TransactionScreen() {
     return null;
   }
 
+  const senderTransitionTag =
+    transaction.uuid + sender.clerkId + transaction.type;
+
+  const recipientTransitionTag =
+    transaction.uuid + recipient.clerkId + transaction.type;
+
   return (
     <View className="flex  p-4">
       <View className="flex flex-row justify-between">
@@ -33,6 +39,7 @@ export default function TransactionScreen() {
           <Animated.Image
             source={{ uri: sender?.imageUrl }}
             style={styles.avatar}
+            sharedTransitionTag={senderTransitionTag}
           />
           <Text className="text-lg">{sender.firstName}</Text>
         </View>
@@ -47,6 +54,7 @@ export default function TransactionScreen() {
         <View className="flex items-center">
           <Animated.Image
             source={{ uri: recipient?.imageUrl }}
+            sharedTransitionTag={recipientTransitionTag}
             style={styles.avatar}
           />
           <Text className="text-lg">{recipient.firstName}</Text>
