@@ -5,38 +5,30 @@ import { AntDesign } from "@expo/vector-icons";
 import { formatCurrencyValue } from "@the-bank/core";
 import dayjs from "dayjs";
 
+import { api } from "~/lib/api";
+
 export default function TransactionScreen() {
   const params = useLocalSearchParams<{ uuid: string }>();
 
-  // HINT:  You can get all transactions and get one by uuid
+  const { data } = api.transaction.all.useQuery();
 
-  const sender = {
-    clerkId: "1",
-    firstName: "John",
-    lastName: "Doe",
-    imageUrl: undefined,
-  };
+  const transactionResult = data?.find(
+    (t) => t.transaction.uuid === params.uuid,
+  );
 
-  const recipient = {
-    clerkId: "2",
-    firstName: "Jane",
-    lastName: "Doe",
-    imageUrl: undefined,
-  };
+  if (!transactionResult) {
+    return null;
+  }
 
-  const transaction = {
-    uuid: "1",
-    type: "transfer",
-    title: "Transfer",
-    value: 100,
-    balance: 100,
-    createdAt: "2021-06-01T00:00:00.000Z",
-  };
+  const { transaction, sender, recipient } = transactionResult;
+
+  if (!sender || !recipient) {
+    return null;
+  }
 
   return (
     <View className="flex  p-4">
       <View className="flex flex-row justify-between">
-        <Text>{params.uuid}</Text>
         <View className="flex items-center">
           <Animated.Image
             source={{ uri: sender?.imageUrl }}
