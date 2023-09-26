@@ -3,17 +3,64 @@
 import { formatCurrencyValue } from "@the-bank/core";
 import dayjs from "dayjs";
 
-import { api } from "~/lib/api";
-import { usePusherUpdates } from "~/lib/pusher";
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 import { Skeleton } from "./ui/skeleton";
 
 export function RecentTransactions() {
-  const { data, isLoading } = api.admin.recentTransactions.useQuery({
-    limit: 5,
-  });
+  const isLoading = false;
 
-  usePusherUpdates();
+  const dummyTransactions = [
+    {
+      transaction: {
+        id: 1,
+        uuid: "kgi3g9lafj3",
+        title: "Transaction 1",
+        value: 100,
+        createdAt: "2021-01-01",
+      },
+      sender: {
+        id: 1,
+        clerkId: "clerk-1",
+        firstName: "John",
+        lastName: "Doe",
+        createdAt: "2021-01-01",
+        imageUrl: "https://placehold.co/600x400?text=Hello+World",
+      },
+      recipient: {
+        id: 2,
+        clerkId: "clerk-2",
+        firstName: "Jane",
+        lastName: "Doe",
+        createdAt: "2021-01-01",
+        imageUrl: "https://placehold.co/600x400?text=World+Hello",
+      },
+    },
+    {
+      transaction: {
+        id: 2,
+        uuid: "lapfj3kgi39",
+        title: "Transaction 2",
+        value: 200,
+        createdAt: "2021-01-01",
+      },
+      sender: {
+        id: 3,
+        clerkId: "clerk-3",
+        firstName: "John",
+        lastName: "Smith",
+        createdAt: "2021-01-01",
+        imageUrl: "https://placehold.co/600x400?text=World+Hello",
+      },
+      recipient: {
+        id: 4,
+        clerkId: "clerk-4",
+        firstName: "Jane",
+        lastName: "Smith",
+        createdAt: "2021-01-01",
+        imageUrl: "https://placehold.co/600x400?text=Hello+World",
+      },
+    },
+  ];
 
   if (isLoading) {
     return (
@@ -36,7 +83,7 @@ export function RecentTransactions() {
 
   return (
     <div className="space-y-8">
-      {data?.map(({ transaction, sender, recipient }) => (
+      {dummyTransactions?.map(({ transaction, sender, recipient }) => (
         <div className="h relative flex h-9 items-center " key={transaction.id}>
           <div className="h-12 w-12">
             <Avatar className="h-8 w-8">
@@ -57,7 +104,7 @@ export function RecentTransactions() {
             </p>
           </div>
           <div className="ml-auto font-medium">
-            {formatCurrencyValue(transaction.value)}
+            {formatCurrencyValue(transaction.value)}$
           </div>
         </div>
       ))}

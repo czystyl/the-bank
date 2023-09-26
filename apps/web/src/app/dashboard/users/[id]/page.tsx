@@ -12,7 +12,6 @@ import {
   CardHeader,
   CardTitle,
 } from "~/components/ui/card";
-import { serverAPIClient } from "~/lib/serverAPIClient";
 
 export const metadata: Metadata = {
   title: "Users",
@@ -25,8 +24,15 @@ interface UserPageProps {
   };
 }
 
-export default async function UsersPage({ params }: UserPageProps) {
-  const user = await serverAPIClient().admin.getUser({ clerkId: params.id });
+export default function UsersPage({ params }: UserPageProps) {
+  const user = {
+    id: 1,
+    clerkId: params.id,
+    firstName: "John",
+    lastName: "Doe",
+    createdAt: "2021-01-01",
+    imageUrl: "https://placehold.co/600x400?text=Hello+World",
+  };
 
   return (
     <div className="mx-auto w-1/3">

@@ -6,7 +6,6 @@ import { ClerkProvider } from "@clerk/nextjs";
 
 import { ThemeProvider } from "~/components/ThemeProvider";
 import { Toaster } from "~/components/ui/toaster";
-import { TRPCReactProvider } from "./providers";
 
 const roboto_mono = Roboto_Mono({
   subsets: ["latin"],
@@ -34,11 +33,9 @@ export default function Layout(props: { children: React.ReactNode }) {
     >
       <body suppressHydrationWarning={true}>
         <ClerkProvider>
-          <TRPCReactProvider>
-            <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-              {props.children}
-            </ThemeProvider>
-          </TRPCReactProvider>
+          <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+            {props.children}
+          </ThemeProvider>
         </ClerkProvider>
         <Toaster />
       </body>
