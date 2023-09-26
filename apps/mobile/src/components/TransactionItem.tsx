@@ -29,6 +29,7 @@ export default function TransactionItem({
       onPress={() => {
         router.push({
           pathname: `/(home)/transactions/${transaction.uuid}`,
+          params: { senderTransitionTag, recipientTransitionTag },
         });
       }}
     >

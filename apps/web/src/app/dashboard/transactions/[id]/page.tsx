@@ -13,6 +13,7 @@ import {
   CardHeader,
   CardTitle,
 } from "~/components/ui/card";
+import { serverAPIClient } from "~/lib/serverAPIClient";
 
 export const metadata: Metadata = {
   title: "Transactions",
@@ -25,26 +26,20 @@ interface TransactionsPageProps {
   };
 }
 
-export default function TransactionsPage({ params }: TransactionsPageProps) {
-  const transaction = {
-    transaction: {
-      id: 1,
-      uuid: params.id,
-      title: "Transaction 1",
-      value: 100,
-      createdAt: "2021-01-01",
-      type: "DEPOSIT",
-      balance: 1000,
-    },
-    sender: {
-      id: 1,
-      clerkId: "clerk-1",
-      firstName: "John",
-      lastName: "Doe",
-      createdAt: "2021-01-01",
-      imageUrl: "https://placehold.co/600x400?text=Hello+World",
-    },
-  };
+export default async function TransactionsPage({
+  params,
+}: TransactionsPageProps) {
+  const transaction = await serverAPIClient().admin.getTransaction({
+    id: Number(params.id),
+  });
+
+  if (!transaction) {
+    return (
+      <div className="mx-auto mt-10 w-1/4">
+        <p>Transaction not found</p>
+      </div>
+    );
+  }
 
   return (
     <div className="mx-auto w-1/3">

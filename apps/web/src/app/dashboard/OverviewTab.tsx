@@ -16,33 +16,37 @@ import {
   CardHeader,
   CardTitle,
 } from "~/components/ui/card";
+import { serverAPIClient } from "~/lib/serverAPIClient";
 
-export default function OverviewTab() {
+export default async function OverviewTab() {
+  const { totalVolume, transactionCount, userCount, avgTransaction } =
+    await serverAPIClient().admin.overviews();
+
   return (
     <>
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
         <CardInfo
           title="Total Volume"
-          value={formatCurrencyValue(1000000)}
+          value={formatCurrencyValue(totalVolume)}
           icon={<BarChartIcon className="h-8 w-8 text-green-500" />}
           caption="+20.1% from last month"
         />
 
         <CardInfo
           title="Total Transactions"
-          value={93843}
+          value={transactionCount}
           icon={<RocketIcon className="h-8 w-8 text-green-500" />}
           caption="+10.12% from last month"
         />
         <CardInfo
           title="Avg Transaction Value"
-          value={formatCurrencyValue(999)}
+          value={formatCurrencyValue(avgTransaction)}
           icon={<CommitIcon className="h-8 w-8 text-green-500" />}
           caption="+50.82% from last month"
         />
         <CardInfo
           title="Total Users"
-          value={345}
+          value={userCount}
           icon={<PersonIcon className="h-8 w-8 text-green-500" />}
           caption="+5.12% from last month"
         />

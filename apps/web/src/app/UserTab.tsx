@@ -11,24 +11,10 @@ import {
   TableHeader,
   TableRow,
 } from "~/components/ui/table";
+import { serverAPIClient } from "~/lib/serverAPIClient";
 
-export default function UserTab() {
-  const users = [
-    {
-      id: 1,
-      clerkId: "clerk-1",
-      firstName: "John",
-      lastName: "Doe",
-      createdAt: "2021-01-01",
-    },
-    {
-      id: 2,
-      clerkId: "clerk-2",
-      firstName: "Jane",
-      lastName: "Doe",
-      createdAt: "2021-01-01",
-    },
-  ];
+export default async function UserTab() {
+  const users = await serverAPIClient().admin.allUsers();
 
   return (
     <Card className="col-span-4">
