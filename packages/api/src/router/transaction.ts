@@ -22,14 +22,10 @@ export const transactionRouter = createTRPCRouter({
       try {
         await addFounds(ctx.auth.userId, input.value);
 
-        await PusherServer.trigger(
-          channels.mainChannel.name,
-          channels.mainChannel.events.addFounds,
-          {
-            value: input.value,
-            clerkUserId: ctx.auth.userId,
-          },
-        );
+        await PusherServer.trigger("channe_name", "addFounds", {
+          value: input.value,
+          clerkUserId: ctx.auth.userId,
+        });
       } catch (error) {
         throw new TRPCError({
           code: "BAD_REQUEST",

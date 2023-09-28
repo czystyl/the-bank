@@ -1,5 +1,7 @@
 # The Bank
 
+[![VIDEO DEMO](https://github.com/czystyl/the-bank/blob/main/demo.mov)](https://github.com/czystyl/the-bank/blob/main/demo.mov)
+
 ## Project Structure
 
 ```
@@ -48,7 +50,6 @@ Make sure that you have installed and configured:
 
 - **Node.js**: I recommend using NVM (Node Version Manager). [Installation Guide](https://github.com/nvm-sh/nvm)
 - **pnpm**: [Installation Guide](https://pnpm.io/installation#using-npm)
-- **Docker**: [Installation Guide](https://docs.docker.com/engine/install/)
 - **iOS Simulator**: [Installation Guide](https://docs.expo.dev/workflow/ios-simulator/)
 - **Android Studio Emulator**: [Installation Guide](https://docs.expo.dev/workflow/android-studio-emulator/)
 
@@ -72,15 +73,7 @@ To get it running, follow the steps below:
   cp apps/mobile/.env.example .env
   ```
 
-- Database setup
-
-  ```sh
-  docker run --name the-bank-mysql -e MYSQL_ROOT_PASSWORD=password -d -p 3306:3306 mysql
-  ```
-
-  > You can also get one from https://planetscale.com/
-
-- Database synchronization (optional)
+- Database synchronization
   ```
   pnpm db:push
   ```
