@@ -54,6 +54,16 @@
     @apply border-border;
   }
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background text-white;
   }
+}
+
+.btn {
+  @apply rounded px-4 py-2 font-bold;
+}
+.btn-blue {
+  @apply bg-blue-500 text-white;
+}
+.btn-blue:hover {
+  @apply bg-blue-700;
 }
